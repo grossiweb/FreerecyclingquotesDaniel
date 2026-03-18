@@ -72,10 +72,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
     urls.push({ url: `${BASE}/challenges/${slug}/faqs`, lastModified: NOW, changeFrequency: 'monthly', priority: 0.5 });
   }
 
-  // ─── SERVICE × LOCATION (40) ───
+  // ─── SERVICE × LOCATION (160) ───
   for (const config of SERVICE_LOCATION_CONFIGS) {
     for (const loc of config.locations) {
       urls.push({ url: `${BASE}/${config.serviceSlug}/${loc}`, lastModified: NOW, changeFrequency: 'monthly', priority: 0.7 });
+    }
+  }
+
+  // ─── CITY PAGES (97) ───
+  for (const country of LOCATIONS) {
+    for (const metro of country.metros) {
+      urls.push({ url: `${BASE}/locations/${country.slug}/${metro.slug}`, lastModified: NOW, changeFrequency: 'monthly', priority: 0.6 });
     }
   }
 
