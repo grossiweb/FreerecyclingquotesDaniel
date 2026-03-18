@@ -20,7 +20,7 @@ export default function HomePage() {
       <JsonLd data={homeSchema} />
 
       {/* ═══ HERO — with background image ═══ */}
-      <section className="relative overflow-hidden bg-[#F0FAF3]" style={{ marginTop: '-104px' }}>
+      <section className="relative overflow-hidden bg-[#F0FAF3]" style={{ marginTop: '-104px', minHeight: '100vh' }}>
         {/* Hero background image — copy hero-bg.png from your Vercel project to public/images/ */}
         {/* If the image doesn't exist yet, the gradient background shows as fallback */}
         <div className="absolute inset-0">
@@ -42,7 +42,7 @@ export default function HomePage() {
           WebkitMaskImage: 'radial-gradient(ellipse 60% 50% at 50% 50%, black 0%, transparent 100%)',
         }} />
 
-        <div className="container-rq relative z-10 text-center" style={{ paddingTop: 'calc(104px + 64px)', paddingBottom: '32px' }}>
+        <div className="container-rq relative z-10 text-center flex flex-col items-center justify-center" style={{ paddingTop: '104px', minHeight: '100vh' }}>
           <div className="max-w-[800px] mx-auto">
             <ScrollReveal>
               <h1 className="font-extrabold leading-[1.08] text-gray-800" style={{ fontSize: 'clamp(2.5rem, 5.5vw, 3.75rem)', letterSpacing: '-0.035em' }}>
@@ -72,7 +72,7 @@ export default function HomePage() {
       </section>
 
       {/* ═══ ESG IMPACT CARDS + STATS ═══ */}
-      <section className="bg-[#FAFCFB] pb-16 -mt-4">
+      <section className="bg-[#FAFCFB] py-24">
         <div className="container-rq">
           <ScrollReveal>
             <div className="text-[11px] font-bold uppercase tracking-[.1em] text-gray-400 mb-6 text-center">Impacts We Make</div>
