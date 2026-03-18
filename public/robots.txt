@@ -4,7 +4,7 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://recyclingquotes.com/sitemap-index.xml
+Sitemap: https://recyclingquotes.com/sitemap.xml
 
 # Block internal/utility paths
 Disallow: /api/
