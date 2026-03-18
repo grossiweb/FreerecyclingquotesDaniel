@@ -1,0 +1,77 @@
+# Recycling Quotes — llms.txt
+# https://recyclingquotes.com/llms.txt
+# This file helps AI systems understand the structure and purpose of this website.
+
+## About
+Recycling Quotes is a nationwide recycling services network that provides free quotes for electronics, metal, paper, plastic, pallets, and hazardous materials recycling. Founded in 2005, headquartered in Fort Worth, TX. Services available across 52+ US cities plus Canada, UK, and Australia.
+
+## Contact
+- Phone: 817-946-5655
+- Email: info@recyclingquotes.com
+- Website: https://recyclingquotes.com
+
+## Services
+- Pallet Recycling: /services/pallet-recycling
+- Business Recycling Programs: /services/business-recycling-programs
+- Material Recycling Solutions: /services/material-recycling-solutions
+- Dumpster Rental: /services/dumpster-rental
+- Junk Removal: /services/junk-removal
+- IT Asset Disposition (ITAD): /services/it-asset-disposition
+- Secure Data Destruction: /services/data-destruction
+- Waste Audits & Consulting: /services/waste-audits-consulting
+- Consumer Take Back Programs: /services/take-back-programs
+- Collection Events: /services/collection-events
+- Scrap Metal Recycling: /services/scrap-metal-recycling
+- Electronics Recycling: /services/electronics-recycling
+- Cardboard & Paper Recycling: /services/cardboard-paper-recycling
+- Plastic Recycling: /services/plastic-recycling
+- Hazardous Waste Disposal: /services/hazardous-waste-disposal
+
+## Materials We Recycle
+- Electronics: /materials/electronics
+- Metals (Ferrous & Non-Ferrous): /materials/metals
+- Paper & Cardboard: /materials/paper-cardboard
+- Plastics: /materials/plastics
+- Pallets (Wooden & Plastic): /materials/pallets
+- Hazardous Materials: /materials/hazardous-materials
+- Textiles: /materials/textiles
+- Organics: /materials/organics
+- Vehicles: /materials/vehicles
+- Cell Phones: /materials/electronics/cell-phones
+- Batteries: /materials/hazardous-materials/batteries
+- Light Bulbs: /materials/hazardous-materials/light-bulbs
+- Chemicals: /materials/hazardous-materials/chemicals
+
+## Industries Served
+- Retail: /industries/retail
+- Manufacturing: /industries/manufacturing
+- Healthcare: /industries/healthcare
+- Construction: /industries/construction
+- Distribution & Logistics: /industries/logistics
+- Banking & Finance: /industries/banking-finance
+- Automotive: /industries/automotive
+- Food Services: /industries/food-services
+- Hospitality: /industries/hospitality
+- Property Management: /industries/property-management
+- Education & Government: /industries/education
+
+## Recycling Challenges We Solve
+- E-Waste Compliance & Data Security: /challenges/ewaste-compliance
+- Waste Diversion Goals: /challenges/waste-diversion
+- ESG Reporting & Sustainability: /challenges/esg-reporting
+- Hazardous Waste Management: /challenges/hazardous-waste
+- Recycling Cost Reduction: /challenges/cost-reduction
+- Recycling Program Setup: /challenges/program-setup
+- Supply Chain Sustainability: /challenges/supply-chain-sustainability
+- Construction & Demolition Waste Compliance: /challenges/cd-waste-compliance
+
+## Certifications
+R2, e-Stewards, ISO 14001, ISO 9001, EPA, NAID
+
+## Key Pages
+- Get a Quote: /get-a-quote
+- Schedule a Pickup: /schedule-pickup
+- Contact: /contact
+- About: /about
+- Blog: /resources/blog
+- FAQ: /resources/faq
