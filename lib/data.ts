@@ -33,21 +33,26 @@ export const NAV_ITEMS: NavItem[] = [
   {
     label: 'Services', href: '/services', type: 'mega',
     columns: [
-      { label: 'Core Recycling', items: [
+      { label: 'Recycling Services', items: [
+        { label: 'Scrap Metal Recycling', href: '/services/scrap-metal-recycling', icon: 'iron', color: 'green' },
+        { label: 'Electronics Recycling', href: '/services/electronics-recycling', icon: 'devices', color: 'green' },
+        { label: 'Cardboard & Paper', href: '/services/cardboard-paper-recycling', icon: 'description', color: 'green' },
+        { label: 'Plastic Recycling', href: '/services/plastic-recycling', icon: 'water_bottle', color: 'green' },
         { label: 'Pallet Recycling', href: '/services/pallet-recycling', icon: 'pallet', color: 'green' },
-        { label: 'Business Recycling', href: '/services/business-recycling-programs', icon: 'apartment', color: 'green' },
+        { label: 'Hazardous Waste', href: '/services/hazardous-waste-disposal', icon: 'warning', color: 'green' },
         { label: 'Material Solutions', href: '/services/material-recycling-solutions', icon: 'recycling', color: 'green' },
       ]},
-      { label: 'Equipment & Logistics', items: [
+      { label: 'Equipment & Specialized', items: [
         { label: 'Dumpster Rental', href: '/services/dumpster-rental', icon: 'delete', color: 'amber' },
         { label: 'Junk Removal', href: '/services/junk-removal', icon: 'local_shipping', color: 'amber' },
-      ]},
-      { label: 'Specialized', items: [
         { label: 'IT Asset Disposition', href: '/services/it-asset-disposition', icon: 'devices', color: 'blue' },
         { label: 'Data Destruction', href: '/services/data-destruction', icon: 'enhanced_encryption', color: 'blue' },
-        { label: 'Waste Audits', href: '/services/waste-audits-consulting', icon: 'query_stats', color: 'blue' },
+        { label: 'Product Destruction', href: '/services/product-destruction', icon: 'delete_forever', color: 'blue' },
+        { label: 'Shredding Services', href: '/services/shredding-services', icon: 'content_cut', color: 'blue' },
       ]},
-      { label: 'Programs', items: [
+      { label: 'Programs & Consulting', items: [
+        { label: 'Business Recycling', href: '/services/business-recycling-programs', icon: 'apartment', color: 'teal' },
+        { label: 'Waste Audits', href: '/services/waste-audits-consulting', icon: 'query_stats', color: 'teal' },
         { label: 'Take Back Programs', href: '/services/take-back-programs', icon: 'swap_horiz', color: 'teal' },
         { label: 'Collection Events', href: '/services/collection-events', icon: 'event', color: 'teal' },
       ]},
