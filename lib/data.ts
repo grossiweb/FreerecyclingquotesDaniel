@@ -189,3 +189,100 @@ export const INDUSTRIES = [
   { slug: 'food-services', name: 'Food Services', icon: 'restaurant', description: 'Organics, packaging & kitchen waste', image: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&h=300&fit=crop' },
   { slug: 'education', name: 'Education & Government', icon: 'school', description: 'Campus-wide recycling & compliance', image: 'https://images.unsplash.com/photo-1562774053-701939374585?w=400&h=300&fit=crop' },
 ] as const;
+
+// ─── LOCATIONS ───
+export type LocationCountry = {
+  slug: string;
+  name: string;
+  flag: string;
+  metros: { slug: string; name: string; state?: string }[];
+};
+
+export const LOCATIONS: LocationCountry[] = [
+  {
+    slug: 'usa', name: 'United States', flag: '🇺🇸',
+    metros: [
+      { slug: 'atlanta', name: 'Atlanta', state: 'GA' },
+      { slug: 'austin', name: 'Austin', state: 'TX' },
+      { slug: 'baltimore', name: 'Baltimore', state: 'MD' },
+      { slug: 'birmingham', name: 'Birmingham', state: 'AL' },
+      { slug: 'boston', name: 'Boston', state: 'MA' },
+      { slug: 'buffalo', name: 'Buffalo', state: 'NY' },
+      { slug: 'charlotte', name: 'Charlotte', state: 'NC' },
+      { slug: 'chicago', name: 'Chicago', state: 'IL' },
+      { slug: 'cincinnati', name: 'Cincinnati', state: 'OH' },
+      { slug: 'cleveland', name: 'Cleveland', state: 'OH' },
+      { slug: 'columbus', name: 'Columbus', state: 'OH' },
+      { slug: 'dallas-fort-worth', name: 'Dallas–Fort Worth', state: 'TX' },
+      { slug: 'denver', name: 'Denver', state: 'CO' },
+      { slug: 'detroit', name: 'Detroit', state: 'MI' },
+      { slug: 'hartford', name: 'Hartford', state: 'CT' },
+      { slug: 'houston', name: 'Houston', state: 'TX' },
+      { slug: 'indianapolis', name: 'Indianapolis', state: 'IN' },
+      { slug: 'jacksonville', name: 'Jacksonville', state: 'FL' },
+      { slug: 'kansas-city', name: 'Kansas City', state: 'MO' },
+      { slug: 'las-vegas', name: 'Las Vegas', state: 'NV' },
+      { slug: 'los-angeles', name: 'Los Angeles', state: 'CA' },
+      { slug: 'louisville', name: 'Louisville', state: 'KY' },
+      { slug: 'memphis', name: 'Memphis', state: 'TN' },
+      { slug: 'miami-fort-lauderdale', name: 'Miami–Fort Lauderdale', state: 'FL' },
+      { slug: 'milwaukee', name: 'Milwaukee', state: 'WI' },
+      { slug: 'minneapolis-st-paul', name: 'Minneapolis–St. Paul', state: 'MN' },
+      { slug: 'nashville', name: 'Nashville', state: 'TN' },
+      { slug: 'new-orleans', name: 'New Orleans', state: 'LA' },
+      { slug: 'new-york-city', name: 'New York City', state: 'NY' },
+      { slug: 'oklahoma-city', name: 'Oklahoma City', state: 'OK' },
+      { slug: 'orlando', name: 'Orlando', state: 'FL' },
+      { slug: 'philadelphia', name: 'Philadelphia', state: 'PA' },
+      { slug: 'phoenix', name: 'Phoenix', state: 'AZ' },
+      { slug: 'pittsburgh', name: 'Pittsburgh', state: 'PA' },
+      { slug: 'portland', name: 'Portland', state: 'OR' },
+      { slug: 'providence', name: 'Providence', state: 'RI' },
+      { slug: 'raleigh-cary', name: 'Raleigh–Cary', state: 'NC' },
+      { slug: 'richmond', name: 'Richmond', state: 'VA' },
+      { slug: 'riverside-san-bernardino', name: 'Riverside–San Bernardino', state: 'CA' },
+      { slug: 'rochester', name: 'Rochester', state: 'NY' },
+      { slug: 'sacramento', name: 'Sacramento', state: 'CA' },
+      { slug: 'salt-lake-city', name: 'Salt Lake City', state: 'UT' },
+      { slug: 'san-antonio', name: 'San Antonio', state: 'TX' },
+      { slug: 'san-diego', name: 'San Diego', state: 'CA' },
+      { slug: 'san-francisco-bay-area', name: 'San Francisco Bay Area', state: 'CA' },
+      { slug: 'san-jose', name: 'San Jose', state: 'CA' },
+      { slug: 'seattle-tacoma', name: 'Seattle–Tacoma', state: 'WA' },
+      { slug: 'st-louis', name: 'St. Louis', state: 'MO' },
+      { slug: 'tampa-st-petersburg', name: 'Tampa–St. Petersburg', state: 'FL' },
+      { slug: 'tucson', name: 'Tucson', state: 'AZ' },
+      { slug: 'virginia-beach', name: 'Virginia Beach', state: 'VA' },
+      { slug: 'washington-dc', name: 'Washington, D.C.', state: 'DC' },
+    ],
+  },
+  {
+    slug: 'canada', name: 'Canada', flag: '🇨🇦',
+    metros: [
+      { slug: 'toronto', name: 'Toronto' },
+      { slug: 'vancouver', name: 'Vancouver' },
+      { slug: 'montreal', name: 'Montreal' },
+      { slug: 'calgary', name: 'Calgary' },
+      { slug: 'ottawa', name: 'Ottawa' },
+    ],
+  },
+  {
+    slug: 'uk', name: 'United Kingdom', flag: '🇬🇧',
+    metros: [
+      { slug: 'london', name: 'London' },
+      { slug: 'manchester', name: 'Manchester' },
+      { slug: 'birmingham-uk', name: 'Birmingham' },
+      { slug: 'leeds', name: 'Leeds' },
+      { slug: 'sheffield', name: 'Sheffield' },
+    ],
+  },
+  {
+    slug: 'australia', name: 'Australia', flag: '🇦🇺',
+    metros: [
+      { slug: 'sydney', name: 'Sydney' },
+      { slug: 'melbourne', name: 'Melbourne' },
+      { slug: 'brisbane', name: 'Brisbane' },
+      { slug: 'perth', name: 'Perth' },
+    ],
+  },
+];
