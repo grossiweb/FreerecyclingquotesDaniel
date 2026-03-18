@@ -26,11 +26,7 @@ export default function Header() {
   }, []);
 
   useEffect(() => {
-    if (mobileOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
+    document.body.style.overflow = mobileOpen ? 'hidden' : '';
   }, [mobileOpen]);
 
   useEffect(() => {
@@ -69,10 +65,16 @@ export default function Header() {
                     {item.label}
                   </Link>
                 ) : (
-                  <button className={`flex items-center gap-[3px] px-3.5 h-[72px] text-[13px] font-semibold transition-colors ${openDropdown === item.label ? 'text-gray-800' : 'text-gray-500 hover:text-gray-800'}`} style={{ letterSpacing: '-0.01em' }}>
-                    {item.label}
-                    <span className={`material-symbols-outlined text-[16px] transition-transform duration-200 ${openDropdown === item.label ? 'rotate-180' : ''}`}>expand_more</span>
-                  </button>
+                  /* FIX: Label is now a clickable link to the hub page. Hover still opens dropdown. */
+                  <div className="flex items-center h-[72px]">
+                    <Link href={item.href} className={`flex items-center px-2 h-[72px] text-[13px] font-semibold transition-colors ${openDropdown === item.label ? 'text-gray-800' : 'text-gray-500 hover:text-gray-800'}`} style={{ letterSpacing: '-0.01em' }}>
+                      {item.label}
+                    </Link>
+                    <button className={`flex items-center px-1 h-[72px] transition-colors ${openDropdown === item.label ? 'text-gray-800' : 'text-gray-400 hover:text-gray-600'}`}
+                      onClick={() => setOpenDropdown(openDropdown === item.label ? null : item.label)}>
+                      <span className={`material-symbols-outlined text-[16px] transition-transform duration-200 ${openDropdown === item.label ? 'rotate-180' : ''}`}>expand_more</span>
+                    </button>
+                  </div>
                 )}
 
                 {item.type === 'mega' && item.columns && (
