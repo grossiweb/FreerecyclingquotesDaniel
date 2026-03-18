@@ -1,0 +1,760 @@
+// ─── INDUSTRY PAGE DATA ───
+
+export type IndustryPageData = {
+  slug: string;
+  name: string;
+  icon: string;
+  heroImage: string;
+  definition: string;
+  overview: string[];
+  wasteProfile: string[];
+  challenges: { slug: string; title: string; pain: string }[];
+  services: { slug: string; name: string; why: string }[];
+  materials: { slug: string; name: string }[];
+  caseStudies: { title: string; metric: string }[];
+  faqs: { q: string; a: string }[];
+  titleTag: string;
+  metaDescription: string;
+  h1: string;
+  headlines: {
+    overview: string;
+    wasteProfile: string;
+    challenges: string;
+    challengesSub: string;
+    services: string;
+    materials: string;
+    results: string;
+    faq: string;
+    faqSub: string;
+    cta: string;
+    ctaSub: string;
+  };
+};
+
+export const INDUSTRY_PAGES: Record<string, IndustryPageData> = {
+  'construction': {
+    slug: 'construction', name: 'Construction', icon: 'construction',
+    heroImage: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1600&h=600&fit=crop',
+    definition: 'Construction and demolition (C&D) recycling recovers concrete, metal, wood, drywall, roofing, and other materials from building, renovation, and demolition projects. C&D debris represents over 600 million tons per year in the US — more than twice the amount of municipal solid waste.',
+    headlines: {
+      overview: 'Recycling Built for Job Sites',
+      wasteProfile: 'What Construction Generates',
+      challenges: 'Regulations Are Getting Stricter',
+      challengesSub: 'More cities require C&D diversion plans before issuing permits. Getting ahead of the mandate saves money and delays.',
+      services: 'Services Contractors Actually Use',
+      materials: 'Materials We Pull From the Waste Stream',
+      results: 'Job Sites We\'ve Cleared',
+      faq: 'Construction Recycling Questions',
+      faqSub: 'Permits, diversion rates, and what can come out of a demo.',
+      cta: 'Get a Construction Recycling Quote',
+      ctaSub: 'Tell us about the project — size, timeline, and materials. We\'ll recommend containers and a pickup schedule.',
+    },
+    overview: [
+      'Construction and demolition debris is the largest waste stream in the United States by weight — over 600 million tons annually according to the EPA. Yet most of it is highly recyclable: concrete can be crushed and reused as aggregate, metals are infinitely recyclable, and wood can be chipped for mulch or biomass.',
+      'The challenge for contractors is logistics. Job sites need the right containers, delivered on time, swapped when full, and hauled to facilities that actually sort and recycle — not just landfill everything. Many municipalities now require C&D diversion plans as a condition of building permits, making documented recycling a project requirement.',
+    ],
+    wasteProfile: ['Concrete, brick, and masonry — 40-50% of typical C&D debris', 'Wood and lumber — framing, forming, pallets', 'Metals — rebar, structural steel, copper pipe, HVAC ductwork', 'Drywall and plaster', 'Asphalt and roofing shingles', 'Cardboard and packaging from materials delivery', 'Soil and land clearing debris', 'Hazardous materials — lead paint, asbestos, fluorescent fixtures'],
+    challenges: [
+      { slug: 'cd-waste-compliance', title: 'C&D Diversion Mandates Are Expanding', pain: 'Cities like San Francisco (75%), Portland (85%), and NYC are requiring documented diversion rates for permitted projects. No plan, no permit.' },
+      { slug: 'cost-reduction', title: 'Wrong Containers Cost Real Money', pain: 'Oversized dumpsters haul air. Undersized ones overflow. Mixed heavy debris triggers overweight surcharges. Right-sizing saves 20-30%.' },
+      { slug: 'hazardous-waste', title: 'Lead, Asbestos, and Fluorescent Fixtures', pain: 'Demo sites expose regulated materials that require licensed handling. Mixing hazmat with general debris contaminates the entire load.' },
+    ],
+    services: [
+      { slug: 'dumpster-rental', name: 'Dumpster Rental', why: 'Roll-off containers from 10-40 yards, delivered to your job site and swapped on your schedule. Heavy debris dumpsters for concrete and masonry.' },
+      { slug: 'scrap-metal-recycling', name: 'Scrap Metal Recycling', why: 'Rebar, structural steel, copper pipe, and HVAC scrap pulled from demo sites and sold at market rates. Free pickup for qualifying volumes.' },
+      { slug: 'hazardous-waste-disposal', name: 'Hazardous Waste Disposal', why: 'Lead paint, asbestos, fluorescent fixtures, and chemical waste from renovation and demolition. Licensed handling with full manifests.' },
+      { slug: 'junk-removal', name: 'Junk Removal', why: 'Post-construction cleanup, debris removal, and final broom-clean before project handover.' },
+    ],
+    materials: [
+      { slug: 'metals', name: 'Scrap Metal' }, { slug: 'paper-cardboard', name: 'Cardboard' },
+      { slug: 'pallets', name: 'Pallets' }, { slug: 'hazardous-materials', name: 'Hazardous Materials' },
+    ],
+    caseStudies: [
+      { title: '72% diversion on 200-unit apartment build', metric: 'Concrete recycled as aggregate, metals sold, wood chipped. Diversion documentation satisfied city permit requirements.' },
+      { title: 'Full demo sorted in 2 weeks', metric: 'Three 40-yard roll-offs rotating on 48-hour swaps. 85 tons of debris, 65% diverted from landfill.' },
+    ],
+    faqs: [
+      { q: 'What\'s a C&D diversion rate and do I need one?', a: 'A C&D diversion rate measures what percentage of construction waste is recycled vs landfilled. Many cities now require a diversion plan (with target rates of 50-85%) as a condition of building permits. We provide diversion documentation that satisfies these requirements.' },
+      { q: 'Can concrete and masonry be recycled?', a: 'Yes. Concrete is crushed and used as recycled aggregate for road base, backfill, and new concrete mixes. Brick and masonry can also be crushed for aggregate. These heavy materials should go in dedicated "heavy debris" dumpsters, not mixed with general waste.' },
+      { q: 'What size dumpster do I need for a construction project?', a: 'Depends on the project phase. A 20-yard handles most residential renovations. 30-40 yard containers are standard for commercial construction and demolition. Heavy debris (concrete, masonry) requires 10-15 yard containers due to weight limits. We recommend the right mix.' },
+      { q: 'How do you handle asbestos and lead paint?', a: 'Asbestos and lead paint require licensed abatement contractors and permitted disposal facilities. We coordinate with licensed abatement firms and provide manifested hazardous waste transportation to approved disposal sites.' },
+      { q: 'Do you sort construction debris for recycling?', a: 'Yes. Our processing facilities sort C&D loads to recover metals, wood, cardboard, and concrete for recycling. Source-separation on site (keeping metals, concrete, and wood in separate containers) improves diversion rates and often reduces costs.' },
+      { q: 'Can I get LEED credits for construction waste management?', a: 'Yes. LEED v4 MR Credit: Construction and Demolition Waste Management awards up to 2 points for diverting 50-75% of C&D waste. We provide the weight tickets and diversion reports needed for LEED documentation.' },
+      { q: 'What about roofing material?', a: 'Asphalt shingles can be recycled into road pavement material. We provide dedicated containers for roofing tear-offs. Metal roofing goes through our scrap metal program.' },
+      { q: 'How quickly can you deliver containers?', a: 'Most markets offer next-day delivery. Same-day available in major metros. We coordinate swap schedules with your project timeline so there\'s never a gap.' },
+    ],
+    titleTag: 'Construction Recycling — C&D Debris, Dumpsters & Diversion',
+    metaDescription: 'Construction and demolition recycling with roll-off dumpsters, metal recovery, and C&D diversion documentation. LEED compliant. 97+ cities. 817-946-5655.',
+    h1: 'Construction Recycling — C&D Debris Management & Diversion',
+  },
+
+  'manufacturing': {
+    slug: 'manufacturing', name: 'Manufacturing', icon: 'factory',
+    heroImage: 'https://images.unsplash.com/photo-1565043666747-69f6646db940?w=1600&h=600&fit=crop',
+    definition: 'Manufacturing recycling manages the waste streams generated by production operations — scrap metal, production cutoffs, packaging waste, pallets, hazardous byproducts, and end-of-line equipment. A well-designed program turns disposal costs into revenue and supports ISO 14001 and ESG compliance.',
+    headlines: {
+      overview: 'Production Waste Is a Revenue Opportunity',
+      wasteProfile: 'What Manufacturing Generates',
+      challenges: 'The Hidden Costs on Your Production Floor',
+      challengesSub: 'Most manufacturers pay to dispose of materials that have commodity value. A waste audit usually uncovers five-figure annual savings.',
+      services: 'Services for the Production Floor',
+      materials: 'Materials From Your Operations',
+      results: 'Manufacturing Clients, Real Numbers',
+      faq: 'Manufacturing Recycling Questions',
+      faqSub: 'Scrap value, compliance, and multi-stream programs for production facilities.',
+      cta: 'Get a Manufacturing Recycling Quote',
+      ctaSub: 'We start with a free waste audit of your facility. Most manufacturers find savings in month one.',
+    },
+    overview: [
+      'Manufacturing operations generate some of the most valuable recyclable waste streams in the commercial sector — metal offcuts, production scrap, and clean single-resin plastic can all be sold at commodity rates. Yet many manufacturers still pay disposal fees on these materials because they\'re mixed with general waste.',
+      'Recycling Quotes designs multi-stream recycling programs for production facilities that separate valuable materials at the source, route each stream to the highest-value processor, and deliver consolidated reporting for ISO 14001 and ESG compliance. The waste audit alone typically identifies $20,000-$100,000+ in annual savings or new revenue.',
+    ],
+    wasteProfile: ['Metal scrap — CNC turnings, stamping offcuts, end-of-line equipment', 'Plastic scrap — runners, sprues, rejects, packaging film', 'Cardboard and packaging — inbound materials, shipping supplies', 'Pallets — wooden and plastic, standard and custom sizes', 'Hazardous waste — solvents, cutting fluids, paint, chemicals', 'Electronics — obsolete PLCs, control systems, test equipment', 'Wood — crating, dunnage, shipping materials'],
+    challenges: [
+      { slug: 'cost-reduction', title: 'You\'re Paying to Trash Valuable Scrap', pain: 'Metal turnings, clean plastic, and cardboard all have commodity value. Mixing them with general waste means you pay to dispose of something a recycler would pay you for.' },
+      { slug: 'esg-reporting', title: 'ISO 14001 Needs Real Data', pain: 'Environmental management certification requires documented waste reduction metrics. Our reporting provides the data your auditors need.' },
+      { slug: 'hazardous-waste', title: 'Solvents and Chemicals Need Licensed Handling', pain: 'Cutting fluids, paint waste, and cleaning chemicals are regulated under RCRA. Improper handling means fines; proper manifesting means compliance.' },
+    ],
+    services: [
+      { slug: 'scrap-metal-recycling', name: 'Scrap Metal Recycling', why: 'CNC turnings, stamping offcuts, and fabrication scrap sold at daily market rates. Free pickup for production volumes.' },
+      { slug: 'business-recycling-programs', name: 'Business Recycling Programs', why: 'Multi-stream program covering metal, cardboard, plastic, pallets, and hazmat under one contract with consolidated reporting.' },
+      { slug: 'hazardous-waste-disposal', name: 'Hazardous Waste Disposal', why: 'Solvents, cutting fluids, paint waste, and chemical byproducts — profiled, manifested, and disposed through licensed facilities.' },
+      { slug: 'pallet-recycling', name: 'Pallet Recycling', why: 'Inbound and outbound pallets recycled through our three-tier program. Free pickup for production volumes.' },
+    ],
+    materials: [
+      { slug: 'metals', name: 'Scrap Metal' }, { slug: 'plastics', name: 'Plastics' },
+      { slug: 'paper-cardboard', name: 'Cardboard' }, { slug: 'pallets', name: 'Pallets' },
+      { slug: 'hazardous-materials', name: 'Hazardous Materials' },
+    ],
+    caseStudies: [
+      { title: 'CNC shop finds $85K/year in scrap value', metric: 'Waste audit revealed metal turnings going to general waste. Separated metal stream now generates $85K annually in scrap revenue.' },
+      { title: 'Plant achieves ISO 14001 with documented program', metric: 'Multi-stream program covering 7 waste types. Diversion rate: 88%. ISO auditors passed the facility on first review.' },
+    ],
+    faqs: [
+      { q: 'How do I know if my scrap has commodity value?', a: 'A free waste audit tells you. We assess your waste streams, identify recyclable materials, and quote current market rates. Metal scrap, clean plastic, and cardboard almost always have value.' },
+      { q: 'Can you handle multiple waste streams under one contract?', a: 'Yes — that\'s our specialty. We design programs that cover metal, plastic, cardboard, pallets, electronics, and hazardous waste under one contract with a single account manager and consolidated reporting.' },
+      { q: 'What about cutting fluids and solvents?', a: 'We manage regulated hazardous waste including spent cutting fluids, solvents, paint waste, and cleaning chemicals. Full profiling, manifesting, and licensed disposal included.' },
+      { q: 'Do you serve multi-facility manufacturers?', a: 'Yes. We manage recycling programs across all your facilities nationwide. Same service levels, same reporting, same compliance documentation — one contract covering every plant.' },
+      { q: 'How does pricing work for scrap metal?', a: 'We pay you based on daily commodity rates for sorted metal. The price depends on metal type, grade, and volume. Clean, sorted scrap earns the best rates. We provide certified scale weight tickets.' },
+      { q: 'Can this help with our ISO 14001 certification?', a: 'Absolutely. Our reporting provides the waste reduction metrics, diversion data, and compliance documentation that ISO 14001 auditors require.' },
+      { q: 'What\'s the typical ROI for a manufacturing recycling program?', a: 'Most manufacturers see positive ROI within 60 days. The combination of scrap metal revenue, cardboard rebates, reduced disposal costs, and right-sized containers typically saves $20K-$100K+ annually depending on facility size.' },
+      { q: 'How do you handle production shutdowns or cleanouts?', a: 'We coordinate full facility cleanouts including equipment decommission, scrap removal, and hazardous waste disposition. Typically completed in 1-2 weeks depending on facility size.' },
+    ],
+    titleTag: 'Manufacturing Recycling — Scrap Recovery & Waste Programs',
+    metaDescription: 'Manufacturing recycling programs for scrap metal, plastics, pallets, and hazardous waste. Free waste audits. ISO 14001 compliant reporting. 817-946-5655.',
+    h1: 'Manufacturing Recycling — Scrap Recovery & Waste Management',
+  },
+
+  'retail': {
+    slug: 'retail', name: 'Retail', icon: 'storefront',
+    heroImage: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1600&h=600&fit=crop',
+    definition: 'Retail recycling manages the waste streams generated by stores, distribution centers, and e-commerce operations — primarily cardboard, plastic packaging, pallets, electronics, and fixture waste from buildouts and remodels.',
+    headlines: {
+      overview: 'Every Box That Comes In Is Recyclable',
+      wasteProfile: 'The Retail Waste Stream',
+      challenges: 'Backroom Space Is the Real Constraint',
+      challengesSub: 'When cardboard piles up faster than pickups, your backroom becomes a fire hazard and your staff wastes time managing waste instead of selling.',
+      services: 'Services Built for Retail Operations',
+      materials: 'Materials From Store Operations',
+      results: 'Retail Chains We Serve',
+      faq: 'Retail Recycling Questions',
+      faqSub: 'Cardboard, packaging, fixture disposal, and chain-wide programs.',
+      cta: 'Get a Retail Recycling Quote',
+      ctaSub: 'From a single store to a 500-location chain — we design programs that fit your operations and your sustainability goals.',
+    },
+    overview: [
+      'Retail generates one of the most consistent and recyclable waste streams in commercial operations. Every shipment arrives in cardboard. Every product comes wrapped in plastic. And every few years, store remodels generate fixtures, signage, and construction debris that need to go somewhere.',
+      'For single stores, the solution is right-sized containers and pickup schedules matched to your receiving rhythm. For chains, the value multiplies: standardized programs across all locations with consolidated reporting, one vendor relationship, and consistent service levels from coast to coast.',
+    ],
+    wasteProfile: ['Corrugated cardboard (OCC) — the single largest stream, often 50-70% of retail waste', 'Plastic packaging — shrink wrap, polybags, product packaging', 'Pallets — from daily receiving shipments', 'Fixture and display waste — during remodels and seasonal changeovers', 'Electronics — POS systems, back-office computers, signage displays', 'Textile waste — hangers, damaged goods, unsold inventory (apparel)', 'Organics — expired food products (grocery)'],
+    challenges: [
+      { slug: 'cost-reduction', title: 'You Might Be Getting Paid for Cardboard', pain: 'Clean OCC at high volumes has commodity value. If your cardboard goes in a compactor with general waste, you\'re paying disposal fees on a revenue-generating material.' },
+      { slug: 'waste-diversion', title: 'Sustainability Is a Brand Expectation', pain: 'Customers and investors expect documented recycling programs. A visible sustainability story differentiates your brand and attracts conscious consumers.' },
+      { slug: 'program-setup', title: 'Multi-Location Is Multi-Headache', pain: 'Managing different recycling vendors at every store is expensive and inconsistent. One national program solves logistics, reporting, and compliance at scale.' },
+    ],
+    services: [
+      { slug: 'cardboard-paper-recycling', name: 'Cardboard & Paper Recycling', why: 'The core retail stream. Compactors, balers, and scheduled pickup matched to your receiving volume. Revenue share on clean OCC.' },
+      { slug: 'business-recycling-programs', name: 'Business Recycling Programs', why: 'Multi-stream, multi-location programs under one contract. Cardboard, plastic, pallets, and electronics across your entire store network.' },
+      { slug: 'electronics-recycling', name: 'Electronics Recycling', why: 'POS terminals, back-office computers, and digital signage. Data destruction included for devices with customer information.' },
+      { slug: 'junk-removal', name: 'Junk Removal', why: 'Fixture disposal, remodel debris, and back-of-store cleanouts. After-hours service to avoid disrupting business.' },
+    ],
+    materials: [
+      { slug: 'paper-cardboard', name: 'Cardboard & Paper' }, { slug: 'plastics', name: 'Plastics' },
+      { slug: 'pallets', name: 'Pallets' }, { slug: 'electronics', name: 'Electronics' },
+    ],
+    caseStudies: [
+      { title: '120-store chain goes revenue-positive on cardboard', metric: 'Switched from mixed waste to dedicated OCC program. Net savings: $6,200/month plus $2,400/month in cardboard rebates.' },
+      { title: 'Flagship remodel cleared overnight', metric: 'Fixtures, signage, and construction debris removed between 9pm and 6am. Zero disruption to next-day operations.' },
+    ],
+    faqs: [
+      { q: 'Can we get paid for our cardboard?', a: 'At sufficient volume (typically 2+ tons per pickup of clean OCC), yes. Market rates fluctuate but we pass through current pricing. Even when rebates aren\'t available, recycling is cheaper than landfill disposal.' },
+      { q: 'How do you handle multi-location retail programs?', a: 'One contract covers all locations. We coordinate local haulers in every market, provide standardized service levels, and deliver one consolidated monthly report. Your regional managers don\'t manage waste — we do.' },
+      { q: 'Do you work after hours for store cleanouts?', a: 'Yes. Fixture removal, remodel debris, and cleanouts are typically scheduled after closing or before opening to avoid disrupting customer-facing operations.' },
+      { q: 'What about POS system and electronics recycling?', a: 'We handle chain-wide tech refreshes including data destruction on all devices with customer data. R2 certified processing with per-device Certificates of Destruction.' },
+      { q: 'Can you handle seasonal volume fluctuations?', a: 'Yes. We adjust pickup frequency seasonally — more frequent during holiday receiving surges, scaled back during slower periods. No locked-in schedules that over-service you during off-peak months.' },
+      { q: 'Do you provide balers or compactors?', a: 'For stores generating 2+ tons per week, we provide compactors or balers at no additional charge. This reduces your cardboard volume by 50-90%, cuts pickup frequency, and keeps your backroom clear.' },
+      { q: 'What about plastic packaging and shrink wrap?', a: 'We set up dedicated film collection for stores generating significant stretch wrap and polybag volumes. Clean film has commodity value and diverts from landfill.' },
+      { q: 'What reporting do we get for sustainability disclosures?', a: 'Monthly reports include tonnage by material, diversion rate per store and chain-wide, cost analysis, and trend data. Annual summaries formatted for GRI, SASB, and CDP reporting frameworks.' },
+    ],
+    titleTag: 'Retail Recycling — Cardboard, Packaging & Store Programs',
+    metaDescription: 'Retail recycling for cardboard, packaging, pallets, electronics, and fixtures. Single-store to 500+ locations. Revenue share on OCC. 817-946-5655.',
+    h1: 'Retail Recycling — Cardboard, Packaging & Chain-Wide Programs',
+  },
+
+  'healthcare': {
+    slug: 'healthcare', name: 'Healthcare', icon: 'local_hospital',
+    heroImage: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=1600&h=600&fit=crop',
+    definition: 'Healthcare recycling manages the complex waste streams generated by hospitals, clinics, laboratories, and medical offices — including regulated medical waste, HIPAA-protected IT equipment, pharmaceutical waste, and standard recyclables — all under overlapping compliance frameworks.',
+    headlines: {
+      overview: 'Where Compliance and Recycling Intersect',
+      wasteProfile: 'Healthcare Waste Is Uniquely Complex',
+      challenges: 'The Regulatory Overlap Is the Hard Part',
+      challengesSub: 'HIPAA for data, RCRA for hazardous waste, OSHA for sharps, DEA for pharmaceuticals — and your recycling program has to satisfy all of them.',
+      services: 'Services for Healthcare Facilities',
+      materials: 'Materials From Healthcare Operations',
+      results: 'Healthcare Systems We Support',
+      faq: 'Healthcare Recycling Questions',
+      faqSub: 'HIPAA, medical waste, pharmaceuticals, and compliance documentation.',
+      cta: 'Get a Healthcare Recycling Quote',
+      ctaSub: 'We understand healthcare compliance. Tell us about your facility and we\'ll design a program that covers every waste stream and every regulation.',
+    },
+    overview: [
+      'Healthcare facilities generate one of the most regulated waste streams in any industry. A single hospital produces medical waste requiring biohazard handling, electronics containing HIPAA-protected patient data, pharmaceutical waste regulated by the DEA, hazardous chemicals from labs, and standard recyclables like cardboard and plastic — all under different compliance frameworks.',
+      'Most healthcare waste management failures come from mis-segregation: putting general waste in red bags (expensive), putting regulated waste in general containers (illegal), or disposing of IT equipment without documented data destruction (HIPAA violation). A properly designed program eliminates these gaps.',
+    ],
+    wasteProfile: ['Regulated medical waste (RMW) — sharps, biohazard, pathological', 'IT equipment with ePHI — computers, monitors, tablets, medical devices', 'Pharmaceutical waste — expired, recalled, and controlled substances', 'Hazardous chemical waste — lab chemicals, solvents, formalin', 'Universal waste — batteries, fluorescent lamps, mercury thermometers', 'General recyclables — cardboard, paper, plastics', 'Confidential documents — patient records past retention'],
+    challenges: [
+      { slug: 'ewaste-compliance', title: 'HIPAA Doesn\'t End at the Dumpster', pain: 'ePHI on a discarded hard drive is a breach waiting to happen. Certificates of Destruction are the only defense — not formatting, not drilling holes.' },
+      { slug: 'hazardous-waste', title: 'Medical and Pharmaceutical Waste Are Expensive to Get Wrong', pain: 'Mis-segregation — putting general waste in red bags — can double your regulated waste costs. Proper training and segregation protocols cut costs dramatically.' },
+      { slug: 'cost-reduction', title: '30% of "Regulated" Waste Isn\'t Actually Regulated', pain: 'Waste audits in healthcare consistently find that 20-40% of red bag waste is general waste being treated as medical. Fixing this saves tens of thousands annually.' },
+    ],
+    services: [
+      { slug: 'it-asset-disposition', name: 'IT Asset Disposition', why: 'HIPAA-compliant decommission of computers, tablets, and medical devices with per-device data destruction and Certificate of Destruction.' },
+      { slug: 'data-destruction', name: 'Data Destruction', why: 'NIST 800-88 compliant wiping or shredding for all devices containing ePHI. Onsite shredding available for highest-security environments.' },
+      { slug: 'hazardous-waste-disposal', name: 'Hazardous Waste Disposal', why: 'Lab chemicals, pharmaceutical waste, mercury equipment, and universal waste handled through licensed facilities with full manifesting.' },
+      { slug: 'shredding-services', name: 'Document Shredding', why: 'HIPAA-compliant destruction of patient records past retention with Certificates of Destruction.' },
+    ],
+    materials: [
+      { slug: 'electronics', name: 'Electronics' }, { slug: 'hazardous-materials', name: 'Hazardous Materials' },
+      { slug: 'paper-cardboard', name: 'Paper & Cardboard' }, { slug: 'hazardous-materials/chemicals', name: 'Chemicals' },
+    ],
+    caseStudies: [
+      { title: 'Hospital system cuts regulated waste costs 40%', metric: 'Waste audit found 35% of red bag waste was general waste. New segregation protocol saved $280K annually across 6 campuses.' },
+      { title: '3,000 devices retired HIPAA-compliant', metric: 'System-wide IT refresh. Every hard drive shredded with per-device COD. Zero data incidents. Joint Commission audit passed.' },
+    ],
+    faqs: [
+      { q: 'How do you handle HIPAA compliance for IT equipment?', a: 'All data-bearing devices undergo NIST 800-88 compliant destruction. You receive a Certificate of Destruction for every device listing serial number, destruction method, and date. Our process meets HIPAA, HITECH, and Joint Commission requirements.' },
+      { q: 'Can you handle pharmaceutical waste disposal?', a: 'Yes. We manage pharmaceutical waste under DEA reverse distribution rules (for controlled substances) and EPA pharmaceutical waste rules. Includes DEA Form 41 processing for Schedule II-V drugs.' },
+      { q: 'What about mercury-containing medical equipment?', a: 'Mercury thermometers, sphygmomanometers, and other mercury-containing devices require universal waste handling. We provide collection containers and manifest compliant disposal.' },
+      { q: 'How do you reduce regulated medical waste costs?', a: 'The biggest savings come from proper segregation. We audit your waste streams, train staff on what does and doesn\'t qualify as RMW, and implement color-coded container systems. Typical result: 20-40% reduction in regulated waste volume.' },
+      { q: 'Do you serve multi-campus health systems?', a: 'Yes. We manage programs across all facilities — hospitals, clinics, labs, and administrative offices — under one contract with consolidated reporting and consistent compliance documentation.' },
+      { q: 'Can you handle laboratory chemical waste?', a: 'Yes. Lab chemicals, solvents, reagents, and formalin are profiled, packed, manifested, and transported to licensed TSDFs. We handle clean-out of individual labs or entire research buildings.' },
+      { q: 'What about confidential document destruction?', a: 'NAID AAA certified shredding for patient records past retention period. Locked consoles placed in nursing stations, records rooms, and administrative areas. HIPAA-compliant Certificates of Destruction.' },
+      { q: 'Do you provide documentation for Joint Commission audits?', a: 'Yes. Our documentation packages include Certificates of Destruction (data), Certificates of Recycling (equipment), hazardous waste manifests, and pharmaceutical disposal records — organized for Joint Commission and state health department review.' },
+    ],
+    titleTag: 'Healthcare Recycling — HIPAA Compliant IT & Medical Waste',
+    metaDescription: 'Healthcare recycling with HIPAA-compliant IT disposition, pharmaceutical waste disposal, and medical waste management. Documentation included. 817-946-5655.',
+    h1: 'Healthcare Recycling — HIPAA Compliant, Fully Documented',
+  },
+
+  'logistics': {
+    slug: 'logistics', name: 'Distribution & Logistics', icon: 'local_shipping',
+    heroImage: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1600&h=600&fit=crop',
+    definition: 'Distribution and logistics recycling manages the high-volume, consistent waste streams generated by warehouses, distribution centers, and 3PL operations — primarily pallets, cardboard, stretch wrap, and packaging materials.',
+    headlines: {
+      overview: 'High Volume, High Value, High Diversion',
+      wasteProfile: 'What DCs Generate Every Day',
+      challenges: 'Volume Without a System Is Just Landfill',
+      challengesSub: 'Distribution centers generate the most recyclable waste per square foot of any commercial operation. Without dedicated streams, it all goes in the compactor.',
+      services: 'Services for Warehouse Operations',
+      materials: 'Materials From the Dock',
+      results: 'Distribution Clients We Manage',
+      faq: 'Logistics Recycling Questions',
+      faqSub: 'Pallets, cardboard, stretch wrap, and warehouse cleanouts.',
+      cta: 'Get a Distribution Recycling Quote',
+      ctaSub: 'We design programs around your dock flow — not the other way around.',
+    },
+    overview: [
+      'Distribution centers and warehouses generate the highest concentration of recyclable materials per square foot of any commercial operation. Pallets, cardboard, stretch wrap, banding, and packaging materials flow through the dock daily in massive quantities — and virtually all of it is recyclable.',
+      'The key to DC recycling isn\'t awareness — operations teams know the materials are recyclable. The key is logistics: the right containers in the right locations, pickup cadence matched to throughput, and a program that doesn\'t create bottlenecks on the dock or in the staging area.',
+    ],
+    wasteProfile: ['Pallets — the highest-volume single item, hundreds per week at a typical DC', 'Corrugated cardboard — from inbound shipments and packaging materials', 'Stretch wrap and banding — from pallet wrapping and securing loads', 'Plastic packaging — polybags, void fill, air pillows', 'Damaged goods — products unfit for sale or distribution', 'Racking and shelving — during warehouse reconfigurations', 'Equipment — conveyors, forklifts, and material handling equipment at end-of-life'],
+    challenges: [
+      { slug: 'cost-reduction', title: 'Your Dock Generates Revenue', pain: 'Pallets, cardboard, and metal racking all have commodity value. A DC generating 500+ pallets/week and 10+ tons of OCC/month should be net-positive on recycling.' },
+      { slug: 'waste-diversion', title: '70-80% of DC Waste Is Recyclable', pain: 'Most DCs achieve only 40-50% diversion because recyclable materials are mixed with general waste. Source separation at the dock pushes diversion above 80%.' },
+      { slug: 'esg-reporting', title: 'Multi-DC Reporting at Scale', pain: 'Regional and national 3PLs need consolidated recycling data across all facilities. One vendor, one report, every DC covered.' },
+    ],
+    services: [
+      { slug: 'pallet-recycling', name: 'Pallet Recycling', why: 'Free pickup, trailer swap programs, and buyback for Grade A pallets. Designed for DC throughput of hundreds or thousands of pallets per week.' },
+      { slug: 'cardboard-paper-recycling', name: 'Cardboard & Paper Recycling', why: 'On-site balers and compactors that reduce OCC volume by 90%. Revenue share on clean bales at market rates.' },
+      { slug: 'business-recycling-programs', name: 'Business Recycling Programs', why: 'Multi-stream program covering every material from one dock — pallets, OCC, stretch wrap, metals, electronics — with one report.' },
+      { slug: 'plastic-recycling', name: 'Plastic Recycling', why: 'Dedicated stretch wrap and film collection. Clean LDPE film baled and sold to domestic reprocessors.' },
+    ],
+    materials: [
+      { slug: 'pallets', name: 'Pallets' }, { slug: 'paper-cardboard', name: 'Cardboard' },
+      { slug: 'plastics', name: 'Stretch Wrap & Film' }, { slug: 'metals', name: 'Racking & Metal' },
+    ],
+    caseStudies: [
+      { title: '92% diversion across 8 DCs', metric: 'National 3PL consolidated from 5 vendors to 1. Pallet, OCC, and film programs at every facility. Annual savings: $220K.' },
+      { title: 'Revenue-positive recycling from day one', metric: 'Single DC: 800 pallets/week + 6 tons OCC/week. Buyback and rebate revenue exceeded program cost in month one.' },
+    ],
+    faqs: [
+      { q: 'How do pallet trailer swap programs work?', a: 'We place a trailer at your dock. Your team loads pallets as they accumulate. When the trailer is full, we swap it for an empty one — usually within 24 hours. You never handle transportation or scheduling.' },
+      { q: 'Can we get revenue for our cardboard?', a: 'Yes. DCs generating 2+ tons/week of clean OCC typically qualify for commodity rebates. An on-site baler produces clean bales that command the best market rates.' },
+      { q: 'Do you provide balers for warehouses?', a: 'Yes. We install and maintain vertical and horizontal balers matched to your cardboard volume. Equipment is typically provided at no additional charge for qualifying volumes.' },
+      { q: 'How do you handle stretch wrap recycling?', a: 'Dedicated film collection containers or balers near wrapping stations. Clean stretch wrap is baled and sold to domestic LDPE reprocessors. A DC wrapping 200+ pallets/day can generate significant film volume.' },
+      { q: 'Can you manage recycling across multiple DCs?', a: 'Yes. We coordinate programs across all your facilities nationwide. Same service levels, same reporting format, consolidated billing. Your operations team gets one point of contact for every DC.' },
+      { q: 'What happens to damaged goods?', a: 'We manage damaged goods disposition through our product destruction service. Items are documented, destroyed if required, and materials are recycled where possible.' },
+      { q: 'What about equipment decommissions?', a: 'When you decommission racking, conveyors, or forklifts, we handle removal and recycling. Metal goes to scrap at market rates. Heavy equipment is dismantled for parts and material recovery.' },
+      { q: 'What reporting do we get?', a: 'Monthly reports per facility: tonnage by material, diversion rate, cost/revenue breakdown, and trend analysis. Annual sustainability summaries for ESG disclosures. Multi-DC rollup for corporate reporting.' },
+    ],
+    titleTag: 'Distribution & Logistics Recycling — Pallets, OCC & More',
+    metaDescription: 'Warehouse and DC recycling programs for pallets, cardboard, stretch wrap, and equipment. Multi-facility management. Revenue-positive. 817-946-5655.',
+    h1: 'Distribution & Logistics Recycling — Built for High Volume',
+  },
+
+  'banking-finance': {
+    slug: 'banking-finance', name: 'Banking & Finance', icon: 'account_balance',
+    heroImage: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1600&h=600&fit=crop',
+    definition: 'Banking and finance recycling handles the secure disposition of IT equipment, confidential documents, and office waste from financial institutions — with documented data destruction meeting GLBA, PCI-DSS, SOX, and FFIEC requirements.',
+    headlines: {
+      overview: 'Data Security Is the Starting Point',
+      wasteProfile: 'What Financial Institutions Discard',
+      challenges: 'The Regulatory Stack Is Deep',
+      challengesSub: 'GLBA, PCI-DSS, SOX, FFIEC — every discarded device and document intersects multiple compliance frameworks.',
+      services: 'Services for Financial Institutions',
+      materials: 'Materials From Banking Operations',
+      results: 'Financial Institutions We Serve',
+      faq: 'Banking & Finance Recycling Questions',
+      faqSub: 'Data destruction, compliance documentation, and branch-wide programs.',
+      cta: 'Get a Financial Services Recycling Quote',
+      ctaSub: 'We understand financial compliance. Every device tracked, every drive destroyed, every certificate audit-ready.',
+    },
+    overview: [
+      'Financial institutions face the strictest data destruction requirements of any industry. GLBA mandates documented disposal of customer financial information. PCI-DSS governs payment card data on POS devices. SOX requires retention and destruction schedules for financial records. And FFIEC examiners review IT disposition as part of every bank examination.',
+      'Recycling Quotes provides compliance-first recycling for banks, credit unions, insurance companies, and investment firms. Every device is tracked by serial number. Every hard drive gets a Certificate of Destruction. Every document shredding job is certified. The result: a complete audit trail that satisfies every regulator you face.',
+    ],
+    wasteProfile: ['IT equipment — workstations, servers, ATMs, networking gear', 'Hard drives and storage media containing customer data', 'POS terminals and payment card equipment', 'Confidential documents — loan files, applications, statements', 'Office equipment — printers, copiers, phones', 'Branch furniture and fixtures during renovations', 'Universal waste — batteries, light bulbs from facilities'],
+    challenges: [
+      { slug: 'ewaste-compliance', title: 'One Drive Is One Breach', pain: 'A single unwiped hard drive with customer account data creates GLBA violation exposure. Serial-number-level tracking and CODs eliminate the risk.' },
+      { slug: 'cost-reduction', title: 'Branch Refreshes Are Expensive', pain: 'Refreshing IT across 50-500 branches generates massive equipment volume. A good ITAD program recovers asset value and reduces disposal cost simultaneously.' },
+      { slug: 'esg-reporting', title: 'ESG Is a Board-Level Priority', pain: 'Investors and regulators increasingly expect documented sustainability programs. Recycling data feeds directly into your annual ESG disclosure.' },
+    ],
+    services: [
+      { slug: 'it-asset-disposition', name: 'IT Asset Disposition', why: 'Serial-number tracking, NIST 800-88 data destruction, remarketing of reusable equipment, and compliance documentation package for GLBA/SOX auditors.' },
+      { slug: 'data-destruction', name: 'Data Destruction', why: 'Onsite shredding for highest-security environments. Per-drive Certificates of Destruction with serial number, method, and technician ID.' },
+      { slug: 'shredding-services', name: 'Document Shredding', why: 'Locked consoles at every branch. Scheduled pickup by screened, bonded drivers. Annual Certificates of Destruction for GLBA compliance.' },
+      { slug: 'electronics-recycling', name: 'Electronics Recycling', why: 'ATMs, servers, workstations, and networking equipment processed through R2/e-Stewards certified facilities.' },
+    ],
+    materials: [
+      { slug: 'electronics', name: 'Electronics' }, { slug: 'paper-cardboard', name: 'Confidential Paper' },
+      { slug: 'junk', name: 'Branch Fixtures' },
+    ],
+    caseStudies: [
+      { title: 'Regional bank retires 12,000 devices across 40 branches', metric: 'Every hard drive shredded with per-drive COD. $85K in remarketing recovery. Zero data incidents. FFIEC exam passed.' },
+      { title: 'Credit union launches shredding program', metric: '85 branches on bi-weekly shredding. Locked consoles at every teller station. Annual COD for GLBA auditors delivered January 15.' },
+    ],
+    faqs: [
+      { q: 'What compliance standards does your ITAD process meet?', a: 'Our process satisfies GLBA, PCI-DSS, SOX, FFIEC examination requirements, and state-specific financial privacy laws. We provide the specific documentation each framework requires.' },
+      { q: 'Can you handle ATM decommissions?', a: 'Yes. ATMs contain hard drives, cash handling components, and customer data interfaces. We disassemble, destroy all data-bearing components, and recycle the remaining materials.' },
+      { q: 'Do you offer onsite data destruction for banks?', a: 'Yes. Our mobile shredding trucks come to your branch or data center. Drives are destroyed on premises and you receive Certificates of Destruction before we leave.' },
+      { q: 'How do you handle multi-branch IT refreshes?', a: 'We coordinate pickup across all branches on a schedule that minimizes operational disruption. Equipment is consolidated at our facility for processing. You get one report covering every branch.' },
+      { q: 'What about remarketing — can we recover value?', a: 'Recent-model workstations, servers, and networking gear often have residual value. We test, refurbish, and resell through our channels. Net recovery revenue is returned to you after data destruction and processing costs.' },
+      { q: 'Do you provide documentation for bank examiners?', a: 'Yes. We produce a compliance documentation package specifically designed for FFIEC IT examinations. It includes serial-level asset tracking, Certificates of Destruction, processor certifications, and chain-of-custody records.' },
+      { q: 'What about branch renovation waste?', a: 'We handle fixture disposal, construction debris, and equipment removal during branch renovations. After-hours scheduling ensures zero disruption to customer-facing operations.' },
+      { q: 'Can you manage our document retention and destruction schedule?', a: 'We can align our shredding program with your retention policy — holding documents for the required period and scheduling destruction on the retention expiration date. Annual destruction certificates document compliance.' },
+    ],
+    titleTag: 'Banking & Finance Recycling — GLBA Compliant ITAD & Shredding',
+    metaDescription: 'Banking recycling with GLBA-compliant IT disposition, document shredding, and branch-wide programs. Per-device tracking. Audit-ready. 817-946-5655.',
+    h1: 'Banking & Finance — Secure IT Disposition & Compliance',
+  },
+
+  'education': {
+    slug: 'education', name: 'Education', icon: 'school',
+    heroImage: 'https://images.unsplash.com/photo-1562774053-701939374585?w=1600&h=600&fit=crop',
+    definition: 'Education recycling manages the waste streams generated by schools, universities, and campus facilities — including Chromebook and laptop fleet disposition, lab chemical waste, cafeteria organics, and general campus recycling programs.',
+    headlines: {
+      overview: 'Campus Recycling That Scales',
+      wasteProfile: 'What Schools and Universities Generate',
+      challenges: 'Budget Constraints Meet Compliance Requirements',
+      challengesSub: 'Schools need recycling programs that satisfy FERPA, handle lab chemicals, and manage device fleets — all on a public-sector budget.',
+      services: 'Services for Education',
+      materials: 'Campus Waste Streams',
+      results: 'Schools and Universities We Serve',
+      faq: 'Education Recycling Questions',
+      faqSub: 'Chromebook fleets, lab waste, FERPA, and campus programs.',
+      cta: 'Get an Education Recycling Quote',
+      ctaSub: 'We work within public procurement timelines and budgets. Tell us about your campus needs.',
+    },
+    overview: [
+      'Schools and universities face a unique recycling challenge: diverse waste streams (IT equipment, lab chemicals, cafeteria waste, paper), strict compliance requirements (FERPA for student data, EPA for lab chemicals), and tight budgets that demand cost-neutral or revenue-generating programs.',
+      'Recycling Quotes designs campus recycling programs that address every stream — from fleet-scale Chromebook disposition to lab chemical cleanouts to dining hall organics diversion. For K-12 districts, we coordinate across all schools in the district with centralized reporting. For universities, we work with facilities management to integrate recycling into campus operations.',
+    ],
+    wasteProfile: ['IT equipment — Chromebooks, laptops, desktops on 3-5 year refresh cycles', 'Lab chemicals — chemistry, biology, and engineering lab waste', 'Paper and cardboard — from offices, classrooms, and print shops', 'Cafeteria organics — food waste, compostable serviceware', 'Furniture and fixtures — classroom, dorm, and office furniture', 'Universal waste — batteries, fluorescent tubes from facilities', 'Move-out waste — end of semester residential cleanouts'],
+    challenges: [
+      { slug: 'ewaste-compliance', title: 'Student Data on Old Devices', pain: 'Chromebooks and laptops contain FERPA-protected student data. Documented data destruction is required before devices leave your control.' },
+      { slug: 'hazardous-waste', title: 'Lab Chemicals Don\'t Go in the Dumpster', pain: 'Chemistry, biology, and engineering labs accumulate regulated chemicals that require profiling, manifesting, and licensed disposal.' },
+      { slug: 'cost-reduction', title: 'Public Budgets Need ROI', pain: 'Asset recovery from device fleets and scrap value from metals and electronics can offset program costs — critical for tax-funded institutions.' },
+    ],
+    services: [
+      { slug: 'electronics-recycling', name: 'Electronics Recycling', why: 'Fleet-scale Chromebook and laptop disposition. 3,000-10,000+ devices per district. FERPA-compliant data destruction with per-device tracking.' },
+      { slug: 'hazardous-waste-disposal', name: 'Hazardous Waste Disposal', why: 'Lab chemicals, mercury thermometers, and universal waste from campus facilities. Full profiling and manifest compliance.' },
+      { slug: 'business-recycling-programs', name: 'Campus Recycling Programs', why: 'Multi-stream programs covering paper, cardboard, plastics, organics, and electronics across campus buildings.' },
+      { slug: 'junk-removal', name: 'Junk Removal', why: 'End-of-semester move-out collection, furniture disposal, and building cleanouts during summer breaks.' },
+    ],
+    materials: [
+      { slug: 'electronics', name: 'Electronics' }, { slug: 'hazardous-materials', name: 'Lab Chemicals' },
+      { slug: 'paper-cardboard', name: 'Paper & Cardboard' }, { slug: 'organics', name: 'Organics' },
+    ],
+    caseStudies: [
+      { title: 'School district recycles 6,000 Chromebooks over summer', metric: 'Fleet disposition completed in 8 weeks. FERPA-compliant data destruction on every device. $18K in asset recovery returned to the district.' },
+      { title: 'University lab cleanout — 8 buildings', metric: '2,000+ chemical containers profiled, packed, and manifested. Zero violations. Project completed before fall semester.' },
+    ],
+    faqs: [
+      { q: 'How do you handle Chromebook and laptop fleet disposition?', a: 'We process fleet-scale device retirement with FERPA-compliant data destruction, serial-number tracking, and remarketing of devices with residual value. Asset recovery revenue is returned to the district or university.' },
+      { q: 'Can you manage lab chemical cleanouts?', a: 'Yes. We handle full lab cleanouts including chemical identification, profiling, packing, manifesting, and transport to licensed disposal facilities. Common for end-of-year, renovation, or lab closure projects.' },
+      { q: 'Do you work with public procurement processes?', a: 'Yes. We\'re experienced with RFP responses, state contract vehicles, cooperative purchasing agreements (TIPS/TAPS, Sourcewell), and public-sector procurement timelines.' },
+      { q: 'What about FERPA compliance for student devices?', a: 'All student devices undergo documented data destruction before any remarketing or recycling. You receive Certificates of Destruction with serial numbers, meeting FERPA disposal requirements.' },
+      { q: 'Can you handle end-of-semester move-out waste?', a: 'Yes. We coordinate collection events and junk removal during move-out periods. Usable items are donated, recyclables sorted, and remaining waste disposed. Popular with residence life offices.' },
+      { q: 'Do you serve individual schools or full districts?', a: 'Both. We manage programs for individual schools and full K-12 districts. District-wide programs get centralized coordination, consolidated billing, and one report covering every school.' },
+      { q: 'What about cafeteria food waste?', a: 'We set up organics diversion programs for school cafeterias. Pre-consumer and post-consumer food waste routed to composting or anaerobic digestion. Required in several states with commercial organics mandates.' },
+      { q: 'Is there a cost for education recycling?', a: 'Many services are free or revenue-generating for qualifying volumes. Device fleets often produce asset recovery revenue. Scrap metal and cardboard may qualify for rebates. Lab chemical disposal has per-container pricing — we quote upfront.' },
+    ],
+    titleTag: 'Education Recycling — Schools, Universities & Campus Programs',
+    metaDescription: 'Education recycling for Chromebook fleets, lab chemicals, campus programs, and FERPA-compliant IT disposition. K-12 and university. 817-946-5655.',
+    h1: 'Education Recycling — Schools, Universities & Campus Programs',
+  },
+
+  'food-services': {
+    slug: 'food-services', name: 'Food Services', icon: 'restaurant',
+    heroImage: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1600&h=600&fit=crop',
+    definition: 'Food services recycling manages the waste streams from restaurants, cafeterias, catering operations, and food processing facilities — including food waste diversion, grease recycling, cardboard, and packaging.',
+    headlines: {
+      overview: 'Kitchen Waste Doesn\'t Belong in a Landfill',
+      wasteProfile: 'What Kitchens Throw Away',
+      challenges: 'Mandates Are Coming for Your Kitchen',
+      challengesSub: 'California, New York, Vermont, and a growing list of states now require commercial food waste diversion. Compliance isn\'t optional.',
+      services: 'Services for Food Operations',
+      materials: 'Materials From Food Services',
+      results: 'Restaurants and Kitchens We Serve',
+      faq: 'Food Services Recycling Questions',
+      faqSub: 'Food waste, grease, composting, and state mandates.',
+      cta: 'Get a Food Services Recycling Quote',
+      ctaSub: 'We design programs that work in a kitchen — fast, clean, and compliant with your state\'s organic waste rules.',
+    },
+    overview: [
+      'Food waste accounts for 24% of US landfill volume — and commercial kitchens are the largest concentrated generators. Restaurants, cafeterias, hotels, and catering operations produce food scraps, expired ingredients, grease, and packaging waste daily.',
+      'With 13+ states enacting or proposing commercial organic waste bans, food waste diversion is shifting from voluntary to mandatory. Recycling Quotes sets up kitchen-friendly collection programs that route food waste to composting or anaerobic digestion, recycle cardboard and packaging, and keep your operation compliant with evolving regulations.',
+    ],
+    wasteProfile: ['Pre-consumer food waste — prep trim, spoiled ingredients, overproduction', 'Post-consumer food waste — plate scrapings, buffet waste', 'Used cooking oil and grease', 'Cardboard and paper from deliveries', 'Plastic packaging and containers', 'Glass bottles and containers', 'Compostable serviceware (if BPI certified)'],
+    challenges: [
+      { slug: 'waste-diversion', title: 'Organic Waste Bans Are Here', pain: 'SB 1383 in California, state mandates in VT, CT, MA, NY — commercial food generators above threshold volumes must divert organics or face penalties.' },
+      { slug: 'cost-reduction', title: 'Organics Diversion Can Be Cost-Neutral', pain: 'In many markets, composting is comparable to or cheaper than landfill disposal. The audit shows you the math for your specific operation.' },
+      { slug: 'esg-reporting', title: 'Food Waste Has the Highest Carbon Impact', pain: 'Per ton diverted, food waste avoidance has the highest methane reduction impact of any recycling stream. Powerful data for sustainability reporting.' },
+    ],
+    services: [
+      { slug: 'business-recycling-programs', name: 'Business Recycling Programs', why: 'Multi-stream programs covering food waste, cardboard, plastics, and glass under one contract for restaurants and food service chains.' },
+      { slug: 'waste-audits-consulting', name: 'Waste Audits', why: 'Kitchen waste audits identify what you\'re generating, what\'s divertible, and how much you can save with an optimized program.' },
+      { slug: 'cardboard-paper-recycling', name: 'Cardboard Recycling', why: 'Restaurant deliveries generate consistent OCC volumes. Right-sized containers and pickup schedules keep your alley clear.' },
+      { slug: 'dumpster-rental', name: 'Dumpster Rental', why: 'Right-sized containers for kitchen waste, recyclables, and organics collection.' },
+    ],
+    materials: [
+      { slug: 'organics', name: 'Organics & Food Waste' }, { slug: 'paper-cardboard', name: 'Cardboard' },
+      { slug: 'plastics', name: 'Plastics' },
+    ],
+    caseStudies: [
+      { title: 'Restaurant group diverts 85% of food waste', metric: '12 locations, daily organics pickup. 85% food waste diversion rate. SB 1383 compliant. Featured in company sustainability report.' },
+      { title: 'Hotel kitchen cuts waste costs 30%', metric: 'Waste audit separated organics from general waste. Composting program cost-neutral vs landfill. Diversion rate: 62%.' },
+    ],
+    faqs: [
+      { q: 'Does my state require food waste diversion?', a: 'As of 2025, 13+ states have enacted or proposed organic waste mandates: CA (SB 1383), VT, CT, MA, NY, NJ, and others. Thresholds vary — typically 1-2 tons/week for commercial generators. Contact us for your state\'s requirements.' },
+      { q: 'What\'s the difference between composting and anaerobic digestion?', a: 'Composting uses oxygen to decompose organics into soil amendment. Anaerobic digestion uses no oxygen, producing biogas (energy) and digestate. We route to whichever facility is available in your area.' },
+      { q: 'How do you handle used cooking oil?', a: 'We coordinate grease collection through licensed haulers. Used cooking oil is recycled into biodiesel or animal feed ingredients. Collection containers and schedules are included in your program.' },
+      { q: 'Will organics collection attract pests?', a: 'Proper containers with tight-fitting lids, daily pickup for high-volume kitchens, and staff training minimize pest risk. We size the program to prevent accumulation.' },
+      { q: 'Can compostable packaging go in the organics bin?', a: 'Only BPI-certified compostable items are accepted at most commercial composting facilities. Many "eco-friendly" products don\'t qualify. We train your staff on what does and doesn\'t go in.' },
+      { q: 'What does it cost compared to regular trash?', a: 'In many markets, organics collection is comparable to or cheaper than landfill disposal — especially in states with organic waste surcharges on landfill tipping fees. The waste audit shows you the exact comparison.' },
+      { q: 'Do you serve restaurant chains?', a: 'Yes. We manage programs across all your locations with standardized service, consolidated billing, and one report covering every restaurant.' },
+      { q: 'What reporting do I get for compliance?', a: 'Weight tickets per pickup, monthly diversion reports, and methane avoidance calculations. SB 1383 compliance reporting included for California operations.' },
+    ],
+    titleTag: 'Food Services Recycling — Restaurant & Kitchen Waste Programs',
+    metaDescription: 'Food waste recycling for restaurants, cafeterias, and food service operations. Composting, grease recycling, SB 1383 compliance. 97+ cities. 817-946-5655.',
+    h1: 'Food Services Recycling — Kitchen Waste & Compliance',
+  },
+
+  'automotive': {
+    slug: 'automotive', name: 'Automotive', icon: 'directions_car',
+    heroImage: 'https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=1600&h=600&fit=crop',
+    definition: 'Automotive recycling handles the waste streams from dealerships, body shops, fleet operators, and parts suppliers — including end-of-life vehicles, scrap metal, catalytic converters, batteries, tires, and regulated automotive fluids.',
+    headlines: {
+      overview: 'Every Part Has a Second Life',
+      wasteProfile: 'What Automotive Operations Generate',
+      challenges: 'Fluids, Batteries, and Regulatory Liability',
+      challengesSub: 'Motor oil, coolant, refrigerant, lead-acid batteries, and catalytic converters all require documented, compliant handling.',
+      services: 'Services for Automotive',
+      materials: 'Materials From Auto Operations',
+      results: 'Automotive Clients We Serve',
+      faq: 'Automotive Recycling Questions',
+      faqSub: 'Vehicle disposal, catalytic converters, fluids, and fleet programs.',
+      cta: 'Get an Automotive Recycling Quote',
+      ctaSub: 'From a single vehicle to a fleet retirement. Tell us what you need and we\'ll quote the full service.',
+    },
+    overview: [
+      'The automotive industry is already the most recycled consumer product sector — over 95% of an end-of-life vehicle is recyclable. But for dealerships, body shops, and fleet operators, the day-to-day waste management challenge goes beyond whole vehicles: it includes used fluids, scrap body panels, catalytic converters, tires, batteries, and packaging waste.',
+      'Recycling Quotes provides automotive recycling programs that handle the full range — from fleet vehicle disposition to daily scrap metal pickup from the body shop. Every fluid is recycled, every battery is recovered, and every catalytic converter is documented to comply with state theft-prevention laws.',
+    ],
+    wasteProfile: ['End-of-life vehicles and auto bodies', 'Scrap body panels, bumpers, and trim', 'Catalytic converters (platinum, palladium, rhodium)', 'Lead-acid and lithium batteries', 'Used motor oil, coolant, and transmission fluid', 'Refrigerant (R-134a, R-1234yf)', 'Tires and wheels', 'Cardboard and packaging from parts departments'],
+    challenges: [
+      { slug: 'hazardous-waste', title: 'Automotive Fluids Are Regulated', pain: 'Motor oil, coolant, brake fluid, and refrigerant are all regulated waste. Improper disposal means EPA fines and environmental liability.' },
+      { slug: 'cost-reduction', title: 'Catalytic Converters Are Valuable', pain: 'Cats contain platinum, palladium, and rhodium. Proper recovery through a documented program maximizes value and prevents theft liability.' },
+      { slug: 'waste-diversion', title: 'Body Shops Generate Valuable Scrap', pain: 'Steel, aluminum, and copper from repairs have market value. A dedicated metal recycling stream turns disposal cost into revenue.' },
+    ],
+    services: [
+      { slug: 'scrap-metal-recycling', name: 'Scrap Metal Recycling', why: 'Body panels, engines, transmissions, and shop scrap. Competitive pricing on ferrous and non-ferrous automotive metals.' },
+      { slug: 'hazardous-waste-disposal', name: 'Hazardous Waste Disposal', why: 'Used oil, coolant, brake fluid, refrigerant, and battery acid. Licensed collection, transport, and recycling with manifests.' },
+      { slug: 'junk-removal', name: 'Junk Removal', why: 'Tires, bumpers, interior components, and general shop cleanouts. Full-service hauling with recycling.' },
+    ],
+    materials: [
+      { slug: 'metals', name: 'Scrap Metal' }, { slug: 'vehicles', name: 'Vehicles' },
+      { slug: 'hazardous-materials/batteries', name: 'Batteries' }, { slug: 'hazardous-materials', name: 'Hazardous Fluids' },
+    ],
+    caseStudies: [
+      { title: 'Dealership group launches scrap program', metric: '8 locations, weekly metal pickup. Body shop scrap generates $4,200/month in revenue. Fluids and batteries properly manifested.' },
+      { title: 'Fleet retirement: 200 vehicles in 6 weeks', metric: 'Municipal fleet. Every vehicle documented: VIN, title, weight, processing. Fluids recycled, metals recovered, environmental compliance certified.' },
+    ],
+    faqs: [
+      { q: 'How do you handle catalytic converter documentation?', a: 'We require vehicle documentation and valid ID for all catalytic converter transactions per state theft-prevention laws. Every converter is logged with VIN, vehicle description, and seller information.' },
+      { q: 'Do you pick up used oil and coolant?', a: 'Yes. Licensed hazardous waste haulers collect used oil, coolant, transmission fluid, and brake fluid on your schedule. All fluids are recycled — used oil becomes re-refined base oil.' },
+      { q: 'Can you handle fleet vehicle retirements?', a: 'Yes. We manage multi-vehicle fleet dispositions with coordinated pickup, title processing, fluid drainage, parts recovery, and metal recycling. Consolidated reporting per vehicle.' },
+      { q: 'What about tires?', a: 'We coordinate tire recycling through licensed processors. Tires are shredded for rubber mulch, tire-derived fuel, or civil engineering applications. Per-tire pricing with documentation.' },
+      { q: 'Do body shops need a hazardous waste permit?', a: 'Depends on your generator status and waste volumes. We help you determine your generator category and set up the appropriate handling and manifest requirements.' },
+      { q: 'What\'s my scrap body panels worth?', a: 'Depends on the metal. Steel panels follow ferrous scrap rates. Aluminum (hoods, fenders on newer vehicles) commands non-ferrous pricing. We sort and pay by grade at current market rates.' },
+      { q: 'Can you handle refrigerant recovery?', a: 'Yes. R-134a and R-1234yf refrigerant must be recovered by EPA Section 608 certified technicians before vehicle scrapping. We coordinate certified recovery as part of our ELV process.' },
+      { q: 'Do you serve independent shops or only dealerships?', a: 'Both. Independent body shops, service centers, and dealerships all qualify. Volume requirements are minimal for most automotive waste streams.' },
+    ],
+    titleTag: 'Automotive Recycling — Vehicles, Scrap Metal & Fluids',
+    metaDescription: 'Automotive recycling for dealerships, body shops, and fleet operators. Vehicles, scrap metal, catalytic converters, fluids. Compliant. 817-946-5655.',
+    h1: 'Automotive Recycling — Vehicles, Scrap & Fluids',
+  },
+
+  'hospitality': {
+    slug: 'hospitality', name: 'Hospitality', icon: 'hotel',
+    heroImage: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1600&h=600&fit=crop',
+    definition: 'Hospitality recycling manages waste from hotels, resorts, and event venues — including food waste from kitchens and banquets, linens and textiles, electronics from guest rooms, and general recyclables.',
+    headlines: {
+      overview: 'Guest Experience Meets Sustainability',
+      wasteProfile: 'What Hotels Generate',
+      challenges: 'Guests Expect Green. Operators Need Efficient.',
+      challengesSub: 'Sustainability is now a booking factor. But recycling programs for hotels have to work 24/7 without disrupting guest experience.',
+      services: 'Services for Hospitality',
+      materials: 'Materials From Hotel Operations',
+      results: 'Properties We Manage',
+      faq: 'Hospitality Recycling Questions',
+      faqSub: 'Food waste, linens, electronics, and guest-facing sustainability.',
+      cta: 'Get a Hospitality Recycling Quote',
+      ctaSub: 'We design programs that work behind the scenes — your guests see sustainability, your operations see efficiency.',
+    },
+    overview: [
+      'Hotels and resorts generate diverse waste streams around the clock — kitchen food waste, guest room amenity packaging, worn linens and towels, banquet and event waste, and electronics from room upgrades and business centers. Guests increasingly expect visible sustainability programs, and corporate booking policies often require documented environmental practices.',
+      'Recycling Quotes designs hospitality recycling programs that operate behind the scenes — early morning pickups, back-of-house container placement, and housekeeping-integrated collection — so your sustainability program works without disrupting the guest experience.',
+    ],
+    wasteProfile: ['Kitchen food waste — prep, buffet, banquet, and room service', 'Linens and towels — worn items beyond repair', 'Guest room electronics — TVs, phones, minibars during renovations', 'Cardboard from receiving docks', 'Amenity packaging and plastic containers', 'Banquet and event waste — mixed recyclables and food waste', 'Furniture and fixtures during room renovations'],
+    challenges: [
+      { slug: 'waste-diversion', title: 'Guests See What You Recycle', pain: 'Visible recycling and sustainability programs influence booking decisions — especially for corporate travel and events.' },
+      { slug: 'cost-reduction', title: 'Food Waste Is Your Biggest Line Item', pain: 'Hotels with restaurants, banquet halls, and room service generate massive food waste volumes. Diversion can be cost-neutral vs landfill in many markets.' },
+      { slug: 'esg-reporting', title: 'Brand Standards Require Documentation', pain: 'Major hotel brands now require documented sustainability metrics from managed properties. Our reporting feeds directly into brand ESG frameworks.' },
+    ],
+    services: [
+      { slug: 'business-recycling-programs', name: 'Business Recycling Programs', why: 'Multi-stream programs covering food waste, cardboard, plastics, linens, and electronics for full-service hotels.' },
+      { slug: 'junk-removal', name: 'Junk Removal', why: 'Furniture, fixture, and equipment removal during room and property renovations. Off-hours scheduling.' },
+      { slug: 'electronics-recycling', name: 'Electronics Recycling', why: 'Guest room TVs, business center equipment, and back-of-house IT. Data destruction for devices with guest information.' },
+    ],
+    materials: [
+      { slug: 'organics', name: 'Food Waste' }, { slug: 'textiles', name: 'Linens & Textiles' },
+      { slug: 'paper-cardboard', name: 'Cardboard' }, { slug: 'electronics', name: 'Electronics' },
+    ],
+    caseStudies: [
+      { title: 'Resort achieves Green Key certification', metric: 'Multi-stream program covering food waste, recyclables, and linens. 58% diversion rate. Green Key 4-star rating achieved.' },
+      { title: '400-room renovation cleared in 10 days', metric: 'Furniture, TVs, and fixtures removed room by room. 70% donated or recycled. Zero disruption to occupied floors.' },
+    ],
+    faqs: [
+      { q: 'How do hotel recycling pickups work without disrupting guests?', a: 'We schedule early morning or late night pickups through receiving docks and service corridors. Containers are placed in back-of-house areas only. Your guests see recycling bins in public areas; they never see our trucks.' },
+      { q: 'Can you handle banquet and event waste?', a: 'Yes. We provide event-specific recycling and composting setups for conferences, weddings, and large events. Post-event cleanup included. Diversion data available for event sustainability reporting.' },
+      { q: 'What about worn linens and towels?', a: 'Worn items beyond repair are recycled into industrial rags, insulation, or padding. Usable items are donated to shelters. We provide containers in your laundry area and pick up on schedule.' },
+      { q: 'Do you serve hotel chains across multiple properties?', a: 'Yes. We manage programs across all your properties with standardized service and consolidated reporting. Brand-level sustainability data aggregated across the portfolio.' },
+      { q: 'How do you handle room renovation waste?', a: 'We coordinate furniture, fixture, and equipment removal room by room or floor by floor. Scheduling works around occupied areas. Usable items donated, materials recycled, debris disposed.' },
+      { q: 'Can you help with Green Key or LEED certification?', a: 'Our programs and reporting support Green Key, LEED, Green Globe, and other hospitality sustainability certifications. We provide the waste diversion documentation these certifications require.' },
+      { q: 'What about food waste composting?', a: 'We set up kitchen-to-compost programs with proper containers, daily pickup, and staff training. Essential for hotels in states with commercial organic waste mandates.' },
+      { q: 'Is there a cost impact vs our current waste program?', a: 'Most hotels see cost-neutral or positive ROI. Food waste composting is often comparable to landfill. Cardboard and metal recycling reduce disposal volume. A waste audit shows the exact financial picture.' },
+    ],
+    titleTag: 'Hospitality Recycling — Hotels, Resorts & Event Venues',
+    metaDescription: 'Hotel recycling programs for food waste, linens, electronics, and renovation debris. Multi-property management. Green Key compliant. 817-946-5655.',
+    h1: 'Hospitality Recycling — Hotels, Resorts & Event Venues',
+  },
+
+  'property-management': {
+    slug: 'property-management', name: 'Property Management', icon: 'domain',
+    heroImage: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1600&h=600&fit=crop',
+    definition: 'Property management recycling handles the waste and recycling needs of multi-tenant commercial and residential properties — including tenant cleanouts, unit turns, bulk item removal, common area recycling, and renovation debris management.',
+    headlines: {
+      overview: 'Recycling That Works for Landlords and Tenants',
+      wasteProfile: 'What Properties Generate',
+      challenges: 'Turnover Is the Waste Event',
+      challengesSub: 'Every unit turn, every tenant move-out, and every renovation generates waste that has to move fast to meet your leasing timeline.',
+      services: 'Services for Property Managers',
+      materials: 'Property Waste Streams',
+      results: 'Properties We Manage',
+      faq: 'Property Management Recycling Questions',
+      faqSub: 'Cleanouts, unit turns, bulk removal, and common area programs.',
+      cta: 'Get a Property Management Quote',
+      ctaSub: 'We work around your leasing timeline. Tell us about your properties and we\'ll design a program.',
+    },
+    overview: [
+      'Property managers deal with waste in waves — tenant move-outs, unit renovations, seasonal cleanups, and the day-to-day recycling needs of common areas. The challenge is speed: units need to be rent-ready fast, and waste management can\'t be the bottleneck.',
+      'Recycling Quotes provides on-demand junk removal for unit turns, scheduled recycling for common areas, dumpster rental for renovations, and bulk item removal for lease-end situations. We work around your leasing timeline, not the other way around.',
+    ],
+    wasteProfile: ['Tenant move-out furniture and belongings', 'Renovation debris — drywall, flooring, fixtures', 'Appliances — refrigerators, washers, dryers', 'Bulk items — mattresses, couches, electronics', 'Common area recyclables — paper, cardboard, bottles', 'Landscape waste from grounds maintenance', 'Construction debris from property improvements'],
+    challenges: [
+      { slug: 'cost-reduction', title: 'Every Vacant Day Costs Rent', pain: 'A unit full of abandoned furniture can\'t be shown. Fast cleanout = faster lease-up. Our crews can clear a unit same-day.' },
+      { slug: 'waste-diversion', title: 'Tenant Furniture Can Be Donated', pain: '60-70% of items from tenant cleanouts are donatable or recyclable. Donation receipts provide tax benefits for property owners.' },
+      { slug: 'program-setup', title: 'Portfolio-Wide Is Portfolio-Smart', pain: 'Managing different haulers at every property is expensive and inconsistent. One vendor for all your properties simplifies operations.' },
+    ],
+    services: [
+      { slug: 'junk-removal', name: 'Junk Removal', why: 'Same-day unit cleanouts, bulk item removal, and tenant move-out hauling. Our crew loads everything — you don\'t lift a finger.' },
+      { slug: 'dumpster-rental', name: 'Dumpster Rental', why: 'Roll-off containers for unit renovations, property improvements, and seasonal cleanups. Flexible rental periods.' },
+      { slug: 'business-recycling-programs', name: 'Property Recycling Programs', why: 'Common area recycling, tenant recycling programs, and ongoing waste management for multi-tenant properties.' },
+    ],
+    materials: [
+      { slug: 'junk', name: 'Junk & Bulky Items' }, { slug: 'electronics', name: 'Electronics' },
+      { slug: 'paper-cardboard', name: 'Cardboard' }, { slug: 'metals', name: 'Appliance Metal' },
+    ],
+    caseStudies: [
+      { title: '200 units turned in 10 days', metric: 'Post-renovation cleanout across 4 buildings. 60% donated or recycled. All units rent-ready on schedule.' },
+      { title: 'Portfolio-wide recycling program', metric: '15 properties, 3 markets. One vendor, one invoice. Common area diversion rate: 45%. Tenant satisfaction improved.' },
+    ],
+    faqs: [
+      { q: 'How fast can you clear a unit?', a: 'Same-day in most markets. Our 2-person crew can clear a standard apartment in 1-3 hours. For larger units or multi-unit projects, we scale up to get everything done on your timeline.' },
+      { q: 'Do you donate usable items?', a: 'Yes. Furniture, appliances, and goods in usable condition go to local charities. You receive a donation receipt for tax purposes. Typically 60-70% of items from a cleanout are donatable or recyclable.' },
+      { q: 'Can you handle renovation dumpsters?', a: 'Yes. Roll-off containers from 10-40 yards for unit renovations, property improvements, and capital projects. Next-day delivery in most markets.' },
+      { q: 'Do you serve property management portfolios?', a: 'Yes. We manage waste and recycling across all your properties under one contract. Consistent service, consolidated billing, and one point of contact for every property.' },
+      { q: 'What about appliance removal?', a: 'Refrigerators, washers, dryers, dishwashers — we handle them all. Refrigerant is recovered from cooling units per EPA requirements before recycling.' },
+      { q: 'Can you set up common area recycling?', a: 'Yes. We design and deploy tenant recycling programs with appropriate containers, signage, and pickup schedules for lobbies, mail rooms, and shared spaces.' },
+      { q: 'How does pricing work for unit cleanouts?', a: 'Volume-based pricing — we quote onsite before starting. Most unit cleanouts range $300-$1,000 depending on contents. Multi-unit discounts available for portfolio accounts.' },
+      { q: 'Do you handle seasonal bulk pickup?', a: 'Yes. Spring cleanups, end-of-lease bulk removal, and seasonal property maintenance. Scheduled or on-demand, we flex to your property calendar.' },
+    ],
+    titleTag: 'Property Management Recycling — Cleanouts, Dumpsters & Programs',
+    metaDescription: 'Property management recycling for unit cleanouts, renovation dumpsters, and common area programs. Same-day service. Portfolio management. 817-946-5655.',
+    h1: 'Property Management — Cleanouts, Dumpsters & Recycling',
+  },
+
+  'offices': {
+    slug: 'offices', name: 'Corporate Offices', icon: 'apartment',
+    heroImage: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=1600&h=600&fit=crop',
+    definition: 'Office recycling manages the waste streams from corporate offices, coworking spaces, and professional buildings — including paper, cardboard, electronics, furniture, and confidential document destruction.',
+    headlines: {
+      overview: 'Office Recycling That People Actually Use',
+      wasteProfile: 'What Offices Generate',
+      challenges: 'Bins Aren\'t a Program',
+      challengesSub: 'Recycling bins in the kitchen is step one. Without proper streams, signage, and pickup cadence, contamination rates kill the program.',
+      services: 'Services for Office Environments',
+      materials: 'Office Waste Streams',
+      results: 'Offices We\'ve Transformed',
+      faq: 'Office Recycling Questions',
+      faqSub: 'Paper, electronics, furniture, and how to get employees to actually recycle.',
+      cta: 'Get an Office Recycling Quote',
+      ctaSub: 'From a single floor to a campus — we design programs that employees use and facilities managers love.',
+    },
+    overview: [
+      'Office recycling has a participation problem. Most offices have recycling bins — but contamination rates above 25% are common because employees aren\'t sure what goes where. The result: recyclable material gets landfilled because the load is too contaminated for processing.',
+      'Effective office recycling requires the right streams (paper, bottles, electronics), the right containers (desk-side, centralized, and kitchen), clear signage, proper pickup frequency, and periodic reinforcement. Recycling Quotes builds programs that actually work — not just programs that exist on paper.',
+    ],
+    wasteProfile: ['Office paper — print waste, junk mail, notebooks', 'Cardboard — from office supplies and deliveries', 'Bottles and cans from break rooms', 'Electronics — computers, monitors, phones on refresh cycles', 'Confidential documents requiring secure shredding', 'Office furniture — during moves and reconfigurations', 'Toner and printer cartridges'],
+    challenges: [
+      { slug: 'waste-diversion', title: 'Contamination Kills Office Recycling', pain: 'Food in the recycling bin, plastic bags mixed with paper — one contaminated load negates a week of good recycling. Proper streams and signage fix this.' },
+      { slug: 'cost-reduction', title: 'Right-Sizing Saves More Than You Think', pain: 'Most offices are over-serviced on general waste and under-serviced on recycling. Adjusting the container mix cuts costs 15-25%.' },
+      { slug: 'esg-reporting', title: 'Employees Want to See the Numbers', pain: 'Sustainability-minded employees want to know their office recycling program works. Monthly reporting shows the impact and maintains engagement.' },
+    ],
+    services: [
+      { slug: 'business-recycling-programs', name: 'Office Recycling Programs', why: 'Multi-stream programs with desk-side bins, centralized collection, signage, training, and monthly reporting.' },
+      { slug: 'shredding-services', name: 'Document Shredding', why: 'Locked consoles at key locations. Scheduled pickup by bonded drivers. Certificates of Destruction for compliance.' },
+      { slug: 'electronics-recycling', name: 'Electronics Recycling', why: 'IT refresh programs with data destruction. Computers, monitors, and phones processed through R2 certified facilities.' },
+      { slug: 'junk-removal', name: 'Junk Removal', why: 'Furniture disposal, office moves, and decommissions. After-hours scheduling to avoid disrupting work.' },
+    ],
+    materials: [
+      { slug: 'paper-cardboard', name: 'Paper & Cardboard' }, { slug: 'electronics', name: 'Electronics' },
+      { slug: 'plastics', name: 'Bottles & Plastics' }, { slug: 'junk', name: 'Furniture' },
+    ],
+    caseStudies: [
+      { title: 'Corporate campus: 22% → 68% diversion', metric: '3 buildings, 2,000 employees. Desk-side bins, centralized collection, monthly reporting. Diversion improved from 22% to 68% in 3 months.' },
+      { title: 'Office move: 15,000 sqft decommissioned', metric: 'Cubicles, desks, and IT equipment removed in 2 days. Furniture donated to nonprofit. Electronics recycled with data destruction.' },
+    ],
+    faqs: [
+      { q: 'How do you reduce contamination in office recycling?', a: 'Clear signage at every bin, standardized container colors, centralized collection points (removing desk-side trash cans), employee kick-off communication, and periodic refresher campaigns. Contamination typically drops below 10% within the first month.' },
+      { q: 'What\'s included in an office recycling program?', a: 'Waste audit, program design, container deployment, signage, employee training, scheduled pickup for all streams, monthly reporting, and quarterly optimization reviews.' },
+      { q: 'Do you handle confidential document shredding?', a: 'Yes. Locked consoles placed in print rooms and reception areas. Bonded drivers pick up on schedule. Cross-cut shredding with Certificate of Destruction. Shredded paper recycled.' },
+      { q: 'Can you manage an office move or decommission?', a: 'Yes. Furniture, electronics, and fixtures removed on your timeline. Usable items donated. Electronics recycled with data destruction. Construction debris hauled. Broom-clean before lease handback.' },
+      { q: 'How much does office recycling cost?', a: 'Often less than your current waste program. Shifting volume from landfill (expensive) to recycling (cheaper or free) reduces total cost. The waste audit shows you the exact financial picture before you commit.' },
+      { q: 'Do you provide desk-side recycling bins?', a: 'Yes. We provide standardized bins for each workstation — typically one for paper and one for bottles/cans. Centralized general waste bins replace individual desk-side trash cans.' },
+      { q: 'What reporting do we get?', a: 'Monthly reports: tonnage by material, diversion rate, contamination rate, and cost analysis. Quarterly reviews with optimization recommendations. Annual sustainability summary for ESG reporting.' },
+      { q: 'Can you recycle toner and printer cartridges?', a: 'Yes. We provide collection containers for spent toner and ink cartridges. Many are refurbished for reuse; the rest are recycled for plastic and metal recovery.' },
+    ],
+    titleTag: 'Office Recycling — Corporate Programs, Shredding & IT',
+    metaDescription: 'Corporate office recycling programs with paper, electronics, furniture, and document shredding. Reduce contamination, improve diversion. 97+ cities. 817-946-5655.',
+    h1: 'Office Recycling — Programs That Employees Actually Use',
+  },
+
+  'government': {
+    slug: 'government', name: 'Government', icon: 'account_balance',
+    heroImage: 'https://images.unsplash.com/photo-1523995462485-3d171b5c8fa9?w=1600&h=600&fit=crop',
+    definition: 'Government recycling manages waste streams from federal, state, and local government facilities — including secure IT disposition for classified and controlled equipment, document destruction, surplus property disposition, and facility recycling programs.',
+    headlines: {
+      overview: 'Public-Sector Recycling That Meets Every Standard',
+      wasteProfile: 'What Government Facilities Generate',
+      challenges: 'Security Clearance Meets Sustainability Goals',
+      challengesSub: 'Government recycling requires certified destruction methods, documented chain-of-custody, and compliance with FISMA, GSA, and agency-specific requirements.',
+      services: 'Services for Government',
+      materials: 'Government Waste Streams',
+      results: 'Agencies We Serve',
+      faq: 'Government Recycling Questions',
+      faqSub: 'FISMA, surplus property, and public-sector procurement.',
+      cta: 'Get a Government Recycling Quote',
+      ctaSub: 'We work within government procurement frameworks and understand agency-specific security requirements.',
+    },
+    overview: [
+      'Government facilities — from federal agencies to city halls — generate waste streams that intersect security requirements, procurement rules, and public accountability. IT equipment may contain classified or controlled unclassified information (CUI). Documents may fall under retention schedules. Surplus property must follow GSA or agency disposition guidelines.',
+      'Recycling Quotes provides government-grade recycling with the security controls, documentation, and procurement flexibility that public-sector clients require. We work with GSA schedules, state contracts, and cooperative purchasing agreements to simplify procurement.',
+    ],
+    wasteProfile: ['IT equipment with classified or CUI data', 'Confidential documents under retention schedules', 'Surplus property and office equipment', 'Fleet vehicles and heavy equipment', 'Facility waste — paper, cardboard, bottles', 'Lab and testing equipment from research facilities', 'Universal waste from government buildings'],
+    challenges: [
+      { slug: 'ewaste-compliance', title: 'FISMA and Agency Security Requirements', pain: 'Classified and CUI media require destruction methods that meet NIST 800-88 Purge or Destroy levels — not just Clear. Documentation must satisfy security officer review.' },
+      { slug: 'cost-reduction', title: 'Surplus Property Has Residual Value', pain: 'Government surplus equipment — vehicles, IT, furniture — can be remarketed through proper channels. Asset recovery returns funds to the operating budget.' },
+      { slug: 'esg-reporting', title: 'Executive Orders Require Sustainability', pain: 'Federal executive orders mandate waste diversion and sustainability reporting. State and local governments face similar mandates from legislators and constituents.' },
+    ],
+    services: [
+      { slug: 'it-asset-disposition', name: 'IT Asset Disposition', why: 'FISMA-compliant IT disposition with NIST 800-88 Purge/Destroy level data destruction. Serial-number tracking and compliance documentation.' },
+      { slug: 'data-destruction', name: 'Data Destruction', why: 'Onsite physical shredding for classified media. NSA-listed shredders available for highest-security environments.' },
+      { slug: 'shredding-services', name: 'Document Shredding', why: 'Secure destruction of controlled documents with chain-of-custody and Certificates of Destruction per NARA requirements.' },
+      { slug: 'business-recycling-programs', name: 'Facility Recycling Programs', why: 'Multi-stream programs for government buildings with compliance reporting for executive order sustainability mandates.' },
+    ],
+    materials: [
+      { slug: 'electronics', name: 'Electronics' }, { slug: 'paper-cardboard', name: 'Documents' },
+      { slug: 'vehicles', name: 'Fleet Vehicles' }, { slug: 'junk', name: 'Surplus Property' },
+    ],
+    caseStudies: [
+      { title: 'Federal agency: 8,000 devices decommissioned', metric: 'NIST 800-88 Destroy-level shredding for all storage media. Per-drive COD with serial tracking. FISMA documentation package delivered on schedule.' },
+      { title: 'City government launches facility recycling', metric: '12 government buildings. Paper, bottles, electronics, and document shredding under one program. 52% diversion rate in year one.' },
+    ],
+    faqs: [
+      { q: 'Do you have experience with federal procurement?', a: 'Yes. We work with GSA schedules, BPAs, and agency-specific procurement vehicles. We also respond to RFPs through state contracts and cooperative agreements (Sourcewell, TIPS/TAPS, OMNIA).' },
+      { q: 'Can you handle classified or CUI media destruction?', a: 'Yes. We offer NIST 800-88 Purge and Destroy level data destruction for classified and CUI media. Physical shredding using NSA-evaluated equipment available for highest-security requirements.' },
+      { q: 'What about government surplus property?', a: 'We manage surplus disposition following GSA guidelines — including asset valuation, remarketing through approved channels, and documentation for property disposition records.' },
+      { q: 'Do you provide FISMA-compliant documentation?', a: 'Yes. Our ITAD documentation package includes serial-level asset tracking, NIST 800-88 destruction certificates, chain-of-custody records, and processor certifications — organized for security officer review.' },
+      { q: 'Can you handle fleet vehicle disposition?', a: 'Yes. Government fleet vehicles processed with title management, fluid recycling, parts recovery, and metal recycling. Per-vehicle documentation for fleet management records.' },
+      { q: 'Do you serve state and local government?', a: 'Yes. State agencies, counties, cities, school districts, and special districts. We work within public procurement rules and provide documentation for public accountability requirements.' },
+      { q: 'What about sustainability executive orders?', a: 'Our reporting provides the waste diversion, recycling, and environmental impact data needed to comply with federal executive orders and state sustainability mandates.' },
+      { q: 'Do you offer onsite destruction for classified media?', a: 'Yes. Mobile shredding at your facility with witnessed destruction. Media is destroyed on premises — no classified material leaves your control. CODs issued before our truck departs.' },
+    ],
+    titleTag: 'Government Recycling — FISMA, ITAD & Facility Programs',
+    metaDescription: 'Government recycling with FISMA-compliant ITAD, classified media destruction, and facility programs. Federal, state, and local. 817-946-5655.',
+    h1: 'Government Recycling — Secure, Compliant, Documented',
+  },
+};
