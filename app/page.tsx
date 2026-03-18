@@ -1,7 +1,15 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { SERVICES, MATERIALS, INDUSTRIES, CONTACT } from '@/lib/data';
+import { JsonLd, webPageSchema } from '@/lib/schema';
 import { SectionHeader, CTABlock, ScrollReveal } from '@/components/ui';
+
+// Homepage WebPage schema (Structured Data §3.1)
+const homeSchema = webPageSchema({
+  path: '',
+  name: 'Free Recycling Quotes | Electronics, Metal, Paper, Plastic & More',
+  description: 'Get free recycling quotes for electronics, metal, paper, plastic, pallets, and hazardous materials. Nationwide pickup service since 2005.',
+});
 
 export default function HomePage() {
   const featuredServices = SERVICES.filter(s => ['pallet-recycling', 'business-recycling-programs', 'it-asset-disposition', 'dumpster-rental'].includes(s.slug));
@@ -9,19 +17,34 @@ export default function HomePage() {
 
   return (
     <>
-      {/* ═══ HERO ═══ */}
-      <section className="pt-[72px] pb-0 bg-[#FAFCFB] text-center relative overflow-hidden">
-        {/* Decorative elements */}
-        <div className="absolute top-[-20%] left-1/2 -translate-x-1/2 w-[800px] h-[800px] rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(27,122,61,.05) 0%, transparent 60%)' }} />
-        <div className="absolute inset-0 pointer-events-none opacity-25" style={{
-          backgroundImage: 'linear-gradient(#E2E8E5 1px, transparent 1px), linear-gradient(90deg, #E2E8E5 1px, transparent 1px)',
+      <JsonLd data={homeSchema} />
+
+      {/* ═══ HERO — with background image ═══ */}
+      <section className="relative overflow-hidden bg-[#F0FAF3]" style={{ marginTop: '-72px', paddingTop: '0' }}>
+        {/* Hero background image — copy hero-bg.png from your Vercel project to public/images/ */}
+        {/* If the image doesn't exist yet, the gradient background shows as fallback */}
+        <div className="absolute inset-0">
+          <Image
+            src="/images/hero-bg.png"
+            alt=""
+            width={1600}
+            height={800}
+            className="w-full h-full object-cover object-center"
+            priority
+            onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+          />
+        </div>
+
+        {/* Subtle grid pattern overlay */}
+        <div className="absolute inset-0 pointer-events-none opacity-15" style={{
+          backgroundImage: 'linear-gradient(#1B7A3D10 1px, transparent 1px), linear-gradient(90deg, #1B7A3D10 1px, transparent 1px)',
           backgroundSize: '80px 80px',
-          maskImage: 'radial-gradient(ellipse 60% 50% at 50% 40%, black 0%, transparent 100%)',
-          WebkitMaskImage: 'radial-gradient(ellipse 60% 50% at 50% 40%, black 0%, transparent 100%)',
+          maskImage: 'radial-gradient(ellipse 60% 50% at 50% 50%, black 0%, transparent 100%)',
+          WebkitMaskImage: 'radial-gradient(ellipse 60% 50% at 50% 50%, black 0%, transparent 100%)',
         }} />
 
-        <div className="container-rq relative z-10">
-          <div className="max-w-[800px] mx-auto pt-[72px]">
+        <div className="container-rq relative z-10 text-center" style={{ paddingTop: 'calc(72px + 40px + 72px)', paddingBottom: '48px' }}>
+          <div className="max-w-[800px] mx-auto">
             <ScrollReveal>
               <h1 className="font-extrabold leading-[1.08] text-gray-800" style={{ fontSize: 'clamp(2.5rem, 5.5vw, 3.75rem)', letterSpacing: '-0.035em' }}>
                 Recycling that helps businesses build a more <span className="text-primary">sustainable future</span>
@@ -31,7 +54,7 @@ export default function HomePage() {
               <Image src="/images/hero-underline.png" alt="" width={220} height={12} className="mx-auto mt-2 mb-5 opacity-70" />
             </ScrollReveal>
             <ScrollReveal delay={80}>
-              <p className="text-gray-400 text-[17px] leading-relaxed max-w-[560px] mx-auto mb-7">
+              <p className="text-gray-500 text-[17px] leading-relaxed max-w-[560px] mx-auto mb-7">
                 Get quick, dependable recycling solutions for end-of-life products, materials, and business waste — with guidance you can trust.
               </p>
             </ScrollReveal>
@@ -46,51 +69,52 @@ export default function HomePage() {
               </div>
             </ScrollReveal>
           </div>
+        </div>
+      </section>
 
-          {/* ESG Cards */}
-          <div className="relative z-10 mt-16 pb-12">
-            <ScrollReveal>
-              <div className="text-[11px] font-bold uppercase tracking-[.1em] text-gray-400 mb-6">Impacts We Make</div>
-            </ScrollReveal>
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-              {[
-                { icon: 'park', title: 'Environmental', desc: 'We maximize your company\'s recycling efforts to reduce environmental impact, including climate risks, emissions, and resource use.' },
-                { icon: 'diversity_3', title: 'Social', desc: 'Our recycling solutions help companies build trust with stakeholders, employees, and communities while addressing health, safety, and labor practices.' },
-                { icon: 'shield', title: 'Governance', desc: 'We ensure recycling programs are transparent, compliant, and accountable — with documented oversight and responsible recycling practices.' },
-              ].map((card, i) => (
-                <ScrollReveal key={card.title} delay={i * 80}>
-                  <div className="bg-white border border-gray-200 rounded-[20px] p-7 text-left relative overflow-hidden group hover:-translate-y-1 hover:shadow-lg hover:border-primary-light transition-all duration-300">
-                    <div className="absolute top-0 left-0 right-0 h-[3px] bg-primary scale-x-0 origin-left group-hover:scale-x-100 transition-transform duration-400" />
-                    <div className="w-[52px] h-[52px] rounded-[12px] bg-primary-light flex items-center justify-center mb-4">
-                      <span className="material-symbols-outlined text-[26px] text-primary">{card.icon}</span>
-                    </div>
-                    <h3 className="font-extrabold text-gray-800 mb-2" style={{ letterSpacing: '-0.015em' }}>{card.title}</h3>
-                    <p className="text-[13px] text-gray-400 leading-relaxed">{card.desc}</p>
+      {/* ═══ ESG IMPACT CARDS + STATS ═══ */}
+      <section className="bg-[#FAFCFB] pb-12">
+        <div className="container-rq">
+          <ScrollReveal>
+            <div className="text-[11px] font-bold uppercase tracking-[.1em] text-gray-400 mb-6 text-center">Impacts We Make</div>
+          </ScrollReveal>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+            {[
+              { icon: 'park', title: 'Environmental', desc: 'We maximize your company\'s recycling efforts to reduce environmental impact, including climate risks, emissions, and resource use.' },
+              { icon: 'diversity_3', title: 'Social', desc: 'Our recycling solutions help companies build trust with stakeholders, employees, and communities while addressing health, safety, and labor practices.' },
+              { icon: 'shield', title: 'Governance', desc: 'We ensure recycling programs are transparent, compliant, and accountable — with documented oversight and responsible recycling practices.' },
+            ].map((card, i) => (
+              <ScrollReveal key={card.title} delay={i * 80}>
+                <div className="bg-white border border-gray-200 rounded-[20px] p-7 text-left relative overflow-hidden group hover:-translate-y-1 hover:shadow-lg hover:border-primary-light transition-all duration-300">
+                  <div className="absolute top-0 left-0 right-0 h-[3px] bg-primary scale-x-0 origin-left group-hover:scale-x-100 transition-transform duration-400" />
+                  <div className="w-[52px] h-[52px] rounded-[12px] bg-primary-light flex items-center justify-center mb-4">
+                    <span className="material-symbols-outlined text-[26px] text-primary">{card.icon}</span>
                   </div>
-                </ScrollReveal>
+                  <h3 className="font-extrabold text-gray-800 mb-2" style={{ letterSpacing: '-0.015em' }}>{card.title}</h3>
+                  <p className="text-[13px] text-gray-400 leading-relaxed">{card.desc}</p>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+
+          <ScrollReveal>
+            <div className="grid grid-cols-2 lg:grid-cols-4 bg-dark-bg rounded-[20px] overflow-hidden mt-8">
+              {[
+                { num: '500,000+', label: 'Tons Diverted' },
+                { num: '1.2M', label: 'Gallons Water Preserved' },
+                { num: '92%', label: 'Material Recovery Rate' },
+                { num: 'Zero', label: 'Landfill Commitment' },
+              ].map((stat, i) => (
+                <div key={stat.label} className="py-7 px-6 text-center relative">
+                  {i < 3 && <div className="hidden lg:block absolute top-[20%] right-0 bottom-[20%] w-px bg-dark-border" />}
+                  <div className="font-extrabold text-white leading-none" style={{ fontSize: 'clamp(1.5rem, 3vw, 2rem)', letterSpacing: '-0.03em' }}>
+                    <span className="text-[#4ADE80]">{stat.num}</span>
+                  </div>
+                  <div className="text-[11px] text-gray-400 font-medium mt-1">{stat.label}</div>
+                </div>
               ))}
             </div>
-
-            {/* Stats bar */}
-            <ScrollReveal>
-              <div className="grid grid-cols-2 lg:grid-cols-4 bg-dark-bg rounded-[20px] overflow-hidden mt-8">
-                {[
-                  { num: '500,000+', label: 'Tons Diverted' },
-                  { num: '1.2M', label: 'Gallons Water Preserved' },
-                  { num: '92%', label: 'Material Recovery Rate' },
-                  { num: 'Zero', label: 'Landfill Commitment' },
-                ].map((stat, i) => (
-                  <div key={stat.label} className="py-7 px-6 text-center relative">
-                    {i < 3 && <div className="hidden lg:block absolute top-[20%] right-0 bottom-[20%] w-px bg-dark-border" />}
-                    <div className="font-extrabold text-white leading-none" style={{ fontSize: 'clamp(1.5rem, 3vw, 2rem)', letterSpacing: '-0.03em' }}>
-                      <span className="text-[#4ADE80]">{stat.num}</span>
-                    </div>
-                    <div className="text-[11px] text-gray-400 font-medium mt-1">{stat.label}</div>
-                  </div>
-                ))}
-              </div>
-            </ScrollReveal>
-          </div>
+          </ScrollReveal>
         </div>
       </section>
 
@@ -260,7 +284,6 @@ export default function HomePage() {
             <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_1fr] gap-12 items-center bg-dark-bg rounded-[28px] p-12 lg:p-[52px] relative overflow-hidden">
               <div className="absolute top-[-120px] right-[-80px] w-[400px] h-[400px] rounded-full" style={{ background: 'radial-gradient(circle, rgba(27,122,61,.1) 0%, transparent 60%)' }} />
               <div className="absolute inset-0 rounded-[28px] border border-white/[.04] pointer-events-none" />
-
               <div className="relative z-10">
                 <div className="section-tag !bg-[rgba(27,122,61,.15)]">
                   <span className="material-symbols-outlined text-[14px]">psychology</span> Challenges
@@ -284,7 +307,6 @@ export default function HomePage() {
                   <Link href="/challenges" className="btn-white">Explore All Challenges <span className="material-symbols-outlined text-[16px]">arrow_forward</span></Link>
                 </div>
               </div>
-
               <div className="grid grid-cols-2 gap-3 relative z-10">
                 {[
                   { icon: 'shield', num: '100%', label: 'Compliance Rate' },

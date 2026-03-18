@@ -35,13 +35,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={jakarta.variable}>
       <head>
         <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet" />
-        {/* Base layer JSON-LD — present on every page (Structured Data §2.1, §2.2) */}
         <JsonLd data={organizationSchema} />
         <JsonLd data={webSiteSchema} />
       </head>
       <body>
         <Header />
-        <main className="pt-[72px]">{children}</main>
+        {/* pt accounts for: utility bar (40px) + header (64px) = 104px on desktop */}
+        {/* On scroll, utility bar hides and header moves to top — CSS handles this via the Header component */}
+        <main className="pt-[104px] lg:pt-[104px]">{children}</main>
         <Footer />
       </body>
     </html>
