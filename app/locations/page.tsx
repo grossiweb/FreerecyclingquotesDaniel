@@ -5,6 +5,54 @@ import Link from 'next/link';
 import { LOCATIONS, SERVICES, CONTACT } from '@/lib/data';
 import { ScrollReveal } from '@/components/ui';
 
+// SVG Flag components — render consistently on all devices (no emoji issues on Windows)
+const FLAGS: Record<string, React.ReactNode> = {
+  usa: (
+    <svg viewBox="0 0 60 40" className="w-10 h-7 rounded-[4px] shadow-sm shrink-0" xmlns="http://www.w3.org/2000/svg">
+      <rect width="60" height="40" fill="#B22234"/>
+      {[0,1,2,3,4,5,6].map(i => <rect key={i} y={i * 6.15} width="60" height="3.08" fill={i % 2 === 0 ? '#B22234' : '#fff'}/>)}
+      <rect width="24" height="21.54" fill="#3C3B6E"/>
+      {/* Simplified stars */}
+      {[0,1,2,3,4].map(r => [0,1,2,3,4,5].slice(0, r % 2 === 0 ? 6 : 5).map(c => (
+        <circle key={`${r}-${c}`} cx={2 + c * 4 + (r % 2 === 0 ? 0 : 2)} cy={2 + r * 4.3} r="0.8" fill="#fff"/>
+      )))}
+    </svg>
+  ),
+  canada: (
+    <svg viewBox="0 0 60 40" className="w-10 h-7 rounded-[4px] shadow-sm shrink-0" xmlns="http://www.w3.org/2000/svg">
+      <rect width="60" height="40" fill="#fff"/>
+      <rect width="15" height="40" fill="#D52B1E"/>
+      <rect x="45" width="15" height="40" fill="#D52B1E"/>
+      <path d="M30 8 L32 16 L28 14 L24 18 L26 14 L22 14 L26 12 L24 8 L28 10 L30 8Z" fill="#D52B1E" transform="scale(1.2) translate(-5,-1)"/>
+    </svg>
+  ),
+  uk: (
+    <svg viewBox="0 0 60 40" className="w-10 h-7 rounded-[4px] shadow-sm shrink-0" xmlns="http://www.w3.org/2000/svg">
+      <rect width="60" height="40" fill="#012169"/>
+      <path d="M0 0 L60 40 M60 0 L0 40" stroke="#fff" strokeWidth="6"/>
+      <path d="M0 0 L60 40 M60 0 L0 40" stroke="#C8102E" strokeWidth="4"/>
+      <path d="M30 0 V40 M0 20 H60" stroke="#fff" strokeWidth="10"/>
+      <path d="M30 0 V40 M0 20 H60" stroke="#C8102E" strokeWidth="6"/>
+    </svg>
+  ),
+  australia: (
+    <svg viewBox="0 0 60 40" className="w-10 h-7 rounded-[4px] shadow-sm shrink-0" xmlns="http://www.w3.org/2000/svg">
+      <rect width="60" height="40" fill="#012169"/>
+      {/* Union Jack in canton */}
+      <rect width="30" height="20" fill="#012169"/>
+      <path d="M0 0 L30 20 M30 0 L0 20" stroke="#fff" strokeWidth="3"/>
+      <path d="M0 0 L30 20 M30 0 L0 20" stroke="#C8102E" strokeWidth="2"/>
+      <path d="M15 0 V20 M0 10 H30" stroke="#fff" strokeWidth="5"/>
+      <path d="M15 0 V20 M0 10 H30" stroke="#C8102E" strokeWidth="3"/>
+      {/* Southern Cross stars (simplified) */}
+      <circle cx="45" cy="15" r="2" fill="#fff"/><circle cx="50" cy="22" r="1.5" fill="#fff"/>
+      <circle cx="42" cy="28" r="1.5" fill="#fff"/><circle cx="48" cy="32" r="1.5" fill="#fff"/>
+      {/* Commonwealth Star */}
+      <circle cx="15" cy="30" r="3" fill="#fff"/>
+    </svg>
+  ),
+};
+
 // Group US metros by region
 const US_REGIONS = [
   { label: 'Northeast', metros: ['boston','buffalo','hartford','new-york-city','philadelphia','pittsburgh','providence','rochester','richmond','virginia-beach','washington-dc'] },
@@ -52,13 +100,13 @@ export default function LocationsPage() {
               <button
                 key={country.slug}
                 onClick={() => setActiveCountry(country.slug)}
-                className={`flex items-center gap-2.5 px-6 py-3.5 rounded-full font-bold text-[14px] transition-all duration-200 ${
+                className={`flex items-center gap-3 px-7 py-4 rounded-full font-bold text-[15px] transition-all duration-200 ${
                   activeCountry === country.slug
                     ? 'bg-dark-bg text-white shadow-lg scale-105'
                     : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                 }`}
               >
-                <span className="text-xl leading-none">{country.flag}</span>
+                {FLAGS[country.slug]}
                 {country.name}
                 <span className={`text-[11px] font-bold px-2 py-0.5 rounded-full ${
                   activeCountry === country.slug
@@ -105,7 +153,7 @@ export default function LocationsPage() {
           {activeCountry !== 'usa' && (
             <div>
               <div className="flex items-center gap-3 mb-6">
-                <span className="text-3xl">{activeData.flag}</span>
+                {FLAGS[activeCountry]}
                 <div>
                   <h2 className="text-xl font-extrabold text-gray-800" style={{ letterSpacing: '-0.02em' }}>{activeData.name}</h2>
                   <p className="text-gray-400 text-[13px]">{activeData.metros.length} cities with recycling services</p>

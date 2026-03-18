@@ -75,7 +75,8 @@ export default function HomePage() {
       <section className="bg-[#FAFCFB] py-24">
         <div className="container-rq">
           <ScrollReveal>
-            <div className="text-[11px] font-bold uppercase tracking-[.1em] text-gray-400 mb-6 text-center">Impacts We Make</div>
+            <div className="section-tag mb-6"><span className="material-symbols-outlined text-[14px]">eco</span> ESG</div>
+            <h2 className="section-title text-center mb-10">Impacts We Make</h2>
           </ScrollReveal>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
             {[
