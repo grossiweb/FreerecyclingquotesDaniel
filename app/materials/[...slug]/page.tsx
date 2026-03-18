@@ -9,15 +9,15 @@ import { JsonLd, faqPageSchema, webPageSchema } from '@/lib/schema';
 import Breadcrumbs from '@/components/ui/Breadcrumbs';
 import PageHero from '@/components/ui/PageHero';
 import { CTABlock, FAQAccordion, ScrollReveal } from '@/components/ui';
+import FAQFullPage from '@/components/ui/FAQFullPage';
 
-// Generate static params for both parent and leaf pages
+// Generate static params for parent, leaf, AND faq pages
 export function generateStaticParams() {
   const params: { slug: string[] }[] = [];
-  // Parent materials: /materials/[slug]
   for (const key of Object.keys(MATERIAL_PAGES)) {
     params.push({ slug: [key] });
+    params.push({ slug: [key, 'faqs'] });
   }
-  // Leaf materials: /materials/[parent]/[child] or /materials/[parent]/[sub]/[child]
   for (const key of Object.keys(MATERIAL_LEAF_PAGES)) {
     params.push({ slug: key.split('/') });
   }
@@ -26,6 +26,12 @@ export function generateStaticParams() {
 
 export function generateMetadata({ params }: { params: { slug: string[] } }): Metadata {
   const fullSlug = params.slug.join('/');
+  // FAQ pages
+  if (params.slug[params.slug.length - 1] === 'faqs') {
+    const parentSlug = params.slug[0];
+    const parent = MATERIAL_PAGES[parentSlug];
+    if (parent) return { title: `${parent.name} Recycling FAQ`, description: `Frequently asked questions about ${parent.name.toLowerCase()} recycling. ${parent.faqs.length} questions answered.`, alternates: { canonical: `https://recyclingquotes.com/materials/${parentSlug}/faqs` } };
+  }
   const leaf = MATERIAL_LEAF_PAGES[fullSlug];
   if (leaf) return { title: leaf.titleTag, description: leaf.metaDescription, alternates: { canonical: `https://recyclingquotes.com/materials/${fullSlug}` } };
   const parent = MATERIAL_PAGES[params.slug[0]];
@@ -35,6 +41,28 @@ export function generateMetadata({ params }: { params: { slug: string[] } }): Me
 
 export default function MaterialCatchAllPage({ params }: { params: { slug: string[] } }) {
   const fullSlug = params.slug.join('/');
+
+  // FAQ page: /materials/[slug]/faqs
+  if (params.slug[params.slug.length - 1] === 'faqs') {
+    const parentSlug = params.slug[0];
+    const parent = MATERIAL_PAGES[parentSlug];
+    if (parent) return (
+      <>
+        <JsonLd data={faqPageSchema(parent.faqs.map(f => ({ question: f.q, answer: f.a })))} />
+        <FAQFullPage
+          title={`${parent.name} Recycling — FAQ`}
+          description={`Common questions about recycling ${parent.name.toLowerCase()}.`}
+          backLabel={`Back to ${parent.name}`}
+          backHref={`/materials/${parent.slug}`}
+          faqs={parent.faqs}
+          breadcrumbItems={[
+            { name: 'Materials', href: '/materials' },
+            { name: parent.name, href: `/materials/${parent.slug}` },
+          ]}
+        />
+      </>
+    );
+  }
 
   // Check if it's a leaf page first
   const leaf = MATERIAL_LEAF_PAGES[fullSlug];
