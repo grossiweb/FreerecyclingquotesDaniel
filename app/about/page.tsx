@@ -1,9 +1,8 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import Image from 'next/image';
-import { CONTACT } from '@/lib/data';
 import { JsonLd, webPageSchema } from '@/lib/schema';
 import Breadcrumbs from '@/components/ui/Breadcrumbs';
+import PageHero from '@/components/ui/PageHero';
 import { SectionHeader, CTABlock, ScrollReveal } from '@/components/ui';
 
 export const metadata: Metadata = {
@@ -23,37 +22,19 @@ const ABOUT_PAGES = [
 export default function AboutPage() {
   return (
     <>
-      <JsonLd data={webPageSchema({ path: '/about', name: 'About Recycling Quotes', description: 'Nationwide recycling services network founded in 2005. R2, e-Stewards, and ISO certified.' })} />
+      <JsonLd data={webPageSchema({ path: '/about', name: 'About Recycling Quotes', description: 'Nationwide recycling services network founded in 2005.' })} />
       <Breadcrumbs items={[{ name: 'About', href: '/about' }]} />
 
-      {/* Hero */}
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0">
-          <Image src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?w=1600&h=600&fit=crop" alt="Recycling operations" width={1600} height={600} className="w-full h-full object-cover" priority />
-          <div className="absolute inset-0 bg-gradient-to-r from-dark-bg/95 via-dark-bg/85 to-dark-bg/60" />
-        </div>
-        <div className="container-rq relative z-10 py-20 lg:py-28">
-          <div className="max-w-2xl">
-            <ScrollReveal>
-              <div className="section-tag !bg-white/10 !text-white/80 mb-6"><span className="material-symbols-outlined text-[14px]">info</span> Since 2005</div>
-              <h1 className="font-extrabold text-white leading-[1.08] mb-5" style={{ fontSize: 'clamp(2.25rem, 5vw, 3.25rem)', letterSpacing: '-0.035em' }}>
-                About <span className="text-[#4ADE80]">Recycling Quotes</span>
-              </h1>
-            </ScrollReveal>
-            <ScrollReveal delay={80}>
-              <p className="definition-block text-white/70 text-[17px] leading-relaxed max-w-xl mb-8">
-                Recycling Quotes is a nationwide recycling services network that connects businesses with certified recycling solutions for 15+ material types across 52+ cities. Founded in 2005 and headquartered in Fort Worth, Texas, we&apos;ve helped over 10,000 businesses divert 500,000+ tons of materials from landfills with full compliance documentation.
-              </p>
-            </ScrollReveal>
-            <ScrollReveal delay={160}>
-              <div className="flex gap-2.5 flex-wrap">
-                <Link href="/about/our-story" className="btn-white">Our Story <span className="material-symbols-outlined text-[16px]">arrow_forward</span></Link>
-                <Link href="/about/certifications" className="btn-outline-white"><span className="material-symbols-outlined text-[16px]">workspace_premium</span> Our Certifications</Link>
-              </div>
-            </ScrollReveal>
-          </div>
-        </div>
-      </section>
+      <PageHero
+        tag="Since 2005"
+        tagIcon="info"
+        title="About"
+        titleAccent="Recycling Quotes"
+        description="Recycling Quotes is a nationwide recycling services network that connects businesses with certified recycling solutions for 15+ material types across 52+ cities. Founded in 2005 and headquartered in Fort Worth, Texas, we've helped over 10,000 businesses divert 500,000+ tons of materials from landfills with full compliance documentation."
+        image="https://images.unsplash.com/photo-1497366216548-37526070297c?w=1600&h=600&fit=crop"
+        primaryCta={{ label: 'Our Story', href: '/about/our-story', icon: 'arrow_forward' }}
+        secondaryCta={{ label: 'Our Certifications', href: '/about/certifications', icon: 'workspace_premium' }}
+      />
 
       {/* Stats */}
       <section className="py-0 bg-white">
@@ -79,12 +60,10 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* About sub-pages grid */}
+      {/* Sub-pages grid */}
       <section className="py-24 bg-white">
         <div className="container-rq">
-          <ScrollReveal>
-            <SectionHeader tag="Learn More" tagIcon="menu_book" title="Explore Our Company" subtitle="Everything you need to know about who we are, what we stand for, and why businesses trust us." />
-          </ScrollReveal>
+          <ScrollReveal><SectionHeader tag="Learn More" tagIcon="menu_book" title="Explore Our Company" subtitle="Everything you need to know about who we are, what we stand for, and why businesses trust us." /></ScrollReveal>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {ABOUT_PAGES.map((page, i) => (
               <ScrollReveal key={page.slug} delay={i * 60}>
@@ -95,9 +74,7 @@ export default function AboutPage() {
                   </div>
                   <h2 className="font-extrabold text-gray-800 text-lg mb-2" style={{ letterSpacing: '-0.015em' }}>{page.title}</h2>
                   <p className="text-[13px] text-gray-400 leading-relaxed mb-3">{page.desc}</p>
-                  <span className="inline-flex items-center gap-1 text-[13px] font-bold text-primary group-hover:gap-2 transition-all">
-                    Read more <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
-                  </span>
+                  <span className="inline-flex items-center gap-1 text-[13px] font-bold text-primary group-hover:gap-2 transition-all">Read more <span className="material-symbols-outlined text-[16px]">arrow_forward</span></span>
                 </Link>
               </ScrollReveal>
             ))}
@@ -105,18 +82,14 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Mission statement */}
+      {/* Mission */}
       <section className="py-24 bg-gray-50">
         <div className="container-rq max-w-3xl mx-auto text-center">
           <ScrollReveal>
             <div className="section-tag mb-6"><span className="material-symbols-outlined text-[14px]">flag</span> Our Mission</div>
             <h2 className="section-title mb-6">Making Responsible Recycling Accessible to Every Business</h2>
-            <p className="text-gray-500 text-[16px] leading-relaxed mb-4">
-              We believe every business — regardless of size, industry, or location — should have access to certified, transparent, and affordable recycling services. Our mission is to eliminate the complexity of commercial recycling by connecting businesses with a nationwide network of vetted, certified processors who handle everything from pickup to compliance documentation.
-            </p>
-            <p className="text-gray-500 text-[16px] leading-relaxed">
-              We measure our success not in revenue, but in tons diverted from landfills, compliance certificates issued, and the sustainability goals we help our clients achieve. Since 2005, that has meant over 500,000 tons diverted, a 92% material recovery rate, and a zero-landfill commitment across our certified network.
-            </p>
+            <p className="text-gray-500 text-[16px] leading-relaxed mb-4">We believe every business — regardless of size, industry, or location — should have access to certified, transparent, and affordable recycling services. Our mission is to eliminate the complexity of commercial recycling by connecting businesses with a nationwide network of vetted, certified processors who handle everything from pickup to compliance documentation.</p>
+            <p className="text-gray-500 text-[16px] leading-relaxed">We measure our success not in revenue, but in tons diverted from landfills, compliance certificates issued, and the sustainability goals we help our clients achieve. Since 2005, that has meant over 500,000 tons diverted, a 92% material recovery rate, and a zero-landfill commitment across our certified network.</p>
           </ScrollReveal>
         </div>
       </section>

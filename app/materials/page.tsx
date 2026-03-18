@@ -1,8 +1,9 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { MATERIALS, SERVICES, CONTACT } from '@/lib/data';
+import { MATERIALS, CONTACT } from '@/lib/data';
 import { JsonLd, webPageSchema, faqPageSchema } from '@/lib/schema';
 import Breadcrumbs from '@/components/ui/Breadcrumbs';
+import PageHero from '@/components/ui/PageHero';
 import { SectionHeader, CTABlock, FAQAccordion, ScrollReveal } from '@/components/ui';
 
 export const metadata: Metadata = {
@@ -50,31 +51,16 @@ export default function MaterialsPage() {
       <JsonLd data={faqPageSchema(FAQS.map(f => ({ question: f.q, answer: f.a })))} />
       <Breadcrumbs items={[{ name: 'Materials', href: '/materials' }]} />
 
-      {/* §1 Hero */}
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary-50 via-[#FAFCFB] to-white" />
-        <div className="container-rq relative z-10 py-16 lg:py-20 text-center max-w-3xl mx-auto">
-          <ScrollReveal>
-            <div className="section-tag mb-6"><span className="material-symbols-outlined text-[14px]">category</span> 15+ Material Types</div>
-            <h1 className="font-extrabold text-gray-800 leading-[1.08] mb-4" style={{ fontSize: 'clamp(2.25rem, 5vw, 3.25rem)', letterSpacing: '-0.035em' }}>
-              What We <span className="text-primary">Recycle</span>
-            </h1>
-          </ScrollReveal>
-          <ScrollReveal delay={80}>
-            <p className="definition-block text-gray-500 text-[17px] leading-relaxed max-w-xl mx-auto mb-8">
-              Recycling Quotes handles 15+ material types across 52+ cities nationwide — from everyday recyclables like paper and plastic to regulated hazardous materials, e-waste, and industrial scrap. Every material is processed through certified facilities with full chain-of-custody documentation.
-            </p>
-          </ScrollReveal>
-          <ScrollReveal delay={160}>
-            <div className="flex gap-2.5 justify-center flex-wrap">
-              <Link href="/get-a-quote" className="btn-primary">Get a Quote <span className="material-symbols-outlined text-[16px]">arrow_forward</span></Link>
-              <Link href="/schedule-pickup" className="btn-outline"><span className="material-symbols-outlined text-[16px]">calendar_month</span> Schedule Pickup</Link>
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
+      <PageHero
+        tag="15+ Material Types"
+        tagIcon="category"
+        title="What We"
+        titleAccent="Recycle"
+        description="Recycling Quotes handles 15+ material types across 52+ cities nationwide — from everyday recyclables like paper and plastic to regulated hazardous materials, e-waste, and industrial scrap. Every material is processed through certified facilities with full chain-of-custody documentation."
+        image="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?w=1600&h=600&fit=crop"
+      />
 
-      {/* §2 Materials Grid — grouped */}
+      {/* Materials Grid */}
       <section className="py-24 bg-white border-t border-gray-100">
         <div className="container-rq">
           {MATERIAL_GROUPS.map((group) => (
@@ -93,9 +79,7 @@ export default function MaterialsPage() {
                       <div>
                         <h3 className="font-extrabold text-gray-800 mb-1" style={{ letterSpacing: '-0.015em' }}>{mat.name}</h3>
                         <p className="text-[13px] text-gray-400 leading-relaxed">{MATERIAL_DESCRIPTIONS[mat.slug] || ''}</p>
-                        <span className="inline-flex items-center gap-1 mt-2 text-[13px] font-bold text-primary">
-                          Learn more <span className="material-symbols-outlined text-[14px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
-                        </span>
+                        <span className="inline-flex items-center gap-1 mt-2 text-[13px] font-bold text-primary">Learn more <span className="material-symbols-outlined text-[14px] group-hover:translate-x-1 transition-transform">arrow_forward</span></span>
                       </div>
                     </Link>
                   </ScrollReveal>
@@ -106,12 +90,10 @@ export default function MaterialsPage() {
         </div>
       </section>
 
-      {/* §3 City Selector — simplified version (full interactive version when Supabase is connected) */}
+      {/* City Selector */}
       <section className="py-24 bg-gray-50">
         <div className="container-rq">
-          <ScrollReveal>
-            <SectionHeader tag="Locations" tagIcon="location_on" title="Find Recycling Near You" subtitle="We offer free pickup in 52+ cities across the United States, Canada, UK, and Australia." />
-          </ScrollReveal>
+          <ScrollReveal><SectionHeader tag="Locations" tagIcon="location_on" title="Find Recycling Near You" subtitle="We offer free pickup in 52+ cities across the United States, Canada, UK, and Australia." /></ScrollReveal>
           <ScrollReveal>
             <div className="bg-white border border-gray-200 rounded-[20px] p-8 lg:p-10 text-center max-w-2xl mx-auto">
               <p className="text-gray-500 mb-6">Select your city to see available recycling services and schedule a pickup in your area.</p>
@@ -124,12 +106,10 @@ export default function MaterialsPage() {
         </div>
       </section>
 
-      {/* §4 Services Cross-Link */}
+      {/* Services Cross-Link */}
       <section className="py-24 bg-white">
         <div className="container-rq">
-          <ScrollReveal>
-            <SectionHeader tag="Services" tagIcon="handyman" title="Need a Full Recycling Program?" subtitle="Our services go beyond single-material pickup — we design complete recycling programs for businesses of any size." />
-          </ScrollReveal>
+          <ScrollReveal><SectionHeader tag="Services" tagIcon="handyman" title="Need a Full Recycling Program?" subtitle="Our services go beyond single-material pickup — we design complete recycling programs for businesses of any size." /></ScrollReveal>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {[
               { slug: 'business-recycling-programs', name: 'Business Recycling Programs', icon: 'apartment', desc: 'Custom multi-material recycling programs with compliance reporting and ongoing support for multi-location businesses.' },
@@ -151,7 +131,7 @@ export default function MaterialsPage() {
         </div>
       </section>
 
-      {/* §5 FAQ + CTA */}
+      {/* FAQ + CTA */}
       <section className="py-24 bg-gray-50">
         <div className="container-rq">
           <ScrollReveal><SectionHeader tag="FAQ" tagIcon="help" title="Common Questions About Materials" /></ScrollReveal>

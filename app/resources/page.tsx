@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { JsonLd, webPageSchema } from '@/lib/schema';
 import Breadcrumbs from '@/components/ui/Breadcrumbs';
+import PageHero from '@/components/ui/PageHero';
 import { SectionHeader, CTABlock, ScrollReveal } from '@/components/ui';
 
 export const metadata: Metadata = {
@@ -28,24 +29,18 @@ export default function ResourcesPage() {
       <JsonLd data={webPageSchema({ path: '/resources', name: 'Recycling Resources & Insights', description: 'Guides, blog posts, FAQs, videos, news, and statistics on recycling.' })} />
       <Breadcrumbs items={[{ name: 'Resources', href: '/resources' }]} />
 
-      {/* §1 Hero */}
-      <section className="py-16 lg:py-20 bg-[#FAFCFB]">
-        <div className="container-rq text-center max-w-3xl mx-auto">
-          <ScrollReveal>
-            <div className="section-tag mb-6"><span className="material-symbols-outlined text-[14px]">school</span> Knowledge Base</div>
-            <h1 className="font-extrabold text-gray-800 leading-[1.08] mb-4" style={{ fontSize: 'clamp(2rem, 4.5vw, 3rem)', letterSpacing: '-0.035em' }}>
-              Recycling Resources & <span className="text-primary">Insights</span>
-            </h1>
-          </ScrollReveal>
-          <ScrollReveal delay={80}>
-            <p className="definition-block text-gray-500 text-[17px] leading-relaxed max-w-xl mx-auto">
-              Stay informed on recycling regulations, compliance requirements, cost reduction strategies, and sustainability trends. Our resource library covers everything from e-waste compliance guides to industry-specific recycling statistics.
-            </p>
-          </ScrollReveal>
-        </div>
-      </section>
+      <PageHero
+        tag="Knowledge Base"
+        tagIcon="school"
+        title="Recycling Resources &"
+        titleAccent="Insights"
+        description="Stay informed on recycling regulations, compliance requirements, cost reduction strategies, and sustainability trends. Our resource library covers everything from e-waste compliance guides to industry-specific recycling statistics."
+        image="https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?w=1600&h=600&fit=crop"
+        primaryCta={{ label: 'Browse Blog', href: '/resources/blog', icon: 'article' }}
+        secondaryCta={{ label: 'View FAQs', href: '/resources/faq', icon: 'help' }}
+      />
 
-      {/* §2 Resource Sections Grid */}
+      {/* Resource Sections */}
       <section className="py-24 bg-white border-t border-gray-100">
         <div className="container-rq">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -58,9 +53,7 @@ export default function ResourcesPage() {
                   </div>
                   <h2 className="font-extrabold text-gray-800 text-lg mb-2" style={{ letterSpacing: '-0.015em' }}>{res.title}</h2>
                   <p className="text-[13px] text-gray-400 leading-relaxed mb-3">{res.desc}</p>
-                  <span className="inline-flex items-center gap-1 text-[13px] font-bold text-primary group-hover:gap-2 transition-all">
-                    Explore <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
-                  </span>
+                  <span className="inline-flex items-center gap-1 text-[13px] font-bold text-primary group-hover:gap-2 transition-all">Explore <span className="material-symbols-outlined text-[16px]">arrow_forward</span></span>
                 </Link>
               </ScrollReveal>
             ))}
@@ -68,23 +61,19 @@ export default function ResourcesPage() {
         </div>
       </section>
 
-      {/* §3 Latest Blog Posts */}
+      {/* Blog Preview */}
       <section className="py-24 bg-gray-50">
         <div className="container-rq">
-          <ScrollReveal>
-            <SectionHeader tag="Latest" tagIcon="auto_awesome" title="Latest from the Blog" subtitle="Recent articles on recycling compliance, sustainability, and industry trends." />
-          </ScrollReveal>
+          <ScrollReveal><SectionHeader tag="Latest" tagIcon="auto_awesome" title="Latest from the Blog" subtitle="Recent articles on recycling compliance, sustainability, and industry trends." /></ScrollReveal>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
             {[
-              { slug: 'ewaste-compliance-guide-2026', tag: 'Compliance', title: 'The Complete Guide to E-Waste Compliance in 2026', desc: 'Federal and state e-waste regulations every business needs to know — from EPA RCRA to state-specific disposal laws.', img: 'https://images.unsplash.com/photo-1550581190-9c1c48d21d6c?w=400&h=200&fit=crop' },
-              { slug: 'esg-reporting-recycling', tag: 'ESG', title: 'How Recycling Programs Support ESG Goals', desc: 'Document and report your recycling impact for GRI, SASB, and CDP frameworks with the right data collection strategy.', img: 'https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?w=400&h=200&fit=crop' },
-              { slug: 'reduce-waste-disposal-costs', tag: 'Cost Savings', title: '5 Ways to Reduce Waste Disposal Costs This Year', desc: 'Practical strategies to lower your recycling and waste management spend without sacrificing compliance or service quality.', img: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400&h=200&fit=crop' },
+              { slug: 'ewaste-compliance-guide-2026', tag: 'Compliance', title: 'The Complete Guide to E-Waste Compliance in 2026', desc: 'Federal and state e-waste regulations every business needs to know.', img: 'https://images.unsplash.com/photo-1550581190-9c1c48d21d6c?w=400&h=200&fit=crop' },
+              { slug: 'esg-reporting-recycling', tag: 'ESG', title: 'How Recycling Programs Support ESG Goals', desc: 'Document and report your recycling impact for GRI, SASB, and CDP frameworks.', img: 'https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?w=400&h=200&fit=crop' },
+              { slug: 'reduce-waste-disposal-costs', tag: 'Cost Savings', title: '5 Ways to Reduce Waste Disposal Costs This Year', desc: 'Practical strategies to lower your waste management spend.', img: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400&h=200&fit=crop' },
             ].map((post, i) => (
               <ScrollReveal key={post.slug} delay={i * 80}>
                 <Link href={`/resources/blog/${post.slug}`} className="block border border-gray-100 rounded-[20px] overflow-hidden bg-white group hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
-                  <div className="h-[180px] overflow-hidden">
-                    <Image src={post.img} alt={post.title} width={400} height={200} className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-500" />
-                  </div>
+                  <div className="h-[180px] overflow-hidden"><Image src={post.img} alt={post.title} width={400} height={200} className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-500" /></div>
                   <div className="p-5">
                     <span className="inline-block px-2.5 py-[3px] bg-primary-light text-primary text-[11px] font-bold rounded-full mb-2">{post.tag}</span>
                     <h3 className="font-extrabold text-gray-800 leading-[1.35] mb-1.5" style={{ fontSize: '0.9375rem', letterSpacing: '-0.015em' }}>{post.title}</h3>
@@ -94,11 +83,7 @@ export default function ResourcesPage() {
               </ScrollReveal>
             ))}
           </div>
-          <ScrollReveal>
-            <div className="text-center mt-10">
-              <Link href="/resources/blog" className="btn-outline">View All Articles <span className="material-symbols-outlined text-[16px]">arrow_forward</span></Link>
-            </div>
-          </ScrollReveal>
+          <ScrollReveal><div className="text-center mt-10"><Link href="/resources/blog" className="btn-outline">View All Articles <span className="material-symbols-outlined text-[16px]">arrow_forward</span></Link></div></ScrollReveal>
         </div>
       </section>
 

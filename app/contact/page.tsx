@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { CONTACT } from '@/lib/data';
 import { JsonLd, webPageSchema } from '@/lib/schema';
 import Breadcrumbs from '@/components/ui/Breadcrumbs';
+import PageHero from '@/components/ui/PageHero';
 import { CTABlock, ScrollReveal } from '@/components/ui';
 
 export const metadata: Metadata = {
@@ -17,21 +18,24 @@ export default function ContactPage() {
       <JsonLd data={webPageSchema({ path: '/contact', name: 'Contact Recycling Quotes', description: 'Contact us for free recycling quotes and service inquiries.' })} />
       <Breadcrumbs items={[{ name: 'Contact', href: '/contact' }]} />
 
-      <section className="py-16 lg:py-24 bg-[#FAFCFB]">
-        <div className="container-rq max-w-4xl mx-auto text-center">
-          <ScrollReveal>
-            <h1 className="font-extrabold text-gray-800 leading-[1.08] mb-4" style={{ fontSize: 'clamp(2rem, 4vw, 2.75rem)', letterSpacing: '-0.035em' }}>
-              Let&apos;s Talk <span className="text-primary">Recycling</span>
-            </h1>
-            <p className="text-gray-500 text-[17px] leading-relaxed max-w-xl mx-auto mb-10">
-              Whether you need a quote, want to schedule a pickup, or have questions about our services — we&apos;re here to help. Most inquiries get a response within 24 hours.
-            </p>
-          </ScrollReveal>
+      <PageHero
+        tag="Get in Touch"
+        tagIcon="mail"
+        title="Let's Talk"
+        titleAccent="Recycling"
+        description="Whether you need a quote, want to schedule a pickup, or have questions about our services — we're here to help. Most inquiries get a response within 24 hours."
+        image="https://images.unsplash.com/photo-1497366216548-37526070297c?w=1600&h=600&fit=crop"
+        primaryCta={{ label: 'Get a Quote', href: '/get-a-quote', icon: 'arrow_forward' }}
+        secondaryCta={null}
+        showPhone
+      />
 
+      <section className="py-16 lg:py-24 bg-white">
+        <div className="container-rq max-w-4xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-12">
             <ScrollReveal>
-              <a href={CONTACT.phoneHref} className="block bg-white border border-gray-200 rounded-[20px] p-8 hover:border-primary-light hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group">
-                <div className="w-14 h-14 rounded-[16px] bg-primary-light flex items-center justify-center mx-auto mb-4 group-hover:bg-primary group-hover:text-white transition-colors">
+              <a href={CONTACT.phoneHref} className="block bg-gray-50 border border-gray-100 rounded-[20px] p-8 hover:border-primary-light hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group text-center">
+                <div className="w-14 h-14 rounded-[16px] bg-primary-light flex items-center justify-center mx-auto mb-4 group-hover:bg-primary transition-colors">
                   <span className="material-symbols-outlined text-[28px] text-primary group-hover:text-white transition-colors">phone</span>
                 </div>
                 <h2 className="font-extrabold text-gray-800 mb-1">Call Us</h2>
@@ -40,7 +44,7 @@ export default function ContactPage() {
               </a>
             </ScrollReveal>
             <ScrollReveal delay={80}>
-              <a href={`mailto:${CONTACT.email}`} className="block bg-white border border-gray-200 rounded-[20px] p-8 hover:border-primary-light hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group">
+              <a href={`mailto:${CONTACT.email}`} className="block bg-gray-50 border border-gray-100 rounded-[20px] p-8 hover:border-primary-light hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group text-center">
                 <div className="w-14 h-14 rounded-[16px] bg-primary-light flex items-center justify-center mx-auto mb-4 group-hover:bg-primary transition-colors">
                   <span className="material-symbols-outlined text-[28px] text-primary group-hover:text-white transition-colors">email</span>
                 </div>
@@ -50,7 +54,7 @@ export default function ContactPage() {
               </a>
             </ScrollReveal>
             <ScrollReveal delay={160}>
-              <Link href="/get-a-quote" className="block bg-primary border border-primary rounded-[20px] p-8 hover:bg-primary-dark hover:-translate-y-1 transition-all duration-300 group text-white">
+              <Link href="/get-a-quote" className="block bg-primary border border-primary rounded-[20px] p-8 hover:bg-primary-dark hover:-translate-y-1 transition-all duration-300 text-white text-center">
                 <div className="w-14 h-14 rounded-[16px] bg-white/15 flex items-center justify-center mx-auto mb-4">
                   <span className="material-symbols-outlined text-[28px]">request_quote</span>
                 </div>
@@ -62,7 +66,7 @@ export default function ContactPage() {
           </div>
 
           <ScrollReveal>
-            <div className="bg-white border border-gray-200 rounded-[20px] p-8 text-left">
+            <div className="bg-gray-50 border border-gray-100 rounded-[20px] p-8 text-left">
               <h2 className="font-extrabold text-gray-800 text-lg mb-4" style={{ letterSpacing: '-0.015em' }}>Our Headquarters</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
@@ -81,6 +85,7 @@ export default function ContactPage() {
           </ScrollReveal>
         </div>
       </section>
+
       <CTABlock title="Prefer to Talk to Someone?" subtitle="Call us at 817-946-5655 for immediate assistance. Our recycling specialists are available Monday through Friday, 8am to 6pm Central Time." />
     </>
   );

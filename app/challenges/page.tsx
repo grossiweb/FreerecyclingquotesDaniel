@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { CONTACT } from '@/lib/data';
 import { JsonLd, webPageSchema, faqPageSchema } from '@/lib/schema';
 import Breadcrumbs from '@/components/ui/Breadcrumbs';
+import PageHero from '@/components/ui/PageHero';
 import { SectionHeader, CTABlock, FAQAccordion, ScrollReveal } from '@/components/ui';
 
 export const metadata: Metadata = {
@@ -39,36 +40,20 @@ export default function ChallengesPage() {
       <JsonLd data={faqPageSchema(FAQS.map(f => ({ question: f.q, answer: f.a })))} />
       <Breadcrumbs items={[{ name: 'Challenges', href: '/challenges' }]} />
 
-      {/* §1 Hero */}
-      <section className="py-16 lg:py-20 bg-dark-bg relative overflow-hidden">
-        <div className="absolute top-[-200px] right-[-200px] w-[600px] h-[600px] rounded-full" style={{ background: 'radial-gradient(circle, rgba(27,122,61,.08) 0%, transparent 60%)' }} />
-        <div className="container-rq relative z-10 text-center max-w-3xl mx-auto">
-          <ScrollReveal>
-            <div className="section-tag !bg-white/10 !text-white/80 mb-6"><span className="material-symbols-outlined text-[14px]">psychology</span> Problem → Solution</div>
-            <h1 className="font-extrabold text-white leading-[1.08] mb-5" style={{ fontSize: 'clamp(2.25rem, 5vw, 3.25rem)', letterSpacing: '-0.035em' }}>
-              Recycling Challenges <span className="text-[#4ADE80]">We Solve</span>
-            </h1>
-          </ScrollReveal>
-          <ScrollReveal delay={80}>
-            <p className="definition-block text-dark-text text-[17px] leading-relaxed max-w-xl mx-auto mb-8">
-              Whatever your waste management problem, we have a certified solution. Each challenge below maps to the specific services, materials, and compliance frameworks that solve it — so you can go from problem to resolution with a single partner.
-            </p>
-          </ScrollReveal>
-          <ScrollReveal delay={160}>
-            <div className="flex gap-2.5 justify-center flex-wrap">
-              <Link href="/get-a-quote" className="btn-white">Get a Quote <span className="material-symbols-outlined text-[16px]">arrow_forward</span></Link>
-              <a href={CONTACT.phoneHref} className="btn-outline-white"><span className="material-symbols-outlined text-[16px]">phone</span> {CONTACT.phone}</a>
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
+      <PageHero
+        tag="Problem → Solution"
+        tagIcon="psychology"
+        title="Recycling Challenges"
+        titleAccent="We Solve"
+        description="Whatever your waste management problem, we have a certified solution. Each challenge below maps to the specific services, materials, and compliance frameworks that solve it — so you can go from problem to resolution with a single partner."
+        image="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1600&h=600&fit=crop"
+        showPhone
+      />
 
-      {/* §2 Challenges Grid — 8 cards */}
+      {/* Challenges Grid */}
       <section className="py-24 bg-white">
         <div className="container-rq">
-          <ScrollReveal>
-            <SectionHeader tag="8 Core Challenges" tagIcon="lightbulb" title="Identify Your Challenge" subtitle="Select the challenge closest to your situation. We'll show you exactly how we solve it." />
-          </ScrollReveal>
+          <ScrollReveal><SectionHeader tag="8 Core Challenges" tagIcon="lightbulb" title="Identify Your Challenge" subtitle="Select the challenge closest to your situation. We'll show you exactly how we solve it." /></ScrollReveal>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {CHALLENGES.map((ch, i) => (
               <ScrollReveal key={ch.slug} delay={Math.min(i * 60, 300)}>
@@ -82,11 +67,7 @@ export default function ChallengesPage() {
                       <h3 className="font-extrabold text-gray-800 mb-2 text-[1.0625rem]" style={{ letterSpacing: '-0.015em' }}>{ch.title}</h3>
                       <p className="text-[13px] text-gray-500 leading-relaxed mb-3">{ch.pain}</p>
                       <div className="stats-block text-[12px] text-primary font-semibold bg-primary-light rounded-full inline-block px-3 py-1 mb-3">{ch.stats}</div>
-                      <div>
-                        <span className="inline-flex items-center gap-1 text-[13px] font-bold text-primary group-hover:gap-2 transition-all">
-                          See how we solve this <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
-                        </span>
-                      </div>
+                      <div><span className="inline-flex items-center gap-1 text-[13px] font-bold text-primary group-hover:gap-2 transition-all">See how we solve this <span className="material-symbols-outlined text-[16px]">arrow_forward</span></span></div>
                     </div>
                   </div>
                 </Link>
@@ -96,7 +77,7 @@ export default function ChallengesPage() {
         </div>
       </section>
 
-      {/* §3 FAQ + CTA */}
+      {/* FAQ + CTA */}
       <section className="py-24 bg-gray-50">
         <div className="container-rq">
           <ScrollReveal><SectionHeader tag="FAQ" tagIcon="help" title="Questions About Recycling Challenges" /></ScrollReveal>
