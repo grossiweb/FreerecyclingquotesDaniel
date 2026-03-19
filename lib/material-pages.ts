@@ -68,11 +68,13 @@ export const MATERIAL_PAGES: Record<string, MaterialPageData> = {
       'Every ton of recycled steel saves 2,500 pounds of iron ore, 1,400 pounds of coal, and 120 pounds of limestone. For non-ferrous metals like copper and aluminum, the energy savings are even more dramatic — recycling aluminum uses 95% less energy than producing it from raw bauxite ore.',
     ],
     subTypes: [
-      { slug: 'ferrous-metals', name: 'Ferrous Metals', description: 'Iron, steel, cast iron, wrought iron — magnetic metals used in construction, manufacturing, and automotive' },
+      { slug: 'steel', name: 'Steel & Iron', description: 'Structural steel, car bodies, cast iron, motor blocks, HMS1, sheet tin — the highest-volume scrap metal' },
       { slug: 'non-ferrous-metals/copper', name: 'Copper', description: 'Wire, pipe, sheet, and plumbing fixtures — one of the highest-value recyclable metals' },
       { slug: 'non-ferrous-metals/aluminum', name: 'Aluminum', description: 'Extrusions, cans, sheet, and castings — recycling uses 95% less energy than virgin production' },
-      { slug: 'non-ferrous-metals/brass', name: 'Brass', description: 'Fittings, valves, fixtures, and decorative hardware — copper-zinc alloy with strong resale value' },
+      { slug: 'non-ferrous-metals/brass', name: 'Brass & Bronze', description: 'Fittings, valves, radiators, shell casings — copper-zinc alloy with strong resale value' },
       { slug: 'stainless-steel', name: 'Stainless Steel', description: '304, 316, and other grades — food equipment, medical devices, architectural elements' },
+      { slug: 'lead', name: 'Lead', description: 'Battery plates, solder, dross, lugs — regulated metal requiring licensed handling' },
+      { slug: 'ferrous-metals', name: 'Other Ferrous Metals', description: 'Wrought iron, rebar, wire mesh, ductwork, general ferrous scrap — magnetic and 100% recyclable' },
     ],
     acceptedItems: [
       'Steel beams, plates, and structural steel',
@@ -172,10 +174,14 @@ export const MATERIAL_PAGES: Record<string, MaterialPageData> = {
     subTypes: [
       { slug: 'cell-phones', name: 'Cell Phones & Mobile Devices', description: 'Smartphones, tablets, iPads, feature phones, smartwatches — all brands, any condition' },
       { slug: 'computers-laptops', name: 'Computers & Laptops', description: 'Desktops, laptops, Chromebooks, workstations, Mac and PC — with certified data destruction' },
-      { slug: 'circuit-boards', name: 'Circuit Boards', description: 'Motherboards, PCBs, and components — precious metal recovery from gold, silver, palladium' },
-      { slug: 'wires-cables', name: 'Wires & Cables', description: 'Network cables, power cords, copper wiring — copper and insulation recovery' },
       { slug: 'monitors-tvs', name: 'Monitors & TVs', description: 'LCD, LED, CRT displays — including hazardous CRT glass handling' },
-      { slug: 'printers-copiers', name: 'Printers & Copiers', description: 'Inkjet, laser, multifunction — including toner cartridge recycling' },
+      { slug: 'printers-copiers', name: 'Printers & Copiers', description: 'Inkjet, laser, multifunction — including toner cartridge recycling and hard drive destruction' },
+      { slug: 'networking-servers', name: 'Networking & Servers', description: 'Routers, switches, firewalls, rack servers, UPS, cable modems — with config and data wiping' },
+      { slug: 'storage-drives', name: 'Storage & Drives', description: 'Hard drives, SSDs, tape drives, flash storage — NIST 800-88 destruction before material recovery' },
+      { slug: 'circuit-boards', name: 'Circuit Boards & Components', description: 'Motherboards, PCBs, CPUs, RAM, power boards — precious metal recovery from gold, silver, palladium' },
+      { slug: 'wires-cables', name: 'Wires & Cables', description: 'Network cables, power cords, copper wiring — copper and insulation recovery' },
+      { slug: 'peripherals', name: 'Peripherals & Accessories', description: 'Keyboards, mice, speakers, chargers, adapters, headsets, power supplies — recovered with electronics' },
+      { slug: 'audio-video', name: 'Audio/Video Equipment', description: 'VCRs, DVD players, projectors, gaming consoles, cable boxes, stereos — circuit board and metal recovery' },
     ],
     acceptedItems: [
       'Desktop computers, towers, and workstations',
@@ -335,7 +341,8 @@ export const MATERIAL_PAGES: Record<string, MaterialPageData> = {
     definition: 'Plastic recycling recovers and reprocesses HDPE, PET, PP, and LDPE plastics from commercial waste streams into reusable raw materials. Only about 5-6% of plastic waste in the US is currently recycled — but commercial operations generating clean, sorted streams can achieve dramatically higher rates.',
     headlines: {
       overview: 'Making Plastic Recycling Actually Work',
-      acceptedItems: 'Plastic Types We Process',
+      subTypes: 'Plastic Types We Process',
+      acceptedItems: 'All Plastics We Accept',
       process: 'From Waste Stream to Pellet',
       whyRecycle: 'The Plastic Problem by the Numbers',
       services: 'Plastic Recycling Services',
@@ -347,6 +354,15 @@ export const MATERIAL_PAGES: Record<string, MaterialPageData> = {
       cta: 'Get a Plastic Recycling Quote',
       ctaSubtitle: 'Tell us your plastic types and volumes. We\'ll design a collection program that maximizes recovery.',
     },
+    subTypes: [
+      { slug: 'hdpe', name: 'HDPE (#2)', description: 'Bottles, buckets, pipes, pallets, totes, drums — the most widely recycled rigid plastic' },
+      { slug: 'pet', name: 'PET (#1)', description: 'Beverage bottles, food containers, thermoform packaging — high-value clear plastic stream' },
+      { slug: 'pp', name: 'PP (#5)', description: 'Kitchenware, yogurt tubs, automotive parts, pallets, supersacks — versatile industrial resin' },
+      { slug: 'ldpe-film', name: 'LDPE / Film (#4)', description: 'Stretch wrap, shrink film, bags, frozen food packaging — major commercial stream from logistics' },
+      { slug: 'pvc', name: 'PVC (#3)', description: 'Pipe, cable insulation, window profiles, blister packaging, clamshells' },
+      { slug: 'engineering-plastics', name: 'Engineering Plastics', description: 'ABS, Nylon, PBT, PC, PC/ABS — industrial regrind, parts, and virgin resin in all forms' },
+      { slug: 'polystyrene', name: 'Polystyrene (#6)', description: 'Egg cartons, packing peanuts, disposable cups, plates, trays, takeaway containers' },
+    ],
     overview: [
       'The national plastic recycling rate of 5-6% is misleading for commercial operations. The problem isn\'t that plastic can\'t be recycled — it\'s that most programs collect mixed, contaminated streams that are too expensive to sort. Clean, source-separated commercial plastic consistently achieves recovery rates of 80-95%.',
       'Recycling Quotes designs plastic recycling programs around your specific resin types and generation patterns. Whether it\'s HDPE containers from a production line, stretch wrap from a distribution center, or PET bottles from a cafeteria, we set up collection that keeps streams clean and marketable.',
@@ -520,6 +536,7 @@ export const MATERIAL_PAGES: Record<string, MaterialPageData> = {
       { slug: 'batteries', name: 'Batteries', description: 'Lithium-ion, lead-acid, NiCd, NiMH, and alkaline — all chemistries, any quantity' },
       { slug: 'light-bulbs', name: 'Light Bulbs & Lamps', description: 'Fluorescent tubes, CFLs, HID, mercury-vapor — all contain mercury requiring special handling' },
       { slug: 'chemicals', name: 'Chemicals & Solvents', description: 'Industrial chemicals, solvents, paint, coatings, lab chemicals, and cleaning agents' },
+      { slug: 'medical-waste', name: 'Medical Waste', description: 'Sharps, biohazard, pathological, pharmaceutical — licensed collection with treatment documentation' },
     ],
     acceptedItems: ['Lithium-ion batteries', 'Lead-acid batteries', 'NiCd and NiMH batteries', 'Fluorescent tubes (all sizes)', 'CFL bulbs', 'HID and mercury-vapor lamps', 'Industrial chemicals and solvents', 'Paint and coatings waste', 'Used oil and coolants', 'Medical waste and sharps', 'Laboratory chemicals', 'Mercury-containing equipment'],
     process: [
