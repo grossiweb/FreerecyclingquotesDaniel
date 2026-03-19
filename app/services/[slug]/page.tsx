@@ -189,11 +189,13 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
               <ScrollReveal>
                 <h2 className="text-xl font-extrabold text-gray-800 mb-5" style={{ letterSpacing: '-0.02em' }}>{h.materials}</h2>
               </ScrollReveal>
-              <div className="space-y-2">
+              <div className="space-y-2.5">
                 {page.materials.map((mat, i) => (
                   <ScrollReveal key={mat.slug} delay={i * 40}>
-                    <Link href={`/materials/${mat.slug}`} className="block px-4 py-3 bg-gray-50 border border-gray-100 rounded-[10px] group hover:border-primary hover:bg-white transition-all duration-200">
-                      <span className="text-[14px] font-bold text-gray-700 group-hover:text-primary transition-colors">{mat.name}</span>
+                    <Link href={`/materials/${mat.slug}`} className={`block ${mat.description ? 'bg-gray-50 border border-gray-100 rounded-[16px] p-5' : 'px-4 py-3 bg-gray-50 border border-gray-100 rounded-[10px]'} group hover:border-primary hover:bg-white hover:shadow-md transition-all duration-200 relative overflow-hidden`}>
+                      {mat.description && <div className="absolute top-0 left-0 right-0 h-[2px] bg-primary scale-x-0 origin-left group-hover:scale-x-100 transition-transform duration-400" />}
+                      <span className="text-[14px] font-bold text-gray-700 group-hover:text-primary transition-colors block">{mat.name}</span>
+                      {mat.description && <span className="text-[12px] text-gray-400 leading-relaxed mt-1 block">{mat.description}</span>}
                     </Link>
                   </ScrollReveal>
                 ))}

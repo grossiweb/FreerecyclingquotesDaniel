@@ -14,7 +14,7 @@ export type ServicePageData = {
   differentiators: string[];
   challenges: { slug: string; title: string; pain: string }[];
   industries: { slug: string; name: string; context: string }[];
-  materials: { slug: string; name: string }[];
+  materials: { slug: string; name: string; description?: string }[];
   topLocations: { slug: string; name: string }[];
   caseStudies: { title: string; metric: string; industry: string }[];
   faqs: { q: string; a: string }[];
@@ -101,11 +101,10 @@ export const SERVICE_PAGES: Record<string, ServicePageData> = {
       { slug: 'construction', name: 'Construction', context: 'Materials arrive on pallets that stack up at job sites. We do on-demand pickup for projects of any size and duration.' },
     ],
     materials: [
-      { slug: 'pallets/wooden-pallets', name: 'Wooden Pallets' },
-      { slug: 'pallets/plastic-pallets', name: 'Plastic Pallets' },
-      { slug: 'pallets', name: 'All Pallet Types' },
-      { slug: 'paper-cardboard', name: 'Cardboard & Paper' },
-      { slug: 'junk', name: 'Junk & Mixed Waste' },
+      { slug: 'pallets/wooden-pallets', name: 'Wooden Pallets', description: 'GMA 48×40, custom sizes, Euro pallets, heat-treated — repair, reuse, or grind' },
+      { slug: 'pallets/plastic-pallets', name: 'Plastic Pallets', description: 'HDPE and PP pallets — nestable, rackable, export-grade — ground into regrind' },
+      { slug: 'paper-cardboard', name: 'Cardboard & Paper', description: 'Often co-collected with pallets from receiving docks — OCC baling available' },
+      { slug: 'junk', name: 'Junk & Mixed Waste', description: 'Broken pallets, crating, dunnage, and other dock waste hauled with pallet pickups' },
     ],
     topLocations: [
       { slug: 'dallas-fort-worth', name: 'Dallas–Fort Worth' },
@@ -201,11 +200,12 @@ export const SERVICE_PAGES: Record<string, ServicePageData> = {
       { slug: 'logistics', name: 'Distribution & Logistics', context: 'Racking, shelving, and equipment decommissions produce steel and aluminum scrap. We handle full warehouse cleanouts with documented chain-of-custody.' },
     ],
     materials: [
-      { slug: 'metals', name: 'All Metals' },
-      { slug: 'metals/ferrous-metals', name: 'Ferrous Metals' },
-      { slug: 'metals/non-ferrous-metals/copper', name: 'Copper' },
-      { slug: 'metals/non-ferrous-metals/aluminum', name: 'Aluminum' },
-      { slug: 'metals/non-ferrous-metals/brass', name: 'Brass' },
+      { slug: 'metals/steel', name: 'Steel & Iron', description: 'Structural steel, car bodies, cast iron, motor blocks, HMS1, sheet tin — the highest-volume scrap category' },
+      { slug: 'metals/non-ferrous-metals/copper', name: 'Copper', description: 'Bare bright wire, insulated wire, pipe, sheet, turnings, electric motors — highest per-pound value' },
+      { slug: 'metals/non-ferrous-metals/aluminum', name: 'Aluminum', description: 'Extrusions, cans, wheels, castings, wire — recycling uses 95% less energy than virgin production' },
+      { slug: 'metals/non-ferrous-metals/brass', name: 'Brass & Bronze', description: 'Fittings, valves, radiators, shell casings, wire nodules — copper-zinc alloy with strong value' },
+      { slug: 'metals/stainless-steel', name: 'Stainless Steel', description: '304, 316, and all grades — restaurant equipment, medical instruments, XRF grade verification' },
+      { slug: 'metals/lead', name: 'Lead', description: 'Battery plates, solder, dross, cable sheathing — regulated metal requiring licensed handling' },
     ],
     topLocations: [
       { slug: 'chicago', name: 'Chicago' },
@@ -302,11 +302,16 @@ export const SERVICE_PAGES: Record<string, ServicePageData> = {
       { slug: 'education', name: 'Education & Government', context: 'Schools and agencies cycle through Chromebooks, desktops, and networking equipment on 3-5 year rotations. We manage fleet-scale IT disposition.' },
     ],
     materials: [
-      { slug: 'electronics', name: 'All Electronics' },
-      { slug: 'electronics/cell-phones', name: 'Cell Phones' },
-      { slug: 'electronics/computers-laptops', name: 'Computers & Laptops' },
-      { slug: 'electronics/circuit-boards', name: 'Circuit Boards' },
-      { slug: 'electronics/wires-cables', name: 'Wires & Cables' },
+      { slug: 'electronics/computers-laptops', name: 'Computers & Laptops', description: 'Desktops, laptops, Chromebooks, workstations — all brands with certified data destruction' },
+      { slug: 'electronics/cell-phones', name: 'Cell Phones & Mobile', description: 'Smartphones, tablets, smartwatches — all brands, any condition, data wiped' },
+      { slug: 'electronics/monitors-tvs', name: 'Monitors & TVs', description: 'LCD, LED, CRT displays — including hazardous CRT lead glass handling' },
+      { slug: 'electronics/printers-copiers', name: 'Printers & Copiers', description: 'Inkjet, laser, MFPs — including hard drive destruction and toner recycling' },
+      { slug: 'electronics/networking-servers', name: 'Networking & Servers', description: 'Routers, switches, rack servers, UPS — config wiping and asset recovery' },
+      { slug: 'electronics/storage-drives', name: 'Storage & Drives', description: 'HDDs, SSDs, tape drives, flash — NIST 800-88 destruction before recycling' },
+      { slug: 'electronics/circuit-boards', name: 'Circuit Boards', description: 'Motherboards, CPUs, RAM — precious metal recovery from gold, silver, palladium' },
+      { slug: 'electronics/wires-cables', name: 'Wires & Cables', description: 'Network cables, power cords, copper wiring — copper and insulation recovery' },
+      { slug: 'electronics/peripherals', name: 'Peripherals', description: 'Keyboards, mice, chargers, adapters, headsets, power supplies' },
+      { slug: 'electronics/audio-video', name: 'Audio/Video', description: 'VCRs, projectors, gaming consoles, cable boxes, stereo equipment' },
     ],
     topLocations: [
       { slug: 'new-york-city', name: 'New York City' },
@@ -400,10 +405,10 @@ export const SERVICE_PAGES: Record<string, ServicePageData> = {
       { slug: 'retail', name: 'Retail', context: 'Store buildouts, remodels, and fixture disposal. We handle the construction waste so your GC doesn\'t have to mark it up.' },
     ],
     materials: [
-      { slug: 'junk', name: 'Junk & Mixed Waste' },
-      { slug: 'paper-cardboard', name: 'Cardboard' },
-      { slug: 'metals', name: 'Scrap Metal' },
-      { slug: 'pallets', name: 'Pallets & Wood' },
+      { slug: 'junk', name: 'Junk & Mixed Waste', description: 'General debris, furniture, fixtures, construction waste — the catch-all for roll-off loads' },
+      { slug: 'paper-cardboard', name: 'Cardboard & Paper', description: 'Corrugated boxes and packaging — often the largest stream in retail and office dumpsters' },
+      { slug: 'metals', name: 'Scrap Metal', description: 'Steel, iron, aluminum from construction, demo, and manufacturing — heavy debris containers available' },
+      { slug: 'pallets', name: 'Pallets & Wood', description: 'Wooden pallets, crating, lumber — collected in open-top roll-offs' },
     ],
     topLocations: [
       { slug: 'chicago', name: 'Chicago' },
@@ -497,10 +502,10 @@ export const SERVICE_PAGES: Record<string, ServicePageData> = {
       { slug: 'logistics', name: 'Distribution & Logistics', context: 'Warehouse cleanouts, racking removal, and damaged goods disposal. We handle the heavy stuff your team shouldn\'t.' },
     ],
     materials: [
-      { slug: 'junk', name: 'Junk & Mixed Waste' },
-      { slug: 'electronics', name: 'Electronics' },
-      { slug: 'metals', name: 'Scrap Metal' },
-      { slug: 'textiles', name: 'Textiles & Fabric' },
+      { slug: 'junk', name: 'Junk & Bulky Items', description: 'Furniture, mattresses, appliances, exercise equipment — our crew loads everything' },
+      { slug: 'electronics', name: 'Electronics', description: 'Old TVs, computers, printers — sorted for recycling, data destruction available' },
+      { slug: 'metals', name: 'Scrap Metal', description: 'Appliances, racking, fixtures — metal recovered and sold at commodity rates' },
+      { slug: 'textiles', name: 'Textiles & Fabric', description: 'Clothing, linens, curtains — usable items donated, remainder recycled for fiber' },
     ],
     topLocations: [
       { slug: 'chicago', name: 'Chicago' },
@@ -584,11 +589,12 @@ export const SERVICE_PAGES: Record<string, ServicePageData> = {
       { slug: 'healthcare', name: 'Healthcare', context: 'Regulated medical waste, e-waste, paper, and general recycling — all requiring different compliance frameworks. One program, all streams covered.' },
     ],
     materials: [
-      { slug: 'paper-cardboard', name: 'Paper & Cardboard' },
-      { slug: 'plastics', name: 'Plastics' },
-      { slug: 'metals', name: 'Metals' },
-      { slug: 'electronics', name: 'Electronics' },
-      { slug: 'pallets', name: 'Pallets' },
+      { slug: 'paper-cardboard', name: 'Paper & Cardboard', description: 'Corrugated cardboard, office paper, magazines, newspapers — revenue-positive at volume' },
+      { slug: 'plastics', name: 'Plastics', description: 'HDPE, PET, PP, LDPE film, engineering plastics — sorted by resin for maximum value' },
+      { slug: 'metals', name: 'Metals', description: 'Steel, aluminum, copper, brass, stainless — all grades at daily commodity rates' },
+      { slug: 'electronics', name: 'Electronics', description: 'Computers, phones, monitors, printers, networking — with certified data destruction' },
+      { slug: 'pallets', name: 'Pallets', description: 'Wooden and plastic pallets — repair, reuse, and grind program with free pickup' },
+      { slug: 'organics', name: 'Organics', description: 'Food waste, compostable serviceware — for operations with SB 1383 or state mandates' },
     ],
     topLocations: [
       { slug: 'chicago', name: 'Chicago' },
@@ -667,10 +673,12 @@ export const SERVICE_PAGES: Record<string, ServicePageData> = {
       { slug: 'retail', name: 'Retail', context: 'POS terminals, back-office systems, and digital signage — retail tech refreshes happen across hundreds of locations. We coordinate nationwide.' },
     ],
     materials: [
-      { slug: 'electronics', name: 'Electronics' },
-      { slug: 'electronics/cell-phones', name: 'Cell Phones' },
-      { slug: 'electronics/computers-laptops', name: 'Computers & Laptops' },
-      { slug: 'electronics/circuit-boards', name: 'Circuit Boards' },
+      { slug: 'electronics/computers-laptops', name: 'Computers & Laptops', description: 'Desktops, laptops, Chromebooks — serial tracking, data destruction, remarketing' },
+      { slug: 'electronics/cell-phones', name: 'Cell Phones & Mobile', description: 'Smartphones, tablets — NIST 800-88 wipe or shred, per-device COD' },
+      { slug: 'electronics/networking-servers', name: 'Networking & Servers', description: 'Servers, routers, switches, UPS — config clearing and drive destruction' },
+      { slug: 'electronics/storage-drives', name: 'Storage & Drives', description: 'HDDs, SSDs, tape drives — the highest-risk component in any ITAD program' },
+      { slug: 'electronics/monitors-tvs', name: 'Monitors & Displays', description: 'LCD, LED monitors, digital signage — recycled after drive removal from all-in-ones' },
+      { slug: 'electronics/printers-copiers', name: 'Printers & Copiers', description: 'MFPs with hard drives, laser printers — hidden data storage risk' },
     ],
     topLocations: [
       { slug: 'new-york-city', name: 'New York City' },
@@ -748,9 +756,11 @@ export const SERVICE_PAGES: Record<string, ServicePageData> = {
       { slug: 'manufacturing', name: 'Manufacturing', context: 'Intellectual property, CAD files, and proprietary formulations stored on retired workstations need secure destruction before equipment disposal.' },
     ],
     materials: [
-      { slug: 'electronics', name: 'Electronics' },
-      { slug: 'electronics/computers-laptops', name: 'Computers & Laptops' },
-      { slug: 'electronics/cell-phones', name: 'Cell Phones & Tablets' },
+      { slug: 'electronics/storage-drives', name: 'Hard Drives & SSDs', description: 'The primary target — NIST 800-88 Clear, Purge, or Destroy depending on security level' },
+      { slug: 'electronics/computers-laptops', name: 'Computers & Laptops', description: 'Internal drives removed and destroyed — device may be remarketed after data elimination' },
+      { slug: 'electronics/cell-phones', name: 'Cell Phones & Tablets', description: 'NIST 800-88 wipe or physical shred — factory reset alone is NOT sufficient' },
+      { slug: 'electronics/networking-servers', name: 'Servers & Network Equipment', description: 'Server drives shredded, router configs wiped and verified — enterprise data security' },
+      { slug: 'electronics/printers-copiers', name: 'Copiers & MFPs', description: 'Hidden hard drives in copiers store images of every document — often overlooked' },
     ],
     topLocations: [
       { slug: 'new-york-city', name: 'New York City' },
@@ -830,10 +840,10 @@ export const SERVICE_PAGES: Record<string, ServicePageData> = {
     ],
     materials: [
       { slug: 'hazardous-materials', name: 'All Hazardous Materials' },
-      { slug: 'hazardous-materials/batteries', name: 'Batteries' },
-      { slug: 'hazardous-materials/light-bulbs', name: 'Light Bulbs' },
-      { slug: 'hazardous-materials/chemicals', name: 'Chemicals' },
-      { slug: 'hazardous-materials/medical-waste', name: 'Medical Waste' },
+      { slug: 'hazardous-materials/batteries', name: 'Batteries', description: 'Li-ion, lead-acid, NiCd, NiMH, alkaline — all chemistries, DOT-compliant packaging' },
+      { slug: 'hazardous-materials/light-bulbs', name: 'Light Bulbs & Lamps', description: 'Fluorescent tubes, CFLs, HID, mercury-vapor — mercury capture and recovery' },
+      { slug: 'hazardous-materials/chemicals', name: 'Chemicals & Solvents', description: 'Industrial chemicals, solvents, paints, lab chemicals, cutting fluids — profiled and manifested' },
+      { slug: 'hazardous-materials/medical-waste', name: 'Medical Waste', description: 'Sharps, biohazard, pathological, pharmaceutical — licensed collection and treatment' },
     ],
     topLocations: [
       { slug: 'houston', name: 'Houston' },
@@ -910,9 +920,9 @@ export const SERVICE_PAGES: Record<string, ServicePageData> = {
       { slug: 'manufacturing', name: 'Manufacturing', context: 'Inbound packaging, production waste, and outbound shipping materials create multi-stream paper waste. We handle all grades.' },
     ],
     materials: [
-      { slug: 'paper-cardboard', name: 'All Paper & Cardboard' },
-      { slug: 'paper-cardboard/cardboard', name: 'Cardboard (OCC)' },
-      { slug: 'paper-cardboard/office-paper', name: 'Office Paper' },
+      { slug: 'paper-cardboard', name: 'Corrugated Cardboard (OCC)', description: 'Shipping boxes, packaging, corrugated sheets — the #1 commercial recyclable by weight' },
+      { slug: 'paper-cardboard', name: 'Office Paper', description: 'White and colored office paper, envelopes, file folders, notebooks — all grades accepted' },
+      { slug: 'paper-cardboard', name: 'Mixed Paper', description: 'Magazines, newspapers, phone books, junk mail, paperboard (cereal boxes), dairy cartons' },
     ],
     topLocations: [
       { slug: 'chicago', name: 'Chicago' },
@@ -989,8 +999,13 @@ export const SERVICE_PAGES: Record<string, ServicePageData> = {
       { slug: 'logistics', name: 'Distribution & Logistics', context: 'Stretch wrap from pallet wrapping is one of the most recyclable plastic streams. A dedicated film recycling program for your DC can divert thousands of pounds per month.' },
     ],
     materials: [
-      { slug: 'plastics', name: 'All Plastics' },
-      { slug: 'plastics/rigid-plastics', name: 'Rigid Plastics' },
+      { slug: 'plastics/hdpe', name: 'HDPE (#2)', description: 'Bottles, buckets, pipes, pallets, drums — the most widely recycled rigid plastic' },
+      { slug: 'plastics/pet', name: 'PET (#1)', description: 'Beverage bottles, food containers, thermoform packaging — high-value clear stream' },
+      { slug: 'plastics/pp', name: 'PP (#5)', description: 'Kitchenware, yogurt tubs, automotive parts, pallets, supersacks' },
+      { slug: 'plastics/ldpe-film', name: 'LDPE / Film (#4)', description: 'Stretch wrap, shrink film, bags — major commercial stream from DCs and warehouses' },
+      { slug: 'plastics/pvc', name: 'PVC (#3)', description: 'Pipe, cable insulation, window profiles, vinyl siding — specialized recycling' },
+      { slug: 'plastics/engineering-plastics', name: 'Engineering Plastics', description: 'ABS, Nylon, PC, PBT, PC/ABS — industrial regrind and production scrap at premium rates' },
+      { slug: 'plastics/polystyrene', name: 'Polystyrene (#6)', description: 'EPS foam, packing peanuts, disposable cups, trays — densifying available' },
     ],
     topLocations: [
       { slug: 'chicago', name: 'Chicago' },
@@ -1068,11 +1083,12 @@ export const SERVICE_PAGES: Record<string, ServicePageData> = {
       { slug: 'healthcare', name: 'Healthcare', context: 'Regulated medical waste, e-waste, paper, batteries, and general recycling. Multiple compliance frameworks, one coordinated program.' },
     ],
     materials: [
-      { slug: 'metals', name: 'Metals' },
-      { slug: 'paper-cardboard', name: 'Paper & Cardboard' },
-      { slug: 'plastics', name: 'Plastics' },
-      { slug: 'electronics', name: 'Electronics' },
-      { slug: 'pallets', name: 'Pallets' },
+      { slug: 'metals', name: 'Metals', description: 'Steel, copper, aluminum, brass, stainless, lead — all grades at daily commodity rates' },
+      { slug: 'paper-cardboard', name: 'Paper & Cardboard', description: 'OCC, office paper, mixed paper — revenue-positive at volume with baler support' },
+      { slug: 'plastics', name: 'Plastics', description: 'HDPE, PET, PP, LDPE film, PVC, engineering plastics — sorted by resin type' },
+      { slug: 'electronics', name: 'Electronics', description: 'All e-waste with certified data destruction — from cell phones to server racks' },
+      { slug: 'pallets', name: 'Pallets', description: 'Wooden and plastic — three-tier program: repair, reuse, grind' },
+      { slug: 'hazardous-materials', name: 'Hazardous Materials', description: 'Batteries, bulbs, chemicals, medical waste — EPA RCRA compliant with manifesting' },
     ],
     topLocations: [
       { slug: 'chicago', name: 'Chicago' },
@@ -1149,11 +1165,11 @@ export const SERVICE_PAGES: Record<string, ServicePageData> = {
       { slug: 'healthcare', name: 'Healthcare', context: 'Healthcare audits focus on separating regulated medical waste from general waste. Mis-classification inflates disposal costs dramatically.' },
     ],
     materials: [
-      { slug: 'paper-cardboard', name: 'Paper & Cardboard' },
-      { slug: 'plastics', name: 'Plastics' },
-      { slug: 'metals', name: 'Metals' },
-      { slug: 'electronics', name: 'Electronics' },
-      { slug: 'hazardous-materials', name: 'Hazardous Materials' },
+      { slug: 'paper-cardboard', name: 'Paper & Cardboard', description: 'Cardboard, office paper, mixed paper — often the quick win in any audit' },
+      { slug: 'plastics', name: 'Plastics', description: 'HDPE, PET, PP, film — identifying clean resin streams unlocks value' },
+      { slug: 'metals', name: 'Metals', description: 'Scrap metal hiding in the general waste stream — usually the biggest revenue discovery' },
+      { slug: 'electronics', name: 'Electronics', description: 'E-waste accumulation points and data security gaps identified during the audit' },
+      { slug: 'hazardous-materials', name: 'Hazardous Materials', description: 'Universal waste compliance check — batteries, bulbs, chemicals often mis-handled' },
     ],
     topLocations: [
       { slug: 'chicago', name: 'Chicago' },
@@ -1231,8 +1247,8 @@ export const SERVICE_PAGES: Record<string, ServicePageData> = {
       { slug: 'retail', name: 'Retail', context: 'Credit applications, employment records, and customer PII from loyalty programs. Recurring shredding keeps stores compliant without back-office burden.' },
     ],
     materials: [
-      { slug: 'paper-cardboard', name: 'Paper & Cardboard' },
-      { slug: 'paper-cardboard/office-paper', name: 'Office Paper' },
+      { slug: 'paper-cardboard', name: 'Confidential Paper', description: 'Financial records, patient files, legal documents, employee records — NAID AAA certified cross-cut shredding' },
+      { slug: 'electronics/storage-drives', name: 'Electronic Media', description: 'Hard drives, SSDs, tapes, CDs, flash drives — physical shredding with per-item COD' },
     ],
     topLocations: [
       { slug: 'new-york-city', name: 'New York City' },
@@ -1310,10 +1326,10 @@ export const SERVICE_PAGES: Record<string, ServicePageData> = {
       { slug: 'logistics', name: 'Distribution & Logistics', context: 'Damaged-in-transit goods, carrier claims, and insurance write-offs. Destruction documentation supports insurance claims and carrier disputes.' },
     ],
     materials: [
-      { slug: 'electronics', name: 'Electronics' },
-      { slug: 'plastics', name: 'Plastics' },
-      { slug: 'metals', name: 'Metals' },
-      { slug: 'textiles', name: 'Textiles' },
+      { slug: 'electronics', name: 'Electronics', description: 'Defective, recalled, or end-of-life electronics destroyed with documentation' },
+      { slug: 'plastics', name: 'Plastics', description: 'Branded packaging, defective plastic products, obsolete inventory — ground and recycled' },
+      { slug: 'metals', name: 'Metals', description: 'Metal products, components, and branded items — shredded and melted for scrap recovery' },
+      { slug: 'textiles', name: 'Textiles & Apparel', description: 'Branded clothing, counterfeit goods, defective fabric — shredded for fiber reclamation' },
     ],
     topLocations: [
       { slug: 'dallas-fort-worth', name: 'Dallas–Fort Worth' },
