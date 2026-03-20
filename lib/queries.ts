@@ -6,11 +6,11 @@ import { supabase } from './supabase';
 
 let contactCache: Record<string, string> | null = null;
 
-export async function getContact() {
+export async function getContact(): Promise<Record<string, string>> {
   if (contactCache) return contactCache;
   const { data } = await supabase.from('site_config').select('key, value');
   contactCache = Object.fromEntries((data || []).map(d => [d.key, d.value]));
-  return contactCache;
+  return contactCache || {};
 }
 
 // ═══════════════════════════════════════════════════════════════

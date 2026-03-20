@@ -58,7 +58,7 @@ export default async function MaterialCatchAllPage({ params }: { params: { slug:
   
   if (pageData) {
     const contact = await getContact();
-    const contactObj = { phone: contact.phone || '817-946-5655', phoneHref: contact.phone_href || 'tel:8179465655' };
+    const contactObj = { phone: contact?.phone || '817-946-5655', phoneHref: contact?.phone_href || 'tel:8179465655' };
 
     if (pageData.depth === 2) {
       // Leaf page — get parent hero image from Supabase too

@@ -64,7 +64,7 @@ export default async function CityPage({ params }: { params: { country: string; 
 
   // ⚡ CONTACT FROM SUPABASE
   const contactData = await getContact();
-  const CONTACT_DB = { phone: contactData.phone || '817-946-5655', phoneHref: contactData.phone_href || 'tel:8179465655' };
+  const CONTACT_DB = { phone: contactData?.phone || '817-946-5655', phoneHref: contactData?.phone_href || 'tel:8179465655' };
 
   const label = `${city.name}${city.state ? `, ${city.state}` : ''}`;
   const stateCtx = city.state ? STATE_CONTEXT[city.state] : null;

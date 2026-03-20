@@ -31,7 +31,7 @@ export default async function ServicePage({ params }: { params: { slug: string }
   if (!page) notFound();
 
   const contact = await getContact();
-  const CONTACT = { phone: contact.phone || '817-946-5655', phoneHref: contact.phone_href || 'tel:8179465655' };
+  const CONTACT = { phone: contact?.phone || '817-946-5655', phoneHref: contact?.phone_href || 'tel:8179465655' };
 
   const indImages = await getIndustryImages();
   const h = page.headlines;

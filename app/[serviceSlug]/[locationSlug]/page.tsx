@@ -50,8 +50,8 @@ export default async function ServiceLocationPage({ params }: { params: { servic
   // ⚡ CONTACT FROM SUPABASE
   const contactData = await getContact();
   const CONTACT_DB = {
-    phone: contactData.phone || '817-946-5655',
-    phoneHref: contactData.phone_href || 'tel:8179465655',
+    phone: contactData?.phone || '817-946-5655',
+    phoneHref: contactData?.phone_href || 'tel:8179465655',
   };
 
   const stateCtx = city.state ? STATE_CONTEXT[city.state] : null;
