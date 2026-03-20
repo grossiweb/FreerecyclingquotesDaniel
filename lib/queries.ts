@@ -314,6 +314,54 @@ export async function getAllIndustrySlugs(): Promise<string[]> {
 }
 
 // ═══════════════════════════════════════════════════════════════
+// GEO: STATS (reusable across pages)
+// ═══════════════════════════════════════════════════════════════
+
+export async function getPageStats(pageType: string, pageSlug: string) {
+  const { data } = await supabase
+    .from('page_stats')
+    .select('stat_key, sort_order, stat:stats(value, context, source)')
+    .eq('page_type', pageType)
+    .eq('page_slug', pageSlug)
+    .order('sort_order');
+
+  return (data || []).map((d: any) => ({
+    value: d.stat?.value,
+    context: d.stat?.context,
+    source: d.stat?.source,
+  })).filter((s: any) => s.value);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// GEO: CERTIFICATIONS (for schema.org mentions)
+// ═══════════════════════════════════════════════════════════════
+
+let certsCache: any[] | null = null;
+
+export async function getCertifications() {
+  if (certsCache) return certsCache;
+  const { data } = await supabase
+    .from('certifications')
+    .select('slug, name, full_name, description, issuing_body')
+    .eq('is_active', true);
+  certsCache = data || [];
+  return certsCache;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// GEO: REGULATIONS (for challenge/industry pages)
+// ═══════════════════════════════════════════════════════════════
+
+export async function getRegulationsForTopic(topic: string) {
+  const { data } = await supabase
+    .from('regulations')
+    .select('*')
+    .eq('is_active', true)
+    .contains('applies_to', JSON.stringify([topic]));
+  return data || [];
+}
+
+// ═══════════════════════════════════════════════════════════════
 // SERVICE CITIES (for LocationsSection component)
 // ═══════════════════════════════════════════════════════════════
 

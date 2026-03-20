@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { getServicePage, getContact, getIndustryImages, getServiceCities } from '@/lib/queries';
+import { getServicePage, getContact, getIndustryImages, getServiceCities, getPageStats, getCertifications } from '@/lib/queries';
 import { SERVICE_PAGES } from '@/lib/service-pages'; // Keep for generateStaticParams + generateMetadata
 import { INDUSTRIES } from '@/lib/data'; // Keep for generateMetadata
 import { JsonLd, serviceSchema, faqPageSchema, webPageSchema } from '@/lib/schema';
@@ -39,6 +39,8 @@ export default async function ServicePage({ params }: { params: { slug: string }
 
   const indImages = await getIndustryImages();
   const serviceCities = await getServiceCities(params.slug);
+  const pageStats = await getPageStats('service', params.slug);
+  const certifications = await getCertifications();
   const h = page.headlines;
   const industryImages = page.industries.map((ind: any) => ({
     ...ind,
@@ -51,7 +53,7 @@ export default async function ServicePage({ params }: { params: { slug: string }
     <>
       <JsonLd data={serviceSchema({ slug: page.slug, name: page.name, description: page.definition, offers: page.materials.map((m: any) => ({ name: `${m.name} Recycling`, url: `/${page.slug}/${m.slug}` })) })} />
       <JsonLd data={faqPageSchema(page.faqs.map((f: any) => ({ question: f.q, answer: f.a })))} />
-      <JsonLd data={webPageSchema({ path: `/services/${page.slug}`, name: page.h1, description: page.metaDescription })} />
+      <JsonLd data={webPageSchema({ path: `/services/${page.slug}`, name: page.h1, description: page.metaDescription, mentions: certifications.map((c: any) => ({ name: c.name, description: c.description })) })} />
       <Breadcrumbs items={[{ name: 'Services', href: '/services' }, { name: page.name, href: `/services/${page.slug}` }]} />
 
       {/* HERO */}
@@ -108,6 +110,25 @@ export default async function ServicePage({ params }: { params: { slug: string }
                 </div>
               </div>
             </ScrollReveal>
+          </div>
+        </section>
+      )}
+
+      {/* ═══ GEO: STATS BLOCK — AI-citable data points ═══ */}
+      {pageStats.length > 0 && (
+        <section className="py-16 bg-dark-bg">
+          <div className="container-rq">
+            <div className={`grid grid-cols-2 ${pageStats.length >= 3 ? 'lg:grid-cols-3' : 'lg:grid-cols-2'} gap-4`}>
+              {pageStats.map((stat: any, i: number) => (
+                <ScrollReveal key={i} delay={i * 60}>
+                  <div className="stats-block text-center p-6">
+                    <div className="text-2xl lg:text-3xl font-extrabold text-[#4ADE80] mb-2" style={{ letterSpacing: '-0.03em' }}>{stat.value}</div>
+                    <p className="text-[13px] text-gray-300 leading-relaxed mb-1">{stat.context}</p>
+                    <p className="text-[11px] text-gray-500">{stat.source}</p>
+                  </div>
+                </ScrollReveal>
+              ))}
+            </div>
           </div>
         </section>
       )}

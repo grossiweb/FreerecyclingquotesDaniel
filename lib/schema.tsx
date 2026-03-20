@@ -74,10 +74,12 @@ export function webPageSchema({
   path,
   name,
   description,
+  mentions,
 }: {
   path: string;
   name: string;
   description: string;
+  mentions?: { name: string; description: string }[];
 }) {
   return {
     '@context': 'https://schema.org',
@@ -91,8 +93,16 @@ export function webPageSchema({
     // GEO §2.3 — speakable markup for AI citation
     speakable: {
       '@type': 'SpeakableSpecification',
-      cssSelector: ['.definition-block', '.faq-answer', '.process-summary', '.stats-block'],
+      cssSelector: ['.definition-block', '.faq-answer', '.process-summary', '.stats-block', '.challenge-definition', '.challenge-approach'],
     },
+    // GEO §2.1 — entity mentions for AI understanding
+    ...(mentions && mentions.length > 0 ? {
+      mentions: mentions.map(m => ({
+        '@type': 'Thing',
+        name: m.name,
+        description: m.description,
+      })),
+    } : {}),
   };
 }
 
