@@ -23,9 +23,9 @@ export async function getIndustryImages(): Promise<Record<string, string>> {
   if (industryImageCache) return industryImageCache;
   const { data } = await supabase.from('industries').select('slug, image').eq('is_active', true);
   industryImageCache = Object.fromEntries(
-    (data || []).map(i => [i.slug, i.image || 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=400&h=300&fit=crop'])
+    (data || []).map((i: any) => [i.slug, i.image || 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=400&h=300&fit=crop'])
   );
-  return industryImageCache;
+  return industryImageCache!;
 }
 
 // ═══════════════════════════════════════════════════════════════
