@@ -142,7 +142,7 @@ function LeafPage({ leaf, heroImage, contact }: { leaf: any; heroImage: string; 
           </ScrollReveal>
           <ScrollReveal>
             <div className="process-summary flex gap-3 overflow-x-auto pb-4 -mx-4 px-4 lg:mx-0 lg:px-0 snap-x snap-mandatory" style={{ scrollbarWidth: 'none' }}>
-              {leaf.process.map((step, i) => (
+              {leaf.process.map((step: any, i: number) => (
                 <div key={i} className="bg-white border border-gray-200 rounded-[20px] p-5 shrink-0 snap-start flex-1 min-w-[220px] hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
                   <div className="flex items-center gap-3 mb-3">
                     <div className="w-8 h-8 flex items-center justify-center bg-dark-bg text-[#4ADE80] text-[13px] font-extrabold rounded-full shrink-0">{i + 1}</div>
@@ -165,7 +165,7 @@ function LeafPage({ leaf, heroImage, contact }: { leaf: any; heroImage: string; 
                 <h2 className="text-xl font-extrabold text-gray-800 mb-6" style={{ letterSpacing: '-0.02em' }}>Related Services</h2>
               </ScrollReveal>
               <div className="space-y-3">
-                {leaf.services.map((svc, i) => (
+                {leaf.services.map((svc: any, i: number) => (
                   <ScrollReveal key={svc.slug} delay={i * 60}>
                     <Link href={`/services/${svc.slug}`} className="block bg-gray-50 border border-gray-100 rounded-[20px] p-6 group hover:bg-white hover:border-primary-light hover:shadow-lg hover:-translate-y-1 transition-all duration-300 relative overflow-hidden">
                       <div className="absolute top-0 left-0 right-0 h-[3px] bg-primary scale-x-0 origin-left group-hover:scale-x-100 transition-transform duration-400" />
@@ -182,7 +182,7 @@ function LeafPage({ leaf, heroImage, contact }: { leaf: any; heroImage: string; 
                 <p className="text-gray-400 text-[13px] mb-6">More from <Link href={`/materials/${leaf.parentSlug}`} className="text-primary font-bold hover:underline">{leaf.parentName}</Link></p>
               </ScrollReveal>
               <div className="space-y-3">
-                {leaf.siblings.map((sib, i) => (
+                {leaf.siblings.map((sib: any, i: number) => (
                   <ScrollReveal key={sib.slug} delay={i * 60}>
                     <Link href={`/materials/${sib.slug}`} className="block bg-gray-50 border border-gray-100 rounded-[20px] p-5 group hover:bg-white hover:border-primary-light hover:shadow-lg hover:-translate-y-1 transition-all duration-300 relative overflow-hidden">
                       <div className="absolute top-0 left-0 right-0 h-[3px] bg-primary scale-x-0 origin-left group-hover:scale-x-100 transition-transform duration-400" />
@@ -247,7 +247,7 @@ function ParentPage({ page, contact, industryImageMap }: { page: any; contact: {
             <div className="section-tag mb-4"><span className="material-symbols-outlined text-[14px]">info</span> Overview</div>
             <h2 className="section-title mb-8">{h.overview}</h2>
           </ScrollReveal>
-          {page.overview.map((p, i) => (<ScrollReveal key={i} delay={i * 60}><p className="definition-block text-gray-500 text-[15px] leading-relaxed mb-4">{p}</p></ScrollReveal>))}
+          {page.overview.map((p: any, i: number) => (<ScrollReveal key={i} delay={i * 60}><p className="definition-block text-gray-500 text-[15px] leading-relaxed mb-4">{p}</p></ScrollReveal>))}
           <ScrollReveal>
             <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-2.5">
               {page.whyRecycle.slice(0, 4).map((item: any) => (
@@ -266,7 +266,7 @@ function ParentPage({ page, contact, industryImageMap }: { page: any; contact: {
           <div className="container-rq">
             <ScrollReveal><h2 className="section-title mb-10">{h.subTypes}</h2></ScrollReveal>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {page.subTypes.map((sub, i) => (
+              {page.subTypes.map((sub: any, i: number) => (
                 <ScrollReveal key={sub.slug} delay={i * 50}>
                   <Link href={`/materials/${page.slug}/${sub.slug}`} className="block bg-white border border-gray-200 rounded-[20px] p-6 group hover:border-primary-light hover:shadow-lg hover:-translate-y-1 transition-all duration-300 relative overflow-hidden h-full">
                     <div className="absolute top-0 left-0 right-0 h-[3px] bg-primary scale-x-0 origin-left group-hover:scale-x-100 transition-transform duration-400" />
@@ -307,7 +307,7 @@ function ParentPage({ page, contact, industryImageMap }: { page: any; contact: {
           </ScrollReveal>
           <ScrollReveal>
             <div className="process-summary flex gap-3 overflow-x-auto pb-4 -mx-4 px-4 lg:mx-0 lg:px-0 snap-x snap-mandatory" style={{ scrollbarWidth: 'none' }}>
-              {page.process.map((step, i) => (<div key={i} className="bg-gray-50 border border-gray-100 rounded-[20px] p-5 shrink-0 snap-start flex-1 min-w-[220px] hover:shadow-md hover:-translate-y-0.5 transition-all duration-300"><div className="flex items-center gap-3 mb-3"><div className="w-8 h-8 flex items-center justify-center bg-dark-bg text-[#4ADE80] text-[13px] font-extrabold rounded-full shrink-0">{i + 1}</div><h3 className="font-extrabold text-gray-800 text-[14px]" style={{ letterSpacing: '-0.015em' }}>{step.title}</h3></div><p className="text-[12px] text-gray-400 leading-relaxed">{step.description}</p></div>))}
+              {page.process.map((step: any, i: number) => (<div key={i} className="bg-gray-50 border border-gray-100 rounded-[20px] p-5 shrink-0 snap-start flex-1 min-w-[220px] hover:shadow-md hover:-translate-y-0.5 transition-all duration-300"><div className="flex items-center gap-3 mb-3"><div className="w-8 h-8 flex items-center justify-center bg-dark-bg text-[#4ADE80] text-[13px] font-extrabold rounded-full shrink-0">{i + 1}</div><h3 className="font-extrabold text-gray-800 text-[14px]" style={{ letterSpacing: '-0.015em' }}>{step.title}</h3></div><p className="text-[12px] text-gray-400 leading-relaxed">{step.description}</p></div>))}
             </div>
           </ScrollReveal>
         </div>
@@ -316,7 +316,7 @@ function ParentPage({ page, contact, industryImageMap }: { page: any; contact: {
       <section className="py-12 bg-dark-bg relative overflow-hidden">
         <div className="container-rq relative z-10">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 text-center">
-            {page.whyRecycle.map((item, i) => (<ScrollReveal key={i} delay={i * 60}><div><div className="text-2xl lg:text-3xl font-extrabold text-[#4ADE80] mb-1" style={{ letterSpacing: '-0.03em' }}>{item.stat}</div><p className="text-[12px] text-gray-400 leading-relaxed">{item.description}</p></div></ScrollReveal>))}
+            {page.whyRecycle.map((item: any, i: number) => (<ScrollReveal key={i} delay={i * 60}><div><div className="text-2xl lg:text-3xl font-extrabold text-[#4ADE80] mb-1" style={{ letterSpacing: '-0.03em' }}>{item.stat}</div><p className="text-[12px] text-gray-400 leading-relaxed">{item.description}</p></div></ScrollReveal>))}
           </div>
         </div>
       </section>
@@ -335,14 +335,14 @@ function ParentPage({ page, contact, industryImageMap }: { page: any; contact: {
               <div className="section-tag mb-4"><span className="material-symbols-outlined text-[14px]">handyman</span> Services</div>
               <h2 className="section-title mb-6">{h.services}</h2>
             </ScrollReveal>
-            <div className="space-y-3">{page.services.map((svc, i) => (<ScrollReveal key={svc.slug} delay={i * 60}><Link href={`/services/${svc.slug}`} className="block bg-gray-50 border border-gray-100 rounded-[20px] p-6 group hover:bg-white hover:border-primary-light hover:shadow-lg hover:-translate-y-1 transition-all duration-300 relative overflow-hidden"><div className="absolute top-0 left-0 right-0 h-[3px] bg-primary scale-x-0 origin-left group-hover:scale-x-100 transition-transform duration-400" /><h3 className="font-extrabold text-gray-800 mb-1.5" style={{ letterSpacing: '-0.015em' }}>{svc.name}</h3><p className="text-[13px] text-gray-400 leading-relaxed">{svc.context}</p></Link></ScrollReveal>))}</div>
+            <div className="space-y-3">{page.services.map((svc: any, i: number) => (<ScrollReveal key={svc.slug} delay={i * 60}><Link href={`/services/${svc.slug}`} className="block bg-gray-50 border border-gray-100 rounded-[20px] p-6 group hover:bg-white hover:border-primary-light hover:shadow-lg hover:-translate-y-1 transition-all duration-300 relative overflow-hidden"><div className="absolute top-0 left-0 right-0 h-[3px] bg-primary scale-x-0 origin-left group-hover:scale-x-100 transition-transform duration-400" /><h3 className="font-extrabold text-gray-800 mb-1.5" style={{ letterSpacing: '-0.015em' }}>{svc.name}</h3><p className="text-[13px] text-gray-400 leading-relaxed">{svc.context}</p></Link></ScrollReveal>))}</div>
           </div>
           <div>
             <ScrollReveal>
               <div className="section-tag mb-4"><span className="material-symbols-outlined text-[14px]">psychology</span> Challenges</div>
               <h2 className="text-xl font-extrabold text-gray-800 mb-6" style={{ letterSpacing: '-0.02em' }}>{h.challenges}</h2>
             </ScrollReveal>
-            <div className="space-y-3">{page.challenges.map((ch, i) => (<ScrollReveal key={ch.slug} delay={i * 60}><Link href={`/challenges/${ch.slug}`} className="block bg-gray-50 border border-gray-100 rounded-[20px] p-6 group hover:bg-white hover:border-primary-light hover:shadow-lg hover:-translate-y-1 transition-all duration-300 relative overflow-hidden"><div className="absolute top-0 left-0 right-0 h-[3px] bg-primary scale-x-0 origin-left group-hover:scale-x-100 transition-transform duration-400" /><h3 className="font-extrabold text-gray-800 mb-1.5" style={{ letterSpacing: '-0.015em' }}>{ch.title}</h3><p className="text-[13px] text-gray-400 leading-relaxed">{ch.pain}</p></Link></ScrollReveal>))}</div>
+            <div className="space-y-3">{page.challenges.map((ch: any, i: number) => (<ScrollReveal key={ch.slug} delay={i * 60}><Link href={`/challenges/${ch.slug}`} className="block bg-gray-50 border border-gray-100 rounded-[20px] p-6 group hover:bg-white hover:border-primary-light hover:shadow-lg hover:-translate-y-1 transition-all duration-300 relative overflow-hidden"><div className="absolute top-0 left-0 right-0 h-[3px] bg-primary scale-x-0 origin-left group-hover:scale-x-100 transition-transform duration-400" /><h3 className="font-extrabold text-gray-800 mb-1.5" style={{ letterSpacing: '-0.015em' }}>{ch.title}</h3><p className="text-[13px] text-gray-400 leading-relaxed">{ch.pain}</p></Link></ScrollReveal>))}</div>
           </div>
         </div></div>
       </section>
@@ -351,7 +351,7 @@ function ParentPage({ page, contact, industryImageMap }: { page: any; contact: {
         <div className="container-rq">
           <ScrollReveal><h2 className="section-title mb-10">{h.industries}</h2></ScrollReveal>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {industryImages.map((ind, i) => (<ScrollReveal key={ind.slug} delay={i * 60}><Link href={`/industries/${ind.slug}`} className="flex gap-5 bg-white border border-gray-200 rounded-[20px] p-6 group hover:border-primary-light hover:shadow-lg hover:-translate-y-1 transition-all duration-300 relative overflow-hidden"><div className="absolute bottom-0 left-0 right-0 h-[3px] bg-primary scale-x-0 origin-left group-hover:scale-x-100 transition-transform duration-400" /><div className="w-16 h-16 rounded-[14px] overflow-hidden shrink-0"><Image src={ind.image} alt={ind.name} width={64} height={64} className="w-full h-full object-cover" /></div><div className="min-w-0"><h3 className="font-extrabold text-gray-800 mb-1 group-hover:text-primary transition-colors" style={{ letterSpacing: '-0.015em' }}>{ind.name}</h3><p className="text-[13px] text-gray-400 leading-relaxed">{ind.context}</p></div></Link></ScrollReveal>))}
+            {industryImages.map((ind: any, i: number) => (<ScrollReveal key={ind.slug} delay={i * 60}><Link href={`/industries/${ind.slug}`} className="flex gap-5 bg-white border border-gray-200 rounded-[20px] p-6 group hover:border-primary-light hover:shadow-lg hover:-translate-y-1 transition-all duration-300 relative overflow-hidden"><div className="absolute bottom-0 left-0 right-0 h-[3px] bg-primary scale-x-0 origin-left group-hover:scale-x-100 transition-transform duration-400" /><div className="w-16 h-16 rounded-[14px] overflow-hidden shrink-0"><Image src={ind.image} alt={ind.name} width={64} height={64} className="w-full h-full object-cover" /></div><div className="min-w-0"><h3 className="font-extrabold text-gray-800 mb-1 group-hover:text-primary transition-colors" style={{ letterSpacing: '-0.015em' }}>{ind.name}</h3><p className="text-[13px] text-gray-400 leading-relaxed">{ind.context}</p></div></Link></ScrollReveal>))}
           </div>
         </div>
       </section>

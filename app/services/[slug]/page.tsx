@@ -59,7 +59,7 @@ export default async function ServicePage({ params }: { params: { slug: string }
             <div className="section-tag mb-4"><span className="material-symbols-outlined text-[14px]">info</span> Overview</div>
             <h2 className="section-title mb-8">{h.overview}</h2>
           </ScrollReveal>
-          {page.overview.map((p, i) => (
+          {page.overview.map((p: any, i: number) => (
             <ScrollReveal key={i} delay={i * 60}>
               <p className="definition-block text-gray-500 text-[15px] leading-relaxed mb-4">{p}</p>
             </ScrollReveal>
@@ -116,7 +116,7 @@ export default async function ServicePage({ params }: { params: { slug: string }
           </ScrollReveal>
           <ScrollReveal>
             <div className="process-summary flex gap-3 overflow-x-auto pb-4 -mx-4 px-4 lg:mx-0 lg:px-0 snap-x snap-mandatory" style={{ scrollbarWidth: 'none' }}>
-              {page.process.map((step, i) => (
+              {page.process.map((step: any, i: number) => (
                 <div key={i} className={`bg-white border border-gray-200 rounded-[20px] p-5 shrink-0 snap-start ${stepCount <= 4 ? 'flex-1 min-w-[220px]' : 'w-[240px] lg:flex-1 lg:w-auto lg:min-w-0'}`}>
                   <div className="flex items-center gap-3 mb-3">
                     <div className="w-8 h-8 flex items-center justify-center bg-dark-bg text-[#4ADE80] text-[13px] font-extrabold rounded-full shrink-0">{i + 1}</div>
@@ -175,7 +175,7 @@ export default async function ServicePage({ params }: { params: { slug: string }
                 <h2 className="section-title mb-6">{h.industries}</h2>
               </ScrollReveal>
               <div className="space-y-3">
-                {industryImages.map((ind, i) => (
+                {industryImages.map((ind: any, i: number) => (
                   <ScrollReveal key={ind.slug} delay={i * 60}>
                     <Link href={`/industries/${ind.slug}`} className="flex gap-5 bg-gray-50 border border-gray-100 rounded-[16px] p-4 group hover:bg-white hover:border-primary-light hover:shadow-md transition-all duration-300 relative overflow-hidden">
                       <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-primary scale-x-0 origin-left group-hover:scale-x-100 transition-transform duration-400" />
@@ -196,7 +196,7 @@ export default async function ServicePage({ params }: { params: { slug: string }
                 <h2 className="text-xl font-extrabold text-gray-800 mb-5" style={{ letterSpacing: '-0.02em' }}>{h.materials}</h2>
               </ScrollReveal>
               <div className="space-y-2.5">
-                {page.materials.map((mat, i) => (
+                {page.materials.map((mat: any, i: number) => (
                   <ScrollReveal key={mat.slug} delay={i * 40}>
                     <Link href={`/materials/${mat.slug}`} className={`block ${mat.description ? 'bg-gray-50 border border-gray-100 rounded-[16px] p-5' : 'px-4 py-3 bg-gray-50 border border-gray-100 rounded-[10px]'} group hover:border-primary hover:bg-white hover:shadow-md transition-all duration-200 relative overflow-hidden`}>
                       {mat.description && <div className="absolute top-0 left-0 right-0 h-[2px] bg-primary scale-x-0 origin-left group-hover:scale-x-100 transition-transform duration-400" />}
@@ -244,7 +244,7 @@ export default async function ServicePage({ params }: { params: { slug: string }
             <h2 className="section-title !text-white mb-10">{h.results}</h2>
           </ScrollReveal>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {page.caseStudies.map((cs, i) => (
+            {page.caseStudies.map((cs: any, i: number) => (
               <ScrollReveal key={i} delay={i * 80}>
                 <div className="stats-block bg-dark-card border border-dark-border rounded-[20px] p-7 hover:border-[rgba(74,222,128,.15)] hover:-translate-y-0.5 transition-all duration-300 h-full">
                   <div className="text-[11px] font-bold uppercase tracking-[.08em] text-[#4ADE80] mb-3">{cs.industry}</div>

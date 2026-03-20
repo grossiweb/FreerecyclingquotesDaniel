@@ -46,7 +46,7 @@ export default async function IndustryPage({ params }: { params: { slug: string 
           <div className="grid grid-cols-1 lg:grid-cols-[1.3fr_1fr] gap-12 lg:gap-16">
             <div>
               <ScrollReveal><h2 className="section-title mb-8">{h.overview}</h2></ScrollReveal>
-              {page.overview.map((p, i) => (
+              {page.overview.map((p: any, i: number) => (
                 <ScrollReveal key={i} delay={i * 60}>
                   <p className="definition-block text-gray-500 text-[15px] leading-relaxed mb-4">{p}</p>
                 </ScrollReveal>
@@ -107,7 +107,7 @@ export default async function IndustryPage({ params }: { params: { slug: string 
                 <p className="text-dark-text text-[15px] leading-relaxed">{h.challengesSub}</p>
               </div>
               <div className="space-y-3">
-                {page.challenges.map((ch, i) => (
+                {page.challenges.map((ch: any, i: number) => (
                   <Link key={ch.slug} href={`/challenges/${ch.slug}`} className="block bg-dark-card border border-dark-border rounded-[20px] p-6 group hover:border-[rgba(74,222,128,.2)] hover:-translate-y-1 transition-all duration-300">
                     <h3 className="font-extrabold text-white mb-2 text-[15px]" style={{ letterSpacing: '-0.015em' }}>{ch.title}</h3>
                     <p className="text-[13px] text-gray-400 leading-relaxed mb-2">{ch.pain}</p>
@@ -136,7 +136,7 @@ export default async function IndustryPage({ params }: { params: { slug: string 
         <div className="container-rq">
           <ScrollReveal><h2 className="section-title mb-10">{h.services}</h2></ScrollReveal>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {page.services.map((svc, i) => (
+            {page.services.map((svc: any, i: number) => (
               <ScrollReveal key={svc.slug} delay={i * 60}>
                 <Link href={`/services/${svc.slug}`} className="block bg-gray-50 border border-gray-100 rounded-[20px] p-7 group hover:bg-white hover:border-primary-light hover:shadow-lg hover:-translate-y-1 transition-all duration-300 relative overflow-hidden h-full">
                   <div className="absolute top-0 left-0 right-0 h-[3px] bg-primary scale-x-0 origin-left group-hover:scale-x-100 transition-transform duration-400" />
@@ -173,7 +173,7 @@ export default async function IndustryPage({ params }: { params: { slug: string 
         <div className="container-rq relative z-10">
           <ScrollReveal><h2 className="section-title !text-white mb-10">{h.results}</h2></ScrollReveal>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {page.caseStudies.map((cs, i) => (
+            {page.caseStudies.map((cs: any, i: number) => (
               <ScrollReveal key={i} delay={i * 80}>
                 <div className="stats-block bg-dark-card border border-dark-border rounded-[20px] p-7 hover:border-[rgba(74,222,128,.15)] hover:-translate-y-0.5 transition-all duration-300">
                   <h3 className="font-extrabold text-white mb-3 text-[15px] leading-snug">{cs.title}</h3>

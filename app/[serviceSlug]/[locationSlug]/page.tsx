@@ -196,7 +196,7 @@ export default async function ServiceLocationPage({ params }: { params: { servic
             <h2 className="section-title mb-8">Other Recycling Services in {city.name}</h2>
           </ScrollReveal>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {config.siblingServices.map((sib, i) => (
+            {config.siblingServices.map((sib: any, i: number) => (
               <ScrollReveal key={sib.slug} delay={i * 60}>
                 <Link href={`/${sib.slug}/${city.slug}`} className="block bg-gray-50 border border-gray-100 rounded-[20px] p-6 group hover:bg-white hover:border-primary-light hover:shadow-lg hover:-translate-y-1 transition-all duration-300 relative overflow-hidden">
                   <div className="absolute top-0 left-0 right-0 h-[3px] bg-primary scale-x-0 origin-left group-hover:scale-x-100 transition-transform duration-400" />

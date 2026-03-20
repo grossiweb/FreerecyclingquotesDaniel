@@ -122,7 +122,7 @@ export default async function CityPage({ params }: { params: { country: string; 
               <p className="text-gray-400 text-[15px] mb-10">Click any service for {city.name}-specific details, pricing, and local regulations.</p>
             </ScrollReveal>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {localServices.map((svc, i) => (
+              {localServices.map((svc: any, i: number) => (
                 <ScrollReveal key={svc.slug} delay={i * 40}>
                   <Link href={`/${svc.slug}/${city.slug}`} className="block bg-gray-50 border border-gray-100 rounded-[20px] p-6 group hover:bg-white hover:border-primary-light hover:shadow-lg hover:-translate-y-1 transition-all duration-300 relative overflow-hidden h-full">
                     <div className="absolute top-0 left-0 right-0 h-[3px] bg-primary scale-x-0 origin-left group-hover:scale-x-100 transition-transform duration-400" />
@@ -146,7 +146,7 @@ export default async function CityPage({ params }: { params: { country: string; 
               </h2>
             </ScrollReveal>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-              {otherServices.map((svc, i) => (
+              {otherServices.map((svc: any, i: number) => (
                 <ScrollReveal key={svc.slug} delay={i * 30}>
                   <Link href={`/services/${svc.slug}`} className="block px-4 py-3.5 bg-white border border-gray-200 rounded-[12px] group hover:border-primary hover:shadow-md transition-all duration-200">
                     <span className="text-[13px] font-bold text-gray-700 group-hover:text-primary transition-colors">{svc.name}</span>
@@ -184,7 +184,7 @@ export default async function CityPage({ params }: { params: { country: string; 
               { stat: '24hr', label: 'Quote turnaround', detail: 'Often same-day' },
               { stat: 'R2', label: 'Certified processors', detail: 'In the ' + city.name + ' area' },
               { stat: '17', label: 'Recycling services', detail: 'Available in ' + city.name },
-            ].map((s, i) => (
+            ].map((s: any, i: number) => (
               <ScrollReveal key={s.label} delay={i * 60}>
                 <div className="text-center bg-white border border-gray-200 rounded-[16px] p-5 hover:shadow-md transition-all duration-300">
                   <div className="text-xl font-extrabold text-primary mb-1" style={{ letterSpacing: '-0.03em' }}>{s.stat}</div>
