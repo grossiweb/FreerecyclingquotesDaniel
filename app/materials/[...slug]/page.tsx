@@ -47,7 +47,7 @@ export default async function MaterialCatchAllPage({ params }: { params: { slug:
     const parent = MATERIAL_PAGES[parentSlug];
     if (parent) return (
       <>
-        <JsonLd data={faqPageSchema(parent.faqs.map(f => ({ question: f.q, answer: f.a })))} />
+        <JsonLd data={faqPageSchema(parent.faqs.map((f: any) => ({ question: f.q, answer: f.a })))} />
         <FAQFullPage title={`${parent.name} Recycling — FAQ`} description={`Common questions about recycling ${parent.name.toLowerCase()}.`} backLabel={`Back to ${parent.name}`} backHref={`/materials/${parent.slug}`} faqs={parent.faqs} breadcrumbItems={[{ name: 'Materials', href: '/materials' }, { name: parent.name, href: `/materials/${parent.slug}` }]} />
       </>
     );
@@ -90,7 +90,7 @@ function LeafPage({ leaf, heroImage, contact }: { leaf: any; heroImage: string; 
   return (
     <>
       <JsonLd data={webPageSchema({ path: `/materials/${leaf.slug}`, name: `${leaf.name} Recycling`, description: leaf.metaDescription })} />
-      <JsonLd data={faqPageSchema(leaf.faqs.map(f => ({ question: f.q, answer: f.a })))} />
+      <JsonLd data={faqPageSchema(leaf.faqs.map((f: any) => ({ question: f.q, answer: f.a })))} />
       <Breadcrumbs items={[{ name: 'Materials', href: '/materials' }, { name: leaf.parentName, href: `/materials/${leaf.parentSlug}` }, { name: leaf.name, href: `/materials/${leaf.slug}` }]} />
 
       <PageHero tag={leaf.parentName} tagIcon="category" title={leaf.name} titleAccent="Recycling" description={leaf.definition} image={heroImage} showPhone />
@@ -122,7 +122,7 @@ function LeafPage({ leaf, heroImage, contact }: { leaf: any; heroImage: string; 
                 <Link href="/get-a-quote" className="btn-white">Get a Quote <span className="material-symbols-outlined text-[16px]">arrow_forward</span></Link>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                {leaf.acceptedItems.map(item => (
+                {leaf.acceptedItems.map((item: any) => (
                   <div key={item} className="flex items-start gap-3 px-4 py-3 bg-dark-card border border-dark-border rounded-[10px]">
                     <span className="material-symbols-outlined text-[16px] text-[#4ADE80] mt-0.5 shrink-0">check_circle</span>
                     <span className="text-[14px] text-gray-300">{item}</span>
@@ -236,7 +236,7 @@ function ParentPage({ page, contact, industryImageMap }: { page: any; contact: {
   return (
     <>
       <JsonLd data={webPageSchema({ path: `/materials/${page.slug}`, name: page.h1, description: page.metaDescription })} />
-      <JsonLd data={faqPageSchema(page.faqs.map(f => ({ question: f.q, answer: f.a })))} />
+      <JsonLd data={faqPageSchema(page.faqs.map((f: any) => ({ question: f.q, answer: f.a })))} />
       <Breadcrumbs items={[{ name: 'Materials', href: '/materials' }, { name: page.name, href: `/materials/${page.slug}` }]} />
 
       <PageHero tag={`${page.name} Recycling`} tagIcon={page.icon} title={page.h1.split('—')[0].trim()} titleAccent={page.h1.includes('—') ? page.h1.split('—')[1].trim() : ''} description={page.definition} image={page.heroImage} />
@@ -250,7 +250,7 @@ function ParentPage({ page, contact, industryImageMap }: { page: any; contact: {
           {page.overview.map((p, i) => (<ScrollReveal key={i} delay={i * 60}><p className="definition-block text-gray-500 text-[15px] leading-relaxed mb-4">{p}</p></ScrollReveal>))}
           <ScrollReveal>
             <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-              {page.whyRecycle.slice(0, 4).map(item => (
+              {page.whyRecycle.slice(0, 4).map((item: any) => (
                 <div key={item.stat} className="flex items-start gap-2.5 p-3 bg-primary-50 rounded-[10px]">
                   <span className="font-extrabold text-primary text-[14px] shrink-0 min-w-[48px]">{item.stat}</span>
                   <span className="text-[13px] text-gray-700 font-medium">{item.description}</span>
@@ -292,7 +292,7 @@ function ParentPage({ page, contact, industryImageMap }: { page: any; contact: {
                 <div className="flex flex-wrap gap-2">{page.certifications.map(cert => (<Link key={cert} href="/about/certifications" className="inline-block px-3 py-1.5 bg-dark-card border border-dark-border rounded-full text-[11px] font-bold text-gray-400 hover:border-[rgba(74,222,128,.3)] hover:text-[#4ADE80] transition-colors">{cert}</Link>))}</div>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                {page.acceptedItems.map(item => (<div key={item} className="flex items-start gap-3 px-4 py-3 bg-dark-card border border-dark-border rounded-[10px]"><span className="material-symbols-outlined text-[16px] text-[#4ADE80] mt-0.5 shrink-0">check_circle</span><span className="text-[14px] text-gray-300">{item}</span></div>))}
+                {page.acceptedItems.map((item: any) => (<div key={item} className="flex items-start gap-3 px-4 py-3 bg-dark-card border border-dark-border rounded-[10px]"><span className="material-symbols-outlined text-[16px] text-[#4ADE80] mt-0.5 shrink-0">check_circle</span><span className="text-[14px] text-gray-300">{item}</span></div>))}
               </div>
             </div>
           </ScrollReveal>

@@ -35,7 +35,7 @@ export default async function ChallengePage({ params }: { params: { slug: string
   return (
     <>
       <JsonLd data={webPageSchema({ path: `/challenges/${page.slug}`, name: page.h1, description: page.metaDescription })} />
-      <JsonLd data={faqPageSchema(page.faqs.map(f => ({ question: f.q, answer: f.a })))} />
+      <JsonLd data={faqPageSchema(page.faqs.map((f: any) => ({ question: f.q, answer: f.a })))} />
       <Breadcrumbs items={[{ name: 'Challenges', href: '/challenges' }, { name: page.name, href: `/challenges/${page.slug}` }]} />
 
       <PageHero tag="Challenge" tagIcon="psychology" title={page.h1} titleAccent="" description={page.definition} image={page.heroImage} />

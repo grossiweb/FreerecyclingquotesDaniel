@@ -44,8 +44,8 @@ export default async function ServicePage({ params }: { params: { slug: string }
 
   return (
     <>
-      <JsonLd data={serviceSchema({ slug: page.slug, name: page.name, description: page.definition, offers: page.materials.map(m => ({ name: `${m.name} Recycling`, url: `/${page.slug}/${m.slug}` })) })} />
-      <JsonLd data={faqPageSchema(page.faqs.map(f => ({ question: f.q, answer: f.a })))} />
+      <JsonLd data={serviceSchema({ slug: page.slug, name: page.name, description: page.definition, offers: page.materials.map((m: any) => ({ name: `${m.name} Recycling`, url: `/${page.slug}/${m.slug}` })) })} />
+      <JsonLd data={faqPageSchema(page.faqs.map((f: any) => ({ question: f.q, answer: f.a })))} />
       <JsonLd data={webPageSchema({ path: `/services/${page.slug}`, name: page.h1, description: page.metaDescription })} />
       <Breadcrumbs items={[{ name: 'Services', href: '/services' }, { name: page.name, href: `/services/${page.slug}` }]} />
 
@@ -66,7 +66,7 @@ export default async function ServicePage({ params }: { params: { slug: string }
           ))}
           <ScrollReveal>
             <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-              {page.differentiators.slice(0, 4).map(d => (
+              {page.differentiators.slice(0, 4).map((d: any) => (
                 <div key={d} className="flex items-start gap-2.5 p-3 bg-primary-50 rounded-[10px]">
                   <span className="material-symbols-outlined text-[16px] text-primary mt-0.5 shrink-0">check</span>
                   <span className="text-[13px] text-gray-700 font-medium">{d}</span>
@@ -94,7 +94,7 @@ export default async function ServicePage({ params }: { params: { slug: string }
                   </div>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                  {page.acceptedItems.map(item => (
+                  {page.acceptedItems.map((item: any) => (
                     <div key={item} className="flex items-start gap-3 px-4 py-3 bg-dark-card border border-dark-border rounded-[10px]">
                       <span className="material-symbols-outlined text-[16px] text-[#4ADE80] mt-0.5 shrink-0">check_circle</span>
                       <span className="text-[14px] text-gray-300">{item}</span>
@@ -142,7 +142,7 @@ export default async function ServicePage({ params }: { params: { slug: string }
                 <p className="text-dark-text text-[15px] leading-relaxed">{h.challengesSubtitle}</p>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                {page.challenges.map(ch => (
+                {page.challenges.map((ch: any) => (
                   <Link key={ch.slug} href={`/challenges/${ch.slug}`} className="block bg-dark-card border border-dark-border rounded-[20px] p-6 group hover:border-[rgba(74,222,128,.2)] hover:-translate-y-1 transition-all duration-300">
                     <h3 className="font-extrabold text-white mb-2 text-[15px]" style={{ letterSpacing: '-0.015em' }}>{ch.title}</h3>
                     <p className="text-[12px] text-gray-400 leading-relaxed mb-3">{ch.pain}</p>

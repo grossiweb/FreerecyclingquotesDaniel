@@ -35,7 +35,7 @@ export default async function IndustryPage({ params }: { params: { slug: string 
   return (
     <>
       <JsonLd data={webPageSchema({ path: `/industries/${page.slug}`, name: page.h1, description: page.metaDescription })} />
-      <JsonLd data={faqPageSchema(page.faqs.map(f => ({ question: f.q, answer: f.a })))} />
+      <JsonLd data={faqPageSchema(page.faqs.map((f: any) => ({ question: f.q, answer: f.a })))} />
       <Breadcrumbs items={[{ name: 'Industries', href: '/industries' }, { name: page.name, href: `/industries/${page.slug}` }]} />
 
       <PageHero tag={`${page.name} Recycling`} tagIcon={page.icon} title={page.h1.split('—')[0].trim()} titleAccent={page.h1.includes('—') ? page.h1.split('—')[1].trim() : ''} description={page.definition} image={page.heroImage} />
@@ -57,7 +57,7 @@ export default async function IndustryPage({ params }: { params: { slug: string 
               <div className="bg-gray-50 border border-gray-100 rounded-[24px] p-7 lg:sticky lg:top-[120px]">
                 <h3 className="font-extrabold text-gray-800 text-lg mb-5" style={{ letterSpacing: '-0.015em' }}>Why {page.name} Chooses Us</h3>
                 <div className="space-y-3">
-                  {page.services.slice(0, 4).map(svc => (
+                  {page.services.slice(0, 4).map((svc: any) => (
                     <div key={svc.slug} className="flex items-start gap-2.5">
                       <span className="material-symbols-outlined text-[16px] text-primary mt-0.5 shrink-0">check</span>
                       <span className="text-[13px] text-gray-600 font-medium">{svc.name}</span>
@@ -84,7 +84,7 @@ export default async function IndustryPage({ params }: { params: { slug: string 
                 <p className="text-dark-text text-[15px] leading-relaxed">Typical waste streams we manage for {page.name.toLowerCase()} operations.</p>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                {page.wasteProfile.map(item => (
+                {page.wasteProfile.map((item: any) => (
                   <div key={item} className="flex items-start gap-3 px-4 py-3 bg-dark-card border border-dark-border rounded-[10px]">
                     <span className="material-symbols-outlined text-[16px] text-[#4ADE80] mt-0.5 shrink-0">check_circle</span>
                     <span className="text-[14px] text-gray-300">{item}</span>
@@ -156,7 +156,7 @@ export default async function IndustryPage({ params }: { params: { slug: string 
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
               <h2 className="text-xl font-extrabold text-gray-800" style={{ letterSpacing: '-0.02em' }}>{h.materials}</h2>
               <div className="flex flex-wrap gap-2.5">
-                {page.materials.map(mat => (
+                {page.materials.map((mat: any) => (
                   <Link key={mat.slug} href={`/materials/${mat.slug}`} className="px-5 py-3 bg-white border border-gray-200 rounded-full group hover:border-primary hover:shadow-md transition-all duration-200">
                     <span className="text-[13px] font-bold text-gray-700 group-hover:text-primary transition-colors">{mat.name}</span>
                   </Link>
