@@ -12,6 +12,9 @@ import PageHero from '@/components/ui/PageHero';
 import { CTABlock, FAQAccordion, ScrollReveal } from '@/components/ui';
 import FAQFullPage from '@/components/ui/FAQFullPage';
 
+// ISR: revalidate every 60 seconds
+export const revalidate = 60;
+
 export function generateStaticParams() {
   const params: { slug: string[] }[] = [];
   for (const key of Object.keys(MATERIAL_PAGES)) {

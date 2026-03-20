@@ -37,6 +37,9 @@ function getServicesForCity(citySlug: string) {
   return services;
 }
 
+// ISR: revalidate every 60 seconds
+export const revalidate = 60;
+
 export function generateStaticParams() {
   const params: { country: string; city: string }[] = [];
   for (const country of LOCATIONS) {

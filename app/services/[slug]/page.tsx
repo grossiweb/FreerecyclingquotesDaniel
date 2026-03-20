@@ -10,6 +10,9 @@ import Breadcrumbs from '@/components/ui/Breadcrumbs';
 import PageHero from '@/components/ui/PageHero';
 import { CTABlock, FAQAccordion, ScrollReveal } from '@/components/ui';
 
+// ISR: revalidate every 60 seconds
+export const revalidate = 60;
+
 export function generateStaticParams() {
   return Object.keys(SERVICE_PAGES).map((slug: any) => ({ slug }));
 }

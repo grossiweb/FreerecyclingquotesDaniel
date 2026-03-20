@@ -9,6 +9,9 @@ import PageHero from '@/components/ui/PageHero';
 import { CTABlock, FAQAccordion, ScrollReveal } from '@/components/ui';
 
 // Static params still use local data (build-time — Supabase might not be reachable during CI)
+// ISR: revalidate every 60 seconds
+export const revalidate = 60;
+
 export function generateStaticParams() {
   return Object.keys(CHALLENGE_PAGES).map((slug: any) => ({ slug }));
 }

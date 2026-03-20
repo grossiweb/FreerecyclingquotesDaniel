@@ -18,6 +18,9 @@ function findCity(slug: string) {
   return null;
 }
 
+// ISR: revalidate every 60 seconds
+export const revalidate = 60;
+
 export function generateStaticParams() {
   const params: { serviceSlug: string; locationSlug: string }[] = [];
   for (const config of SERVICE_LOCATION_CONFIGS) {
