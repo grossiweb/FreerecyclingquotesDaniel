@@ -2,9 +2,10 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { CONTACT, INDUSTRIES } from '@/lib/data';
-import { MATERIAL_PAGES } from '@/lib/material-pages';
-import { MATERIAL_LEAF_PAGES } from '@/lib/material-leaf-pages';
+import { getMaterialPage, getContact, getIndustryImages } from '@/lib/queries';
+import { CONTACT, INDUSTRIES } from '@/lib/data'; // Keep for static parts
+import { MATERIAL_PAGES } from '@/lib/material-pages'; // Keep for generateStaticParams + generateMetadata
+import { MATERIAL_LEAF_PAGES } from '@/lib/material-leaf-pages'; // Keep for generateStaticParams + generateMetadata
 import { JsonLd, faqPageSchema, webPageSchema } from '@/lib/schema';
 import Breadcrumbs from '@/components/ui/Breadcrumbs';
 import PageHero from '@/components/ui/PageHero';
@@ -37,9 +38,10 @@ export function generateMetadata({ params }: { params: { slug: string[] } }): Me
   return {};
 }
 
-export default function MaterialCatchAllPage({ params }: { params: { slug: string[] } }) {
+export default async function MaterialCatchAllPage({ params }: { params: { slug: string[] } }) {
   const fullSlug = params.slug.join('/');
 
+  // FAQ pages still use static data (simple, no complex queries needed)
   if (params.slug[params.slug.length - 1] === 'faqs') {
     const parentSlug = params.slug[0];
     const parent = MATERIAL_PAGES[parentSlug];
@@ -51,11 +53,31 @@ export default function MaterialCatchAllPage({ params }: { params: { slug: strin
     );
   }
 
+  // ⚡ DATA FROM SUPABASE
+  const pageData = await getMaterialPage(fullSlug) as any;
+  
+  if (pageData) {
+    const contact = await getContact();
+    const contactObj = { phone: contact.phone || '817-946-5655', phoneHref: contact.phone_href || 'tel:8179465655' };
+
+    if (pageData.depth === 2) {
+      // Leaf page — get parent hero image from Supabase too
+      const parentData = await getMaterialPage(pageData.parentSlug) as any;
+      const heroImage = parentData?.heroImage || 'https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?w=1600&h=600&fit=crop';
+      return <LeafPage leaf={pageData} heroImage={heroImage} contact={contactObj} />;
+    } else {
+      // Parent page
+      const indImages = await getIndustryImages();
+      return <ParentPage page={pageData} contact={contactObj} industryImageMap={indImages} />;
+    }
+  }
+
+  // Fallback to static data if not in Supabase
   const leaf = MATERIAL_LEAF_PAGES[fullSlug];
-  if (leaf) return <LeafPage leaf={leaf} />;
+  if (leaf) return <LeafPage leaf={leaf as any} heroImage={MATERIAL_PAGES[leaf.parentSlug]?.heroImage || ''} contact={CONTACT} />;
 
   const parent = MATERIAL_PAGES[params.slug[0]];
-  if (parent) return <ParentPage page={parent} />;
+  if (parent) return <ParentPage page={parent as any} contact={CONTACT} industryImageMap={{}} />;
 
   notFound();
 }
@@ -63,9 +85,7 @@ export default function MaterialCatchAllPage({ params }: { params: { slug: strin
 // ═══════════════════════════════════════════════════════════════
 // LEAF PAGE — matches service page layout
 // ═══════════════════════════════════════════════════════════════
-function LeafPage({ leaf }: { leaf: typeof MATERIAL_LEAF_PAGES[string] }) {
-  const parentPage = MATERIAL_PAGES[leaf.parentSlug];
-  const heroImage = parentPage?.heroImage || 'https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?w=1600&h=600&fit=crop';
+function LeafPage({ leaf, heroImage, contact }: { leaf: any; heroImage: string; contact: { phone: string; phoneHref: string } }) {
 
   return (
     <>
@@ -179,7 +199,7 @@ function LeafPage({ leaf }: { leaf: typeof MATERIAL_LEAF_PAGES[string] }) {
       <section className="py-10 bg-primary">
         <div className="container-rq flex flex-col md:flex-row items-center justify-between gap-5">
           <div><h3 className="text-white font-extrabold text-lg" style={{ letterSpacing: '-0.02em' }}>Ready to recycle {leaf.name.toLowerCase()}?</h3><p className="text-white/70 text-[13px] mt-0.5">Free quotes within 24 hours. Free pickup for commercial volumes.</p></div>
-          <div className="flex gap-2.5 shrink-0"><Link href="/get-a-quote" className="btn-white">Get a Quote <span className="material-symbols-outlined text-[16px]">arrow_forward</span></Link><a href={CONTACT.phoneHref} className="btn-outline-white"><span className="material-symbols-outlined text-[16px]">phone</span> {CONTACT.phone}</a></div>
+          <div className="flex gap-2.5 shrink-0"><Link href="/get-a-quote" className="btn-white">Get a Quote <span className="material-symbols-outlined text-[16px]">arrow_forward</span></Link><a href={contact.phoneHref} className="btn-outline-white"><span className="material-symbols-outlined text-[16px]">phone</span> {contact.phone}</a></div>
         </div>
       </section>
 
@@ -206,12 +226,12 @@ function LeafPage({ leaf }: { leaf: typeof MATERIAL_LEAF_PAGES[string] }) {
 // ═══════════════════════════════════════════════════════════════
 // PARENT PAGE — upgraded with tags, stats inline, green stripe
 // ═══════════════════════════════════════════════════════════════
-function ParentPage({ page }: { page: typeof MATERIAL_PAGES[string] }) {
+function ParentPage({ page, contact, industryImageMap }: { page: any; contact: { phone: string; phoneHref: string }; industryImageMap: Record<string, string> }) {
   const h = page.headlines;
-  const industryImages = page.industries.map(ind => {
-    const full = INDUSTRIES.find(i => i.slug === ind.slug);
-    return { ...ind, image: full?.image || 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=400&h=300&fit=crop' };
-  });
+  const industryImages = (page.industries || page.industries_list || []).map((ind: any) => ({
+    ...ind,
+    image: industryImageMap[ind.slug] || ind.image || 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=400&h=300&fit=crop',
+  }));
 
   return (
     <>
@@ -304,7 +324,7 @@ function ParentPage({ page }: { page: typeof MATERIAL_PAGES[string] }) {
       <section className="py-10 bg-primary">
         <div className="container-rq flex flex-col md:flex-row items-center justify-between gap-5">
           <div><h3 className="text-white font-extrabold text-lg" style={{ letterSpacing: '-0.02em' }}>Ready to recycle {page.name.toLowerCase()}?</h3><p className="text-white/70 text-[13px] mt-0.5">Free quotes within 24 hours. Free pickup for commercial volumes.</p></div>
-          <div className="flex gap-2.5 shrink-0"><Link href="/get-a-quote" className="btn-white">Get a Quote <span className="material-symbols-outlined text-[16px]">arrow_forward</span></Link><a href={CONTACT.phoneHref} className="btn-outline-white"><span className="material-symbols-outlined text-[16px]">phone</span> {CONTACT.phone}</a></div>
+          <div className="flex gap-2.5 shrink-0"><Link href="/get-a-quote" className="btn-white">Get a Quote <span className="material-symbols-outlined text-[16px]">arrow_forward</span></Link><a href={contact.phoneHref} className="btn-outline-white"><span className="material-symbols-outlined text-[16px]">phone</span> {contact.phone}</a></div>
         </div>
       </section>
 

@@ -1,9 +1,10 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { CONTACT, LOCATIONS, INDUSTRIES } from '@/lib/data';
-import { SERVICE_PAGES } from '@/lib/service-pages';
-import { SERVICE_LOCATION_CONFIGS, STATE_CONTEXT } from '@/lib/service-locations';
+import { getServicePage, getContact } from '@/lib/queries';
+import { CONTACT, LOCATIONS, INDUSTRIES } from '@/lib/data'; // Keep for generateStaticParams + generateMetadata
+import { SERVICE_PAGES } from '@/lib/service-pages'; // Keep for generateStaticParams + generateMetadata
+import { SERVICE_LOCATION_CONFIGS, STATE_CONTEXT } from '@/lib/service-locations'; // Keep for generateStaticParams + generateMetadata
 import { JsonLd, faqPageSchema, webPageSchema } from '@/lib/schema';
 import Breadcrumbs from '@/components/ui/Breadcrumbs';
 import { CTABlock, FAQAccordion, ScrollReveal } from '@/components/ui';
@@ -39,20 +40,27 @@ export function generateMetadata({ params }: { params: { serviceSlug: string; lo
   };
 }
 
-export default function ServiceLocationPage({ params }: { params: { serviceSlug: string; locationSlug: string } }) {
+export default async function ServiceLocationPage({ params }: { params: { serviceSlug: string; locationSlug: string } }) {
   const config = SERVICE_LOCATION_CONFIGS.find(c => c.serviceSlug === params.serviceSlug);
   const city = findCity(params.locationSlug);
   const service = SERVICE_PAGES[params.serviceSlug];
 
   if (!config || !city || !service) notFound();
 
+  // ⚡ CONTACT FROM SUPABASE
+  const contactData = await getContact();
+  const CONTACT_DB = {
+    phone: contactData.phone || '817-946-5655',
+    phoneHref: contactData.phone_href || 'tel:8179465655',
+  };
+
   const stateCtx = city.state ? STATE_CONTEXT[city.state] : null;
   const cityLabel = `${city.name}${city.state ? `, ${city.state}` : ''}`;
 
   // Generate locally-framed FAQs (GEO §3.6: unique, not duplicated from parent)
   const localFaqs = [
-    { q: `Is ${config.serviceName.toLowerCase()} pickup free in ${city.name}?`, a: `Yes. We offer free ${config.serviceName.toLowerCase()} pickup for qualifying commercial volumes in the ${city.name} metro area. For smaller quantities, contact us at ${CONTACT.phone} for specific terms and minimum requirements in your area.` },
-    { q: `How quickly can I get ${config.serviceName.toLowerCase()} service in ${city.name}?`, a: `Most ${config.serviceName.toLowerCase()} pickups in ${city.name} are scheduled within 3-5 business days of quote approval. Same-week and next-day service is often available for urgent needs. Call ${CONTACT.phone} for expedited scheduling.` },
+    { q: `Is ${config.serviceName.toLowerCase()} pickup free in ${city.name}?`, a: `Yes. We offer free ${config.serviceName.toLowerCase()} pickup for qualifying commercial volumes in the ${city.name} metro area. For smaller quantities, contact us at ${CONTACT_DB.phone} for specific terms and minimum requirements in your area.` },
+    { q: `How quickly can I get ${config.serviceName.toLowerCase()} service in ${city.name}?`, a: `Most ${config.serviceName.toLowerCase()} pickups in ${city.name} are scheduled within 3-5 business days of quote approval. Same-week and next-day service is often available for urgent needs. Call ${CONTACT_DB.phone} for expedited scheduling.` },
     { q: `What documentation do I receive for ${config.serviceName.toLowerCase()} in ${city.name}?`, a: `Every pickup includes weight documentation and a Certificate of Recycling. For data-bearing equipment, you also receive a Certificate of Destruction. All documentation meets federal and ${stateCtx?.state || 'state'} regulatory requirements.` },
     { q: `What areas around ${city.name} do you serve?`, a: `Our ${city.name} service area covers the entire metro region and surrounding suburbs. If you're within the ${city.name} metropolitan statistical area, we can serve you. Contact us with your zip code for confirmation.` },
     { q: `Do you serve businesses of all sizes in ${city.name}?`, a: `Yes. From small offices to large industrial facilities, we customize our ${config.serviceName.toLowerCase()} service to match your volume and schedule. Multi-location businesses in the ${city.name} area get consolidated billing and reporting.` },
@@ -91,7 +99,7 @@ export default function ServiceLocationPage({ params }: { params: { serviceSlug:
             <ScrollReveal delay={160}>
               <div className="flex gap-2.5 flex-wrap">
                 <Link href="/get-a-quote" className="btn-primary">Get a Free Quote <span className="material-symbols-outlined text-[16px]">arrow_forward</span></Link>
-                <a href={CONTACT.phoneHref} className="btn-outline"><span className="material-symbols-outlined text-[16px]">phone</span> {CONTACT.phone}</a>
+                <a href={CONTACT_DB.phoneHref} className="btn-outline"><span className="material-symbols-outlined text-[16px]">phone</span> {CONTACT_DB.phone}</a>
               </div>
             </ScrollReveal>
           </div>
@@ -216,7 +224,7 @@ export default function ServiceLocationPage({ params }: { params: { serviceSlug:
         </div>
       </section>
 
-      <CTABlock title={`Get ${config.serviceName} in ${city.name}`} subtitle={`Free quotes within 24 hours. Free commercial pickup in the ${city.name} metro area. Call ${CONTACT.phone} for immediate assistance.`} />
+      <CTABlock title={`Get ${config.serviceName} in ${city.name}`} subtitle={`Free quotes within 24 hours. Free commercial pickup in the ${city.name} metro area. Call ${CONTACT_DB.phone} for immediate assistance.`} />
     </>
   );
 }

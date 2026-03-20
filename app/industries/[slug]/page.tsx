@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { CONTACT } from '@/lib/data';
-import { INDUSTRY_PAGES } from '@/lib/industry-pages';
+import { getIndustryPage, getContact } from '@/lib/queries';
+import { INDUSTRY_PAGES } from '@/lib/industry-pages'; // Keep for generateStaticParams + generateMetadata
 import { JsonLd, faqPageSchema, webPageSchema } from '@/lib/schema';
 import Breadcrumbs from '@/components/ui/Breadcrumbs';
 import PageHero from '@/components/ui/PageHero';
@@ -22,8 +22,13 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
   };
 }
 
-export default function IndustryPage({ params }: { params: { slug: string } }) {
-  const page = INDUSTRY_PAGES[params.slug];
+export default async function IndustryPage({ params }: { params: { slug: string } }) {
+  // ⚡ DATA FROM SUPABASE
+  const page = await getIndustryPage(params.slug) as any;
+  if (!page) notFound();
+
+  const contact = await getContact();
+  const CONTACT = { phone: contact.phone || '817-946-5655', phoneHref: contact.phone_href || 'tel:8179465655' };
   if (!page) notFound();
   const h = page.headlines;
 

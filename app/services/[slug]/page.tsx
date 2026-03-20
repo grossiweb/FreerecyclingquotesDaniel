@@ -2,8 +2,9 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { CONTACT, INDUSTRIES } from '@/lib/data';
-import { SERVICE_PAGES } from '@/lib/service-pages';
+import { getServicePage, getContact, getIndustryImages } from '@/lib/queries';
+import { SERVICE_PAGES } from '@/lib/service-pages'; // Keep for generateStaticParams + generateMetadata
+import { INDUSTRIES } from '@/lib/data'; // Keep for generateMetadata
 import { JsonLd, serviceSchema, faqPageSchema, webPageSchema } from '@/lib/schema';
 import Breadcrumbs from '@/components/ui/Breadcrumbs';
 import PageHero from '@/components/ui/PageHero';
@@ -24,15 +25,20 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
   };
 }
 
-export default function ServicePage({ params }: { params: { slug: string } }) {
-  const page = SERVICE_PAGES[params.slug];
+export default async function ServicePage({ params }: { params: { slug: string } }) {
+  // ⚡ DATA FROM SUPABASE
+  const page = await getServicePage(params.slug) as any;
   if (!page) notFound();
 
+  const contact = await getContact();
+  const CONTACT = { phone: contact.phone || '817-946-5655', phoneHref: contact.phone_href || 'tel:8179465655' };
+
+  const indImages = await getIndustryImages();
   const h = page.headlines;
-  const industryImages = page.industries.map(ind => {
-    const full = INDUSTRIES.find(i => i.slug === ind.slug);
-    return { ...ind, image: full?.image || 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=400&h=300&fit=crop' };
-  });
+  const industryImages = page.industries.map((ind: any) => ({
+    ...ind,
+    image: indImages[ind.slug] || 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=400&h=300&fit=crop',
+  }));
 
   const stepCount = page.process.length;
 

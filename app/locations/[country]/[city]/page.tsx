@@ -1,8 +1,9 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { CONTACT, LOCATIONS, SERVICES } from '@/lib/data';
-import { SERVICE_LOCATION_CONFIGS, STATE_CONTEXT } from '@/lib/service-locations';
+import { getContact } from '@/lib/queries';
+import { CONTACT, LOCATIONS, SERVICES } from '@/lib/data'; // Keep for generateStaticParams + generateMetadata
+import { SERVICE_LOCATION_CONFIGS, STATE_CONTEXT } from '@/lib/service-locations'; // Keep for build
 import { JsonLd, webPageSchema } from '@/lib/schema';
 import Breadcrumbs from '@/components/ui/Breadcrumbs';
 import { CTABlock, ScrollReveal } from '@/components/ui';
@@ -57,9 +58,13 @@ export function generateMetadata({ params }: { params: { country: string; city: 
   };
 }
 
-export default function CityPage({ params }: { params: { country: string; city: string } }) {
+export default async function CityPage({ params }: { params: { country: string; city: string } }) {
   const city = findCity(params.country, params.city);
   if (!city) notFound();
+
+  // ⚡ CONTACT FROM SUPABASE
+  const contactData = await getContact();
+  const CONTACT_DB = { phone: contactData.phone || '817-946-5655', phoneHref: contactData.phone_href || 'tel:8179465655' };
 
   const label = `${city.name}${city.state ? `, ${city.state}` : ''}`;
   const stateCtx = city.state ? STATE_CONTEXT[city.state] : null;
@@ -101,7 +106,7 @@ export default function CityPage({ params }: { params: { country: string; city: 
             <ScrollReveal delay={160}>
               <div className="flex gap-2.5 flex-wrap">
                 <Link href="/get-a-quote" className="btn-primary">Get a Free Quote <span className="material-symbols-outlined text-[16px]">arrow_forward</span></Link>
-                <a href={CONTACT.phoneHref} className="btn-outline"><span className="material-symbols-outlined text-[16px]">phone</span> {CONTACT.phone}</a>
+                <a href={CONTACT_DB.phoneHref} className="btn-outline"><span className="material-symbols-outlined text-[16px]">phone</span> {CONTACT_DB.phone}</a>
               </div>
             </ScrollReveal>
           </div>
@@ -192,7 +197,7 @@ export default function CityPage({ params }: { params: { country: string; city: 
         </div>
       </section>
 
-      <CTABlock title={`Get a Recycling Quote in ${city.name}`} subtitle={`Free quotes within 24 hours. Free commercial pickup in the ${city.name} metro area. Call ${CONTACT.phone} for immediate assistance.`} />
+      <CTABlock title={`Get a Recycling Quote in ${city.name}`} subtitle={`Free quotes within 24 hours. Free commercial pickup in the ${city.name} metro area. Call ${CONTACT_DB.phone} for immediate assistance.`} />
     </>
   );
 }
