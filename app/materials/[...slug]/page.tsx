@@ -2,13 +2,14 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { getMaterialPage, getContact, getIndustryImages } from '@/lib/queries';
+import { getMaterialPage, getContact, getIndustryImages, getMaterialCities } from '@/lib/queries';
 import { CONTACT, INDUSTRIES } from '@/lib/data'; // Keep for static parts
 import { MATERIAL_PAGES } from '@/lib/material-pages'; // Keep for generateStaticParams + generateMetadata
 import { MATERIAL_LEAF_PAGES } from '@/lib/material-leaf-pages'; // Keep for generateStaticParams + generateMetadata
 import { JsonLd, faqPageSchema, webPageSchema } from '@/lib/schema';
 import Breadcrumbs from '@/components/ui/Breadcrumbs';
 import PageHero from '@/components/ui/PageHero';
+import LocationsSection from '@/components/ui/LocationsSection';
 import { CTABlock, FAQAccordion, ScrollReveal } from '@/components/ui';
 import FAQFullPage from '@/components/ui/FAQFullPage';
 
@@ -71,7 +72,8 @@ export default async function MaterialCatchAllPage({ params }: { params: { slug:
     } else {
       // Parent page
       const indImages = await getIndustryImages();
-      return <ParentPage page={pageData} contact={contactObj} industryImageMap={indImages} />;
+      const materialCities = await getMaterialCities(pageData.slug);
+      return <ParentPage page={pageData} contact={contactObj} industryImageMap={indImages} cities={materialCities} />;
     }
   }
 
@@ -80,7 +82,7 @@ export default async function MaterialCatchAllPage({ params }: { params: { slug:
   if (leaf) return <LeafPage leaf={leaf as any} heroImage={MATERIAL_PAGES[leaf.parentSlug]?.heroImage || ''} contact={CONTACT} />;
 
   const parent = MATERIAL_PAGES[params.slug[0]];
-  if (parent) return <ParentPage page={parent as any} contact={CONTACT} industryImageMap={{}} />;
+  if (parent) return <ParentPage page={parent as any} contact={CONTACT} industryImageMap={{}} cities={[]} />;
 
   notFound();
 }
@@ -229,7 +231,7 @@ function LeafPage({ leaf, heroImage, contact }: { leaf: any; heroImage: string; 
 // ═══════════════════════════════════════════════════════════════
 // PARENT PAGE — upgraded with tags, stats inline, green stripe
 // ═══════════════════════════════════════════════════════════════
-function ParentPage({ page, contact, industryImageMap }: { page: any; contact: { phone: string; phoneHref: string }; industryImageMap: Record<string, string> }) {
+function ParentPage({ page, contact, industryImageMap, cities }: { page: any; contact: { phone: string; phoneHref: string }; industryImageMap: Record<string, string>; cities: any[] }) {
   const h = page.headlines;
   const industryImages = (page.industries || page.industries_list || []).map((ind: any) => ({
     ...ind,
@@ -359,18 +361,12 @@ function ParentPage({ page, contact, industryImageMap }: { page: any; contact: {
         </div>
       </section>
 
-      <section className="py-20 bg-primary-50 border-y border-primary-light">
-        <div className="container-rq">
-          <ScrollReveal>
-            <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 mb-10"><div><h2 className="section-title mb-2">{h.cityLinks}</h2><p className="text-gray-500 text-[15px]">Free pickup and same-day quotes in these cities and more.</p></div><Link href="/locations" className="btn-outline shrink-0">View All 97+ Locations <span className="material-symbols-outlined text-[16px]">arrow_forward</span></Link></div>
-          </ScrollReveal>
-          <ScrollReveal>
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-2.5">
-              {page.cityLinks.map((city: any) => (<Link key={city.slug} href={`/${city.urlPrefix}/${city.slug}`} className="px-5 py-4 bg-white border border-gray-200 rounded-[14px] group hover:border-primary hover:shadow-md hover:-translate-y-0.5 transition-all duration-200"><span className="block text-[14px] font-bold text-gray-800 group-hover:text-primary transition-colors" style={{ letterSpacing: '-0.01em' }}>{city.name}</span><span className="block text-[11px] text-gray-400 mt-0.5">{page.name} Recycling</span></Link>))}
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
+      {/* ═══ LOCATIONS — tabbed with flags ═══ */}
+      <LocationsSection
+        title={h.cityLinks}
+        subtitle="Free pickup and same-day quotes in these cities and more."
+        cities={cities}
+      />
 
       <section className="py-24 bg-white">
         <div className="container-rq"><div className="grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-12 items-start">

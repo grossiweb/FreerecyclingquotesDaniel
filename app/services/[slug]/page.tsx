@@ -2,12 +2,13 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { getServicePage, getContact, getIndustryImages } from '@/lib/queries';
+import { getServicePage, getContact, getIndustryImages, getServiceCities } from '@/lib/queries';
 import { SERVICE_PAGES } from '@/lib/service-pages'; // Keep for generateStaticParams + generateMetadata
 import { INDUSTRIES } from '@/lib/data'; // Keep for generateMetadata
 import { JsonLd, serviceSchema, faqPageSchema, webPageSchema } from '@/lib/schema';
 import Breadcrumbs from '@/components/ui/Breadcrumbs';
 import PageHero from '@/components/ui/PageHero';
+import LocationsSection from '@/components/ui/LocationsSection';
 import { CTABlock, FAQAccordion, ScrollReveal } from '@/components/ui';
 
 // ISR: revalidate every 60 seconds
@@ -37,6 +38,7 @@ export default async function ServicePage({ params }: { params: { slug: string }
   const CONTACT = { phone: contact?.phone || '817-946-5655', phoneHref: contact?.phone_href || 'tel:8179465655' };
 
   const indImages = await getIndustryImages();
+  const serviceCities = await getServiceCities(params.slug);
   const h = page.headlines;
   const industryImages = page.industries.map((ind: any) => ({
     ...ind,
@@ -214,30 +216,12 @@ export default async function ServicePage({ params }: { params: { slug: string }
         </div>
       </section>
 
-      {/* ═══ LOCATIONS — full-width prominent section ═══ */}
-      <section className="py-20 bg-primary-50 border-y border-primary-light">
-        <div className="container-rq">
-          <ScrollReveal>
-            <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 mb-10">
-              <div>
-                <h2 className="section-title mb-2">{h.locations}</h2>
-                <p className="text-gray-500 text-[15px]">Free pickup and same-day quotes in these cities and 85+ more.</p>
-              </div>
-              <Link href="/locations" className="btn-outline shrink-0">View All 97+ Locations <span className="material-symbols-outlined text-[16px]">arrow_forward</span></Link>
-            </div>
-          </ScrollReveal>
-          <ScrollReveal>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5">
-              {page.topLocations.map((loc: any) => (
-                <Link key={loc.slug} href={`/${page.slug}/${loc.slug}`} className="px-5 py-4 bg-white border border-gray-200 rounded-[12px] group hover:border-primary hover:shadow-md transition-all duration-200">
-                  <span className="block text-[14px] font-bold text-gray-800 group-hover:text-primary transition-colors" style={{ letterSpacing: '-0.01em' }}>{loc.name}</span>
-                  <span className="block text-[11px] text-gray-400 mt-0.5">{page.name}</span>
-                </Link>
-              ))}
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
+      {/* ═══ LOCATIONS — tabbed with flags ═══ */}
+      <LocationsSection
+        title={h.locations}
+        subtitle="Free pickup and same-day quotes in these cities and more."
+        cities={serviceCities}
+      />
 
       {/* ═══ RESULTS ═══ */}
       <section className="py-24 bg-dark-bg relative overflow-hidden">

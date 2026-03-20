@@ -310,5 +310,77 @@ export async function getAllMaterialSlugs() {
 
 export async function getAllIndustrySlugs(): Promise<string[]> {
   const { data } = await supabase.from('industries').select('slug').eq('is_active', true).order('sort_order');
-  return data?.map(d => d.slug) || [];
+  return data?.map((d: any) => d.slug) || [];
+}
+
+// ═══════════════════════════════════════════════════════════════
+// SERVICE CITIES (for LocationsSection component)
+// ═══════════════════════════════════════════════════════════════
+
+export async function getServiceCities(serviceSlug: string) {
+  const { data: service } = await supabase
+    .from('services')
+    .select('id')
+    .eq('slug', serviceSlug)
+    .single();
+
+  if (!service) return [];
+
+  const { data: locs } = await supabase
+    .from('service_locations')
+    .select('location:locations(slug, name, country_code, region)')
+    .eq('service_id', service.id)
+    .eq('is_approved', true)
+    .order('priority_score', { ascending: false });
+
+  return (locs || []).map((l: any) => ({
+    slug: l.location?.slug,
+    name: l.location?.name,
+    country_code: l.location?.country_code,
+    state: l.location?.region,
+    urlPrefix: serviceSlug,
+  })).filter((c: any) => c.slug);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MATERIAL CITIES — gets cities from related services' S×L pages
+// ═══════════════════════════════════════════════════════════════
+
+export async function getMaterialCities(materialSlug: string) {
+  // Find services that handle this material
+  const { data: material } = await supabase
+    .from('materials')
+    .select('id')
+    .eq('slug', materialSlug)
+    .single();
+
+  if (!material) return [];
+
+  const { data: svcJunctions } = await supabase
+    .from('service_materials')
+    .select('service:services(id, slug)')
+    .eq('material_id', material.id)
+    .eq('is_approved', true)
+    .limit(3); // Top 3 services for this material
+
+  if (!svcJunctions || svcJunctions.length === 0) return [];
+
+  // Get cities for the primary service
+  const primaryService = (svcJunctions[0] as any).service;
+  if (!primaryService) return [];
+
+  const { data: locs } = await supabase
+    .from('service_locations')
+    .select('location:locations(slug, name, country_code, region)')
+    .eq('service_id', primaryService.id)
+    .eq('is_approved', true)
+    .order('priority_score', { ascending: false });
+
+  return (locs || []).map((l: any) => ({
+    slug: l.location?.slug,
+    name: l.location?.name,
+    country_code: l.location?.country_code,
+    state: l.location?.region,
+    urlPrefix: primaryService.slug,
+  })).filter((c: any) => c.slug);
 }
