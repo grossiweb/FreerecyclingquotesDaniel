@@ -9,7 +9,7 @@ import PageHero from '@/components/ui/PageHero';
 import { CTABlock, FAQAccordion, ScrollReveal } from '@/components/ui';
 
 export function generateStaticParams() {
-  return Object.keys(INDUSTRY_PAGES).map(slug => ({ slug }));
+  return Object.keys(INDUSTRY_PAGES).map((slug: any) => ({ slug }));
 }
 
 export function generateMetadata({ params }: { params: { slug: string } }): Metadata {

@@ -11,7 +11,7 @@ import PageHero from '@/components/ui/PageHero';
 import { CTABlock, FAQAccordion, ScrollReveal } from '@/components/ui';
 
 export function generateStaticParams() {
-  return Object.keys(SERVICE_PAGES).map(slug => ({ slug }));
+  return Object.keys(SERVICE_PAGES).map((slug: any) => ({ slug }));
 }
 
 export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
@@ -88,7 +88,7 @@ export default async function ServicePage({ params }: { params: { slug: string }
                   <h2 className="text-2xl font-extrabold text-white mb-3" style={{ letterSpacing: '-0.025em' }}>What We Accept</h2>
                   <p className="text-dark-text text-[15px] leading-relaxed mb-5">Everything we process goes through certified facilities with full documentation.</p>
                   <div className="flex flex-wrap gap-2">
-                    {page.certifications.map(cert => (
+                    {page.certifications.map((cert: any) => (
                       <Link key={cert} href="/about/certifications" className="inline-block px-3 py-1.5 bg-dark-card border border-dark-border rounded-full text-[11px] font-bold text-gray-400 hover:border-[rgba(74,222,128,.3)] hover:text-[#4ADE80] transition-colors">{cert}</Link>
                     ))}
                   </div>
@@ -225,7 +225,7 @@ export default async function ServicePage({ params }: { params: { slug: string }
           </ScrollReveal>
           <ScrollReveal>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5">
-              {page.topLocations.map(loc => (
+              {page.topLocations.map((loc: any) => (
                 <Link key={loc.slug} href={`/${page.slug}/${loc.slug}`} className="px-5 py-4 bg-white border border-gray-200 rounded-[12px] group hover:border-primary hover:shadow-md transition-all duration-200">
                   <span className="block text-[14px] font-bold text-gray-800 group-hover:text-primary transition-colors" style={{ letterSpacing: '-0.01em' }}>{loc.name}</span>
                   <span className="block text-[11px] text-gray-400 mt-0.5">{page.name}</span>

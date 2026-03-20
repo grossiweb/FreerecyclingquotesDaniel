@@ -72,7 +72,7 @@ export default async function ServiceLocationPage({ params }: { params: { servic
   return (
     <>
       <JsonLd data={webPageSchema({ path: `/${config.serviceSlug}/${city.slug}`, name: `${config.serviceName} in ${cityLabel}`, description: `${config.serviceName} with free pickup and certified processing in ${cityLabel}.` })} />
-      <JsonLd data={faqPageSchema(localFaqs.map(f => ({ question: f.q, answer: f.a })))} />
+      <JsonLd data={faqPageSchema(localFaqs.map((f: any) => ({ question: f.q, answer: f.a })))} />
       <Breadcrumbs items={[
         { name: service.name, href: `/services/${config.serviceSlug}` },
         { name: city.name, href: `/${config.serviceSlug}/${city.slug}` },
@@ -137,7 +137,7 @@ export default async function ServiceLocationPage({ params }: { params: { servic
                     { label: 'Pickup', value: 'Free for commercial volumes' },
                     { label: 'Quotes', value: 'Within 24 hours, often same-day' },
                     { label: 'Documentation', value: 'Certificate of Recycling included' },
-                  ].map(item => (
+                  ].map((item: any) => (
                     <div key={item.label} className="flex justify-between items-start gap-3">
                       <span className="text-[12px] text-gray-400 font-medium uppercase tracking-wider shrink-0">{item.label}</span>
                       <span className="text-[13px] text-gray-700 font-medium text-right">{item.value}</span>
@@ -163,7 +163,7 @@ export default async function ServiceLocationPage({ params }: { params: { servic
               <div>
                 <h2 className="text-xl font-extrabold text-white mb-6" style={{ letterSpacing: '-0.02em' }}>Materials We Handle in {city.name}</h2>
                 <div className="space-y-2.5">
-                  {config.materials.map(mat => (
+                  {config.materials.map((mat: any) => (
                     <Link key={mat.slug} href={`/materials/${mat.slug}`} className="block px-5 py-3.5 bg-dark-card border border-dark-border rounded-[12px] group hover:border-[rgba(74,222,128,.2)] transition-all duration-200">
                       <span className="text-[14px] font-bold text-white group-hover:text-[#4ADE80] transition-colors">{mat.name}</span>
                     </Link>
@@ -176,7 +176,7 @@ export default async function ServiceLocationPage({ params }: { params: { servic
               <div>
                 <h2 className="text-xl font-extrabold text-white mb-6" style={{ letterSpacing: '-0.02em' }}>Industries We Serve in {city.name}</h2>
                 <div className="space-y-2.5">
-                  {relevantIndustries.map(ind => (
+                  {relevantIndustries.map((ind: any) => (
                     <Link key={ind.slug} href={`/industries/${ind.slug}`} className="block px-5 py-3.5 bg-dark-card border border-dark-border rounded-[12px] group hover:border-[rgba(74,222,128,.2)] transition-all duration-200">
                       <span className="block text-[14px] font-bold text-white group-hover:text-[#4ADE80] transition-colors">{ind.name}</span>
                       <span className="block text-[12px] text-gray-400 mt-0.5">{ind.context}</span>

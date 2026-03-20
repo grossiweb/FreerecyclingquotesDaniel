@@ -10,7 +10,7 @@ import { CTABlock, FAQAccordion, ScrollReveal } from '@/components/ui';
 
 // Static params still use local data (build-time — Supabase might not be reachable during CI)
 export function generateStaticParams() {
-  return Object.keys(CHALLENGE_PAGES).map(slug => ({ slug }));
+  return Object.keys(CHALLENGE_PAGES).map((slug: any) => ({ slug }));
 }
 
 export function generateMetadata({ params }: { params: { slug: string } }): Metadata {

@@ -289,7 +289,7 @@ function ParentPage({ page, contact, industryImageMap }: { page: any; contact: {
               <div>
                 <h2 className="text-2xl font-extrabold text-white mb-3" style={{ letterSpacing: '-0.025em' }}>{h.acceptedItems}</h2>
                 <p className="text-dark-text text-[15px] leading-relaxed mb-5">Processed through certified facilities with full documentation.</p>
-                <div className="flex flex-wrap gap-2">{page.certifications.map(cert => (<Link key={cert} href="/about/certifications" className="inline-block px-3 py-1.5 bg-dark-card border border-dark-border rounded-full text-[11px] font-bold text-gray-400 hover:border-[rgba(74,222,128,.3)] hover:text-[#4ADE80] transition-colors">{cert}</Link>))}</div>
+                <div className="flex flex-wrap gap-2">{page.certifications.map((cert: any) => (<Link key={cert} href="/about/certifications" className="inline-block px-3 py-1.5 bg-dark-card border border-dark-border rounded-full text-[11px] font-bold text-gray-400 hover:border-[rgba(74,222,128,.3)] hover:text-[#4ADE80] transition-colors">{cert}</Link>))}</div>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                 {page.acceptedItems.map((item: any) => (<div key={item} className="flex items-start gap-3 px-4 py-3 bg-dark-card border border-dark-border rounded-[10px]"><span className="material-symbols-outlined text-[16px] text-[#4ADE80] mt-0.5 shrink-0">check_circle</span><span className="text-[14px] text-gray-300">{item}</span></div>))}
@@ -363,7 +363,7 @@ function ParentPage({ page, contact, industryImageMap }: { page: any; contact: {
           </ScrollReveal>
           <ScrollReveal>
             <div className="grid grid-cols-2 md:grid-cols-5 gap-2.5">
-              {page.cityLinks.map(city => (<Link key={city.slug} href={`/${city.urlPrefix}/${city.slug}`} className="px-5 py-4 bg-white border border-gray-200 rounded-[14px] group hover:border-primary hover:shadow-md hover:-translate-y-0.5 transition-all duration-200"><span className="block text-[14px] font-bold text-gray-800 group-hover:text-primary transition-colors" style={{ letterSpacing: '-0.01em' }}>{city.name}</span><span className="block text-[11px] text-gray-400 mt-0.5">{page.name} Recycling</span></Link>))}
+              {page.cityLinks.map((city: any) => (<Link key={city.slug} href={`/${city.urlPrefix}/${city.slug}`} className="px-5 py-4 bg-white border border-gray-200 rounded-[14px] group hover:border-primary hover:shadow-md hover:-translate-y-0.5 transition-all duration-200"><span className="block text-[14px] font-bold text-gray-800 group-hover:text-primary transition-colors" style={{ letterSpacing: '-0.01em' }}>{city.name}</span><span className="block text-[11px] text-gray-400 mt-0.5">{page.name} Recycling</span></Link>))}
             </div>
           </ScrollReveal>
         </div>
