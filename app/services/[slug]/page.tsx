@@ -42,6 +42,8 @@ export default async function ServicePage({ params }: { params: { slug: string }
   const pageStats = await getPageStats('service', params.slug);
   const certifications = await getCertifications();
   const h = page.headlines;
+  const hidden = page.hiddenSections || [];
+  const show = (section: string) => !hidden.includes(section);
   const industryImages = page.industries.map((ind: any) => ({
     ...ind,
     image: indImages[ind.slug] || 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=400&h=300&fit=crop',
@@ -60,7 +62,7 @@ export default async function ServicePage({ params }: { params: { slug: string }
       <PageHero tag={page.name} tagIcon={page.icon} title={page.h1.split('—')[0].trim()} titleAccent={page.h1.includes('—') ? page.h1.split('—')[1].trim() : ''} description={page.definition} image={page.heroImage} />
 
       {/* ═══ OVERVIEW ═══ */}
-      <section className="py-24 bg-white">
+      {show('overview') && <section className="py-24 bg-white">
         <div className="container-rq max-w-4xl">
           <ScrollReveal>
             <div className="section-tag mb-4"><span className="material-symbols-outlined text-[14px]">info</span> Overview</div>
@@ -82,10 +84,10 @@ export default async function ServicePage({ params }: { params: { slug: string }
             </div>
           </ScrollReveal>
         </div>
-      </section>
+      </section>}
 
       {/* ═══ WHAT WE ACCEPT — full-width prominent panel ═══ */}
-      {page.acceptedItems && (
+      {show('acceptedItems') && page.acceptedItems && (
         <section className="py-20 bg-dark-bg relative overflow-hidden">
           <div className="absolute top-[-100px] left-[-100px] w-[400px] h-[400px] rounded-full" style={{ background: 'radial-gradient(circle, rgba(27,122,61,.08) 0%, transparent 60%)' }} />
           <div className="container-rq relative z-10">
@@ -133,8 +135,8 @@ export default async function ServicePage({ params }: { params: { slug: string }
         </section>
       )}
 
-      {/* ═══ PROCESS — always one row ═══ */}
-      <section className="py-24 bg-gray-50">
+      {/* ═══ PROCESS ═══ */}
+      {show('process') && <section className="py-24 bg-gray-50">
         <div className="container-rq">
           <ScrollReveal>
             <div className="section-tag mb-4"><span className="material-symbols-outlined text-[14px]">timeline</span> Process</div>
@@ -155,10 +157,10 @@ export default async function ServicePage({ params }: { params: { slug: string }
           </ScrollReveal>
           <ScrollReveal><div className="mt-8"><Link href="/schedule-pickup" className="btn-primary">Schedule a Pickup <span className="material-symbols-outlined text-[16px]">calendar_month</span></Link></div></ScrollReveal>
         </div>
-      </section>
+      </section>}
 
-      {/* ═══ CHALLENGES — dark split ═══ */}
-      <section className="py-24 bg-dark-bg relative overflow-hidden">
+      {/* ═══ CHALLENGES ═══ */}
+      {show('challenges') && <section className="py-24 bg-dark-bg relative overflow-hidden">
         <div className="absolute top-[-100px] right-[-100px] w-[400px] h-[400px] rounded-full" style={{ background: 'radial-gradient(circle, rgba(27,122,61,.08) 0%, transparent 60%)' }} />
         <div className="container-rq relative z-10">
           <ScrollReveal>
@@ -179,7 +181,7 @@ export default async function ServicePage({ params }: { params: { slug: string }
             </div>
           </ScrollReveal>
         </div>
-      </section>
+      </section>}
 
       {/* MID CTA */}
       <section className="py-10 bg-primary">
@@ -192,8 +194,8 @@ export default async function ServicePage({ params }: { params: { slug: string }
         </div>
       </section>
 
-      {/* ═══ INDUSTRIES + MATERIALS — side by side ═══ */}
-      <section className="py-24 bg-white">
+      {/* ═══ INDUSTRIES + MATERIALS ═══ */}
+      {show('industries') && <section className="py-24 bg-white">
         <div className="container-rq">
           <div className="grid grid-cols-1 lg:grid-cols-[1.3fr_1fr] gap-16">
             <div>
@@ -235,7 +237,7 @@ export default async function ServicePage({ params }: { params: { slug: string }
             </div>
           </div>
         </div>
-      </section>
+      </section>}
 
       {/* ═══ LOCATIONS — tabbed with flags ═══ */}
       <LocationsSection
@@ -245,7 +247,7 @@ export default async function ServicePage({ params }: { params: { slug: string }
       />
 
       {/* ═══ RESULTS ═══ */}
-      <section className="py-24 bg-dark-bg relative overflow-hidden">
+      {show('caseStudies') && <section className="py-24 bg-dark-bg relative overflow-hidden">
         <div className="absolute bottom-[-100px] left-[-100px] w-[400px] h-[400px] rounded-full" style={{ background: 'radial-gradient(circle, rgba(27,122,61,.08) 0%, transparent 60%)' }} />
         <div className="container-rq relative z-10">
           <ScrollReveal>
@@ -263,7 +265,7 @@ export default async function ServicePage({ params }: { params: { slug: string }
             ))}
           </div>
         </div>
-      </section>
+      </section>}
 
       {/* ═══ FAQ — split layout ═══ */}
       <section className="py-24 bg-white">

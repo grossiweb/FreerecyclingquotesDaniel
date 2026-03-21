@@ -225,6 +225,7 @@ function EntityEditor({ table, label }: { table: string; label: string }) {
   const [loading, setLoading] = useState(true);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editingRow, setEditingRow] = useState<EntityRow | null>(null);
+  const [isNew, setIsNew] = useState(false);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState('');
 
@@ -240,38 +241,107 @@ function EntityEditor({ table, label }: { table: string; label: string }) {
   const startEditing = (row: EntityRow) => {
     setEditingId(row.id);
     setEditingRow({ ...row });
+    setIsNew(false);
+  };
+
+  const startNew = () => {
+    const defaults: Record<string, any> = {
+      name: '', slug: '', h1: '', definition: '', icon: '', hero_image: '', image: '',
+      seo_title: '', seo_description: '', is_active: true, sort_order: rows.length,
+      page_data: {
+        headlines: table === 'services' ? { overview: '', process: '', materials: '', challenges: '', industries: '', locations: '', results: '', faq: '', cta: '' }
+          : table === 'challenges' ? { definition: '', whyHard: '', whyHardSub: '', approach: '', approachSub: '', industries: '', industriesSub: '', outcomes: '', faq: '', faqSub: '', cta: '', ctaSub: '' }
+          : table === 'materials' ? { overview: '', process: '', acceptedItems: '', certifications: '', services: '', challenges: '', industries: '', cityLinks: '', faq: '', faqSubtitle: '' }
+          : { overview: '' },
+        overview: [], faqs: [],
+      },
+    };
+    if (table === 'services') { defaults.page_data.acceptedItems = []; defaults.page_data.process = []; defaults.page_data.differentiators = []; defaults.page_data.certifications = []; defaults.page_data.caseStudies = []; defaults.category = 'core-recycling'; }
+    if (table === 'materials') { defaults.page_data.acceptedItems = []; defaults.page_data.process = []; defaults.page_data.certifications = []; defaults.page_data.subTypes = []; defaults.category = ''; defaults.depth = 1; defaults.parent_slug = ''; }
+    if (table === 'industries') { defaults.page_data.wasteProfile = []; defaults.page_data.caseStudies = []; defaults.category = ''; defaults.depth = 1; }
+    if (table === 'challenges') { defaults.page_data.consequences = []; defaults.page_data.problemStats = []; defaults.page_data.barriers = []; defaults.page_data.approach = []; defaults.page_data.outcomes = []; defaults.page_data.resources = []; defaults.color = 'green'; }
+    setEditingId('new');
+    setEditingRow(defaults);
+    setIsNew(true);
   };
 
   const handleSave = async (entity: Record<string, any>, pd: Record<string, any>) => {
     if (!editingId) return;
     setSaving(true);
-    const update: Record<string, any> = {};
-    const fields = ['name', 'h1', 'definition', 'hero_image', 'image', 'icon', 'seo_title', 'seo_description', 'slug', 'parent_slug', 'category'];
-    for (const f of fields) { if (entity[f] !== undefined) update[f] = entity[f]; }
+
+    // Build the record — only include fields that exist on this table
+    const record: Record<string, any> = {};
+    const commonFields = ['name', 'h1', 'definition', 'icon', 'seo_title', 'seo_description', 'slug', 'sort_order', 'is_active'];
+    const tableFields: Record<string, string[]> = {
+      services: [...commonFields, 'hero_image', 'category'],
+      materials: [...commonFields, 'hero_image', 'parent_slug', 'category', 'depth'],
+      industries: [...commonFields, 'image', 'category', 'depth'],
+      challenges: [...commonFields, 'color'],
+    };
+    const allowedFields = tableFields[table] || commonFields;
+    for (const f of allowedFields) { if (entity[f] !== undefined && entity[f] !== '') record[f] = entity[f]; }
+    // Ensure required fields have defaults
+    if (!record.icon) record.icon = table === 'services' ? 'build' : table === 'materials' ? 'recycling' : table === 'industries' ? 'factory' : 'psychology';
+    if (!record.category && (table === 'services' || table === 'materials' || table === 'industries')) record.category = 'general';
+    if (table === 'challenges' && !record.color) record.color = 'green';
+    if (table === 'materials' && !record.depth) record.depth = 1;
+    
+    // Auto-generate slug from name if empty
+    if (!record.slug && record.name) {
+      record.slug = record.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    }
+    
+    // Build page_data
     const newPd = { ...pd };
-    newPd.slug = entity.slug; newPd.name = entity.name; newPd.h1 = entity.h1;
-    newPd.definition = entity.definition; newPd.heroImage = entity.hero_image || entity.image;
-    newPd.titleTag = entity.seo_title; newPd.metaDescription = entity.seo_description;
-    update.page_data = newPd;
-    console.log('💾 SAVING:', JSON.stringify(update).slice(0, 500));
-    const { error } = await supabase.from(table).update(update).eq('id', editingId);
+    newPd.slug = record.slug; newPd.name = record.name; newPd.h1 = record.h1;
+    newPd.definition = record.definition; newPd.heroImage = record.hero_image || record.image;
+    newPd.titleTag = record.seo_title; newPd.metaDescription = record.seo_description;
+    record.page_data = newPd;
+
+    let error;
+    if (isNew) {
+      // INSERT
+      const result = await supabase.from(table).insert(record);
+      error = result.error;
+    } else {
+      // UPDATE
+      const { id, ...updateFields } = record;
+      const result = await supabase.from(table).update(updateFields).eq('id', editingId);
+      error = result.error;
+    }
+
     if (error) { setMessage(`❌ Error: ${error.message}`); }
-    else { setMessage('✅ Saved! Changes will appear on site within 60 seconds.'); setEditingId(null); setEditingRow(null); loadRows(); }
+    else { setMessage(isNew ? '✅ Created! New page will appear after next build or revalidation.' : '✅ Saved! Changes will appear on site within 60 seconds.'); setEditingId(null); setEditingRow(null); setIsNew(false); loadRows(); }
     setSaving(false);
     setTimeout(() => setMessage(''), 5000);
+  };
+
+  const handleDelete = async (id: string, name: string) => {
+    if (!confirm(`Deactivate "${name}"? This will hide it from the site but not delete the data.`)) return;
+    await supabase.from(table).update({ is_active: false }).eq('id', id);
+    setMessage(`✅ "${name}" deactivated.`);
+    loadRows();
+    setTimeout(() => setMessage(''), 3000);
   };
 
   const sections = table === 'services'
     ? ['basic','headlines','overview','accepted','process','differentiators','certifications','casestudies']
     : table === 'materials'
     ? ['basic','headlines','overview','accepted','process','certifications']
+    : table === 'industries'
+    ? ['basic','headlines','overview','wasteprofile','casestudies']
+    : table === 'challenges'
+    ? ['basic','headlines','consequences','problemstats','barriers','approach','outcomes','resources']
     : ['basic','headlines'];
 
   const sectionLabels: Record<string, [string, string]> = {
     basic: ['Basic Info', 'edit'], headlines: ['Headlines', 'title'], overview: ['Overview', 'article'],
     accepted: ['Accepted Items', 'checklist'], process: ['Process Steps', 'format_list_numbered'],
     differentiators: ['Differentiators', 'star'], certifications: ['Certifications', 'verified'],
-    casestudies: ['Case Studies', 'trending_up'],
+    casestudies: ['Case Studies', 'trending_up'], wasteprofile: ['Waste Streams', 'delete'],
+    consequences: ['Consequences', 'warning'], problemstats: ['Problem Stats', 'analytics'],
+    barriers: ['Barriers', 'block'], approach: ['Our Approach', 'lightbulb'],
+    outcomes: ['Outcomes', 'trending_up'], resources: ['Resources', 'link'],
   };
 
   const basicFieldNames = table === 'services'
@@ -286,6 +356,9 @@ function EntityEditor({ table, label }: { table: string; label: string }) {
     <div>
       <div className="flex items-center justify-between mb-6">
         <div><h1 className="text-white text-2xl font-extrabold" style={{ letterSpacing: '-0.025em' }}>{label}</h1><p className="text-gray-500 text-sm">{rows.length} records</p></div>
+        <button onClick={startNew} className="bg-[#1B7A3D] hover:bg-[#1a6e37] text-white font-bold text-sm px-4 py-2.5 rounded-xl flex items-center gap-2">
+          <span className="material-symbols-outlined text-base">add</span> New {label.replace(/s$/, '')}
+        </button>
       </div>
       {message && <div className={`mb-4 px-4 py-3 rounded-xl text-sm font-medium ${message.startsWith('✅') ? 'bg-green-900/30 text-green-400 border border-green-800/30' : 'bg-red-900/30 text-red-400 border border-red-800/30'}`}>{message}</div>}
 
@@ -321,7 +394,7 @@ function EntityEditor({ table, label }: { table: string; label: string }) {
                 <td className="px-4 py-3 text-gray-500 font-mono text-xs">{row.slug}</td>
                 <td className="px-4 py-3 text-gray-400 text-xs max-w-[200px] truncate">{row.h1 || '—'}</td>
                 <td className="px-4 py-3">{(row.hero_image || row.image) ? <img src={row.hero_image || row.image} alt="" className="w-16 h-8 object-cover rounded" onError={(e) => { (e.target as HTMLImageElement).src = ''; }} /> : <span className="text-gray-600 text-xs">No image</span>}</td>
-                <td className="px-4 py-3 text-right"><button onClick={() => startEditing(row)} className="text-[#4ADE80] hover:text-white text-xs font-bold">Edit</button></td>
+                <td className="px-4 py-3 text-right"><div className="flex gap-3 justify-end"><button onClick={() => startEditing(row)} className="text-[#4ADE80] hover:text-white text-xs font-bold">Edit</button><button onClick={() => handleDelete(row.id, row.name)} className="text-red-500/30 hover:text-red-400 text-xs font-bold">Deactivate</button></div></td>
               </tr>
             ))}
           </tbody>
@@ -361,23 +434,44 @@ function EditPanel({ initialEntity, initialPd, sections, sectionLabels, basicFie
 
   const hUpdate = (k: string, v: string) => setPd(p => ({ ...p, headlines: { ...(p.headlines || {}), [k]: v } }));
 
+  // Section visibility
+  const hiddenSections = pd.hiddenSections || [];
+  const toggleSection = (sectionKey: string) => {
+    const current = pd.hiddenSections || [];
+    const newHidden = current.includes(sectionKey) ? current.filter((s: string) => s !== sectionKey) : [...current, sectionKey];
+    setPd(p => ({ ...p, hiddenSections: newHidden }));
+  };
+
+  // Map tab IDs to page_data field names for visibility
+  const sectionFieldMap: Record<string, string> = {
+    overview: 'overview', accepted: 'acceptedItems', process: 'process',
+    differentiators: 'differentiators', certifications: 'certifications',
+    casestudies: 'caseStudies', wasteprofile: 'wasteProfile',
+    consequences: 'consequences', problemstats: 'problemStats',
+    barriers: 'barriers', approach: 'approach', outcomes: 'outcomes', resources: 'resources',
+  };
+
   const ic = "w-full bg-[#0A0F0C] border border-[#1a2e1f] rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-[#1B7A3D]";
   const icl = ic + " rounded-xl px-4 py-3";
+
+  // Add 'visibility' to sections list
+  const allSections = [...sections, 'visibility'];
+  const allLabels: Record<string, [string, string]> = { ...sectionLabels, visibility: ['Section Visibility', 'visibility'] };
 
   return (
     <div className="mb-6 bg-[#111916] border border-[#1B7A3D]/30 rounded-xl overflow-hidden">
       <div className="flex items-center justify-between px-6 py-4 border-b border-[#1a2e1f]">
-        <h2 className="text-white font-bold">Editing: {basic.name}</h2>
+        <h2 className="text-white font-bold">Editing: {basic.name || 'New ' + tableName.replace(/s$/, '')}</h2>
         <div className="flex gap-3">
-          <button onClick={() => window.open(`/${tableName}/${basic.slug}`, '_blank')} className="text-gray-500 hover:text-white text-xs flex items-center gap-1"><span className="material-symbols-outlined text-sm">open_in_new</span> View Page</button>
+          {basic.slug && <button onClick={() => window.open(`/${tableName}/${basic.slug}`, '_blank')} className="text-gray-500 hover:text-white text-xs flex items-center gap-1"><span className="material-symbols-outlined text-sm">open_in_new</span> View Page</button>}
           <button onClick={onCancel} className="text-gray-500 hover:text-white text-sm">✕</button>
         </div>
       </div>
 
       <div className="flex gap-1 px-4 pt-3 pb-0 overflow-x-auto border-b border-[#1a2e1f]">
-        {sections.map((s: string) => (
+        {allSections.map((s: string) => (
           <button key={s} onClick={() => setTab(s)} className={`flex items-center gap-1.5 px-3 py-2.5 text-xs font-medium rounded-t-lg transition-all whitespace-nowrap ${tab === s ? 'bg-[#0A0F0C] text-[#4ADE80] border-t border-x border-[#1B7A3D]/30' : 'text-gray-500 hover:text-white'}`}>
-            <span className="material-symbols-outlined text-sm">{sectionLabels[s]?.[1] || 'edit'}</span>{sectionLabels[s]?.[0] || s}
+            <span className="material-symbols-outlined text-sm">{allLabels[s]?.[1] || 'edit'}</span>{allLabels[s]?.[0] || s}
           </button>
         ))}
       </div>
@@ -449,6 +543,95 @@ function EditPanel({ initialEntity, initialPd, sections, sectionLabels, basicFie
               <input type="text" value={item.metric || ''} onChange={e => oaUpdate('caseStudies', i, 'metric', e.target.value)} placeholder="Metric" className={ic} />
             </div>
           ))}<button onClick={() => oaAdd('caseStudies', { title: '', metric: '' })} className="text-[#4ADE80] text-xs font-bold flex items-center gap-1"><span className="material-symbols-outlined text-sm">add</span> Add</button></div>
+        </div>}
+
+        {/* ═══ INDUSTRY-SPECIFIC TABS ═══ */}
+
+        {tab === 'wasteprofile' && <div><p className="text-gray-500 text-xs mb-3">Waste streams this industry generates.</p>
+          <div className="space-y-2">{sa('wasteProfile').map((v: string, i: number) => (
+            <div key={i} className="flex gap-2"><input type="text" value={v} onChange={e => saUpdate('wasteProfile', i, e.target.value)} className={ic + " flex-1"} placeholder="e.g. Cardboard from shipping — 40% of total waste stream" />
+            <button onClick={() => saDel('wasteProfile', i)} className="text-red-500/50 hover:text-red-400 px-1"><span className="material-symbols-outlined text-base">close</span></button></div>
+          ))}<button onClick={() => saAdd('wasteProfile')} className="text-[#4ADE80] text-xs font-bold flex items-center gap-1 mt-1"><span className="material-symbols-outlined text-sm">add</span> Add waste stream</button></div>
+        </div>}
+
+        {/* ═══ CHALLENGE-SPECIFIC TABS ═══ */}
+
+        {tab === 'consequences' && <div><p className="text-gray-500 text-xs mb-3">Consequences of not addressing this challenge — shown as red warning cards.</p>
+          <div className="space-y-2">{sa('consequences').map((v: string, i: number) => (
+            <div key={i} className="flex gap-2"><input type="text" value={v} onChange={e => saUpdate('consequences', i, e.target.value)} className={ic + " flex-1"} placeholder="e.g. EPA fines up to $70,117 per day per violation" />
+            <button onClick={() => saDel('consequences', i)} className="text-red-500/50 hover:text-red-400 px-1"><span className="material-symbols-outlined text-base">close</span></button></div>
+          ))}<button onClick={() => saAdd('consequences')} className="text-[#4ADE80] text-xs font-bold flex items-center gap-1 mt-1"><span className="material-symbols-outlined text-sm">add</span> Add consequence</button></div>
+        </div>}
+
+        {tab === 'problemstats' && <div><p className="text-gray-500 text-xs mb-3">Statistics shown in the dark sidebar — each with a stat and source.</p>
+          <div className="space-y-3">{oa('problemStats').map((item: any, i: number) => (
+            <div key={i} className="bg-[#0A0F0C] border border-[#1a2e1f] rounded-xl p-4 space-y-2">
+              <div className="flex items-center justify-between"><span className="text-xs text-gray-500 font-bold">Stat {i + 1}</span><button onClick={() => oaDel('problemStats', i)} className="text-red-500/50 hover:text-red-400"><span className="material-symbols-outlined text-sm">close</span></button></div>
+              <input type="text" value={item.stat || ''} onChange={e => oaUpdate('problemStats', i, 'stat', e.target.value)} placeholder="e.g. 62 million tonnes of e-waste generated globally in 2022" className={ic} />
+              <input type="text" value={item.source || ''} onChange={e => oaUpdate('problemStats', i, 'source', e.target.value)} placeholder="e.g. WHO/UN Global E-waste Monitor 2024" className={ic} />
+            </div>
+          ))}<button onClick={() => oaAdd('problemStats', { stat: '', source: '' })} className="text-[#4ADE80] text-xs font-bold flex items-center gap-1"><span className="material-symbols-outlined text-sm">add</span> Add stat</button></div>
+        </div>}
+
+        {tab === 'barriers' && <div><p className="text-gray-500 text-xs mb-3">Why this challenge is hard — shown as numbered cards in dark section.</p>
+          <div className="space-y-3">{oa('barriers').map((item: any, i: number) => (
+            <div key={i} className="bg-[#0A0F0C] border border-[#1a2e1f] rounded-xl p-4 space-y-2">
+              <div className="flex items-center justify-between"><span className="text-xs text-gray-500 font-bold">Barrier {i + 1}</span><button onClick={() => oaDel('barriers', i)} className="text-red-500/50 hover:text-red-400"><span className="material-symbols-outlined text-sm">close</span></button></div>
+              <input type="text" value={item.title || ''} onChange={e => oaUpdate('barriers', i, 'title', e.target.value)} placeholder="Barrier title" className={ic} />
+              <textarea value={item.description || ''} onChange={e => oaUpdate('barriers', i, 'description', e.target.value)} rows={2} placeholder="Description" className={ic + " resize-none"} />
+            </div>
+          ))}<button onClick={() => oaAdd('barriers', { title: '', description: '' })} className="text-[#4ADE80] text-xs font-bold flex items-center gap-1"><span className="material-symbols-outlined text-sm">add</span> Add barrier</button></div>
+        </div>}
+
+        {tab === 'approach' && <div><p className="text-gray-500 text-xs mb-3">Our approach paragraphs — how we solve this challenge.</p>
+          <div className="space-y-2">{sa('approach').map((v: string, i: number) => (
+            <div key={i} className="flex gap-2"><textarea value={v} onChange={e => saUpdate('approach', i, e.target.value)} rows={3} className={ic + " flex-1 resize-none"} />
+            <button onClick={() => saDel('approach', i)} className="text-red-500/50 hover:text-red-400 px-1 self-start mt-2"><span className="material-symbols-outlined text-base">close</span></button></div>
+          ))}<button onClick={() => saAdd('approach')} className="text-[#4ADE80] text-xs font-bold flex items-center gap-1 mt-1"><span className="material-symbols-outlined text-sm">add</span> Add paragraph</button></div>
+        </div>}
+
+        {tab === 'outcomes' && <div><p className="text-gray-500 text-xs mb-3">Outcome metrics — shown as green stat cards.</p>
+          <div className="space-y-3">{oa('outcomes').map((item: any, i: number) => (
+            <div key={i} className="bg-[#0A0F0C] border border-[#1a2e1f] rounded-xl p-4 space-y-2">
+              <div className="flex items-center justify-between"><span className="text-xs text-gray-500 font-bold">#{i + 1}</span><button onClick={() => oaDel('outcomes', i)} className="text-red-500/50 hover:text-red-400"><span className="material-symbols-outlined text-sm">close</span></button></div>
+              <input type="text" value={item.metric || ''} onChange={e => oaUpdate('outcomes', i, 'metric', e.target.value)} placeholder="e.g. 95% diversion rate" className={ic} />
+              <input type="text" value={item.description || ''} onChange={e => oaUpdate('outcomes', i, 'description', e.target.value)} placeholder="Description" className={ic} />
+            </div>
+          ))}<button onClick={() => oaAdd('outcomes', { metric: '', description: '' })} className="text-[#4ADE80] text-xs font-bold flex items-center gap-1"><span className="material-symbols-outlined text-sm">add</span> Add outcome</button></div>
+        </div>}
+
+        {tab === 'resources' && <div><p className="text-gray-500 text-xs mb-3">Related resources — links shown as pills.</p>
+          <div className="space-y-3">{oa('resources').map((item: any, i: number) => (
+            <div key={i} className="bg-[#0A0F0C] border border-[#1a2e1f] rounded-xl p-4 space-y-2">
+              <div className="flex items-center justify-between"><span className="text-xs text-gray-500 font-bold">#{i + 1}</span><button onClick={() => oaDel('resources', i)} className="text-red-500/50 hover:text-red-400"><span className="material-symbols-outlined text-sm">close</span></button></div>
+              <input type="text" value={item.title || ''} onChange={e => oaUpdate('resources', i, 'title', e.target.value)} placeholder="Resource title" className={ic} />
+              <input type="text" value={item.href || ''} onChange={e => oaUpdate('resources', i, 'href', e.target.value)} placeholder="/services/electronics-recycling" className={ic} />
+              <input type="text" value={item.type || ''} onChange={e => oaUpdate('resources', i, 'type', e.target.value)} placeholder="e.g. Service, Guide, Material" className={ic} />
+            </div>
+          ))}<button onClick={() => oaAdd('resources', { title: '', href: '', type: '' })} className="text-[#4ADE80] text-xs font-bold flex items-center gap-1"><span className="material-symbols-outlined text-sm">add</span> Add resource</button></div>
+        </div>}
+
+        {/* ═══ SECTION VISIBILITY ═══ */}
+        {tab === 'visibility' && <div>
+          <p className="text-gray-500 text-xs mb-4">Toggle sections on/off for this page. Hidden sections won&apos;t render on the live site.</p>
+          <div className="space-y-2">
+            {sections.filter((s: string) => s !== 'basic' && s !== 'headlines').map((s: string) => {
+              const fieldName = sectionFieldMap[s] || s;
+              const isHidden = hiddenSections.includes(fieldName);
+              return (
+                <div key={s} className={`flex items-center justify-between px-4 py-3 rounded-xl border transition-all ${isHidden ? 'bg-[#0A0F0C] border-red-900/30' : 'bg-[#0A0F0C] border-[#1a2e1f]'}`}>
+                  <div className="flex items-center gap-2.5">
+                    <span className="material-symbols-outlined text-base" style={{ color: isHidden ? '#666' : '#4ADE80' }}>{allLabels[s]?.[1] || 'edit'}</span>
+                    <span className={`text-sm font-medium ${isHidden ? 'text-gray-600 line-through' : 'text-white'}`}>{allLabels[s]?.[0] || s}</span>
+                  </div>
+                  <button onClick={() => toggleSection(fieldName)} className={`px-3 py-1 rounded-lg text-xs font-bold transition-all ${isHidden ? 'bg-red-900/20 text-red-400 hover:bg-red-900/40' : 'bg-[#1B7A3D]/15 text-[#4ADE80] hover:bg-[#1B7A3D]/30'}`}>
+                    {isHidden ? 'Hidden' : 'Visible'}
+                  </button>
+                </div>
+              );
+            })}
+          </div>
+          <p className="text-gray-600 text-[10px] mt-4">Note: Basic Info and Headlines are always visible. Hidden sections still store their data — toggling back to visible restores the content.</p>
         </div>}
       </div>
 
