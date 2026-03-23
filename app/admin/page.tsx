@@ -223,6 +223,7 @@ function DashboardTab({ counts }: { counts: Record<string, number> }) {
 function EntityEditor({ table, label }: { table: string; label: string }) {
   const [rows, setRows] = useState<EntityRow[]>([]);
   const [loading, setLoading] = useState(true);
+  const [showInactive, setShowInactive] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editingRow, setEditingRow] = useState<EntityRow | null>(null);
   const [isNew, setIsNew] = useState(false);
@@ -231,10 +232,12 @@ function EntityEditor({ table, label }: { table: string; label: string }) {
 
   const loadRows = useCallback(async () => {
     setLoading(true);
-    const { data } = await supabase.from(table).select('*').eq('is_active', true).order('sort_order');
+    let query = supabase.from(table).select('*').order('sort_order');
+    if (!showInactive) query = query.eq('is_active', true);
+    const { data } = await query;
     setRows(data || []);
     setLoading(false);
-  }, [table]);
+  }, [table, showInactive]);
 
   useEffect(() => { loadRows(); }, [loadRows]);
 
@@ -242,6 +245,13 @@ function EntityEditor({ table, label }: { table: string; label: string }) {
     setEditingId(row.id);
     setEditingRow({ ...row });
     setIsNew(false);
+  };
+
+  const handleReactivate = async (id: string, name: string) => {
+    await supabase.from(table).update({ is_active: true }).eq('id', id);
+    setMessage(`✅ "${name}" reactivated.`);
+    loadRows();
+    setTimeout(() => setMessage(''), 3000);
   };
 
   const startNew = () => {
@@ -279,17 +289,19 @@ function EntityEditor({ table, label }: { table: string; label: string }) {
       challenges: [...commonFields, 'color'],
     };
     const allowedFields = tableFields[table] || commonFields;
-    for (const f of allowedFields) { if (entity[f] !== undefined && entity[f] !== '') record[f] = entity[f]; }
-    // Ensure required fields have defaults
+    for (const f of allowedFields) { if (entity[f] !== undefined) record[f] = entity[f] || null; }
+    // Don't null out required fields
+    if (!record.name) { setMessage('❌ Name is required'); setSaving(false); return; }
+    if (!record.slug) record.slug = record.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    // Ensure NOT NULL fields have defaults
+    if (!record.definition) record.definition = '';
+    if (!record.h1) record.h1 = record.name;
+    if (!record.seo_title) record.seo_title = record.name;
+    if (!record.seo_description) record.seo_description = record.definition || record.name;
     if (!record.icon) record.icon = table === 'services' ? 'build' : table === 'materials' ? 'recycling' : table === 'industries' ? 'factory' : 'psychology';
     if (!record.category && (table === 'services' || table === 'materials' || table === 'industries')) record.category = 'general';
     if (table === 'challenges' && !record.color) record.color = 'green';
     if (table === 'materials' && !record.depth) record.depth = 1;
-    
-    // Auto-generate slug from name if empty
-    if (!record.slug && record.name) {
-      record.slug = record.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-    }
     
     // Build page_data
     const newPd = { ...pd };
@@ -324,6 +336,16 @@ function EntityEditor({ table, label }: { table: string; label: string }) {
     setTimeout(() => setMessage(''), 3000);
   };
 
+  const handlePermanentDelete = async (id: string, name: string) => {
+    if (!confirm(`⚠️ PERMANENTLY DELETE "${name}"?\n\nThis cannot be undone. All data for this page will be lost.\n\nType the page name to confirm.`)) return;
+    const confirmName = prompt(`Type "${name}" to confirm permanent deletion:`);
+    if (confirmName !== name) { setMessage('❌ Name did not match. Deletion cancelled.'); setTimeout(() => setMessage(''), 3000); return; }
+    const { error } = await supabase.from(table).delete().eq('id', id);
+    if (error) { setMessage(`❌ Error: ${error.message}`); } 
+    else { setMessage(`🗑️ "${name}" permanently deleted.`); loadRows(); }
+    setTimeout(() => setMessage(''), 5000);
+  };
+
   const sections = table === 'services'
     ? ['basic','headlines','overview','accepted','process','differentiators','certifications','casestudies']
     : table === 'materials'
@@ -355,10 +377,15 @@ function EntityEditor({ table, label }: { table: string; label: string }) {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <div><h1 className="text-white text-2xl font-extrabold" style={{ letterSpacing: '-0.025em' }}>{label}</h1><p className="text-gray-500 text-sm">{rows.length} records</p></div>
-        <button onClick={startNew} className="bg-[#1B7A3D] hover:bg-[#1a6e37] text-white font-bold text-sm px-4 py-2.5 rounded-xl flex items-center gap-2">
-          <span className="material-symbols-outlined text-base">add</span> New {label.replace(/s$/, '')}
-        </button>
+        <div><h1 className="text-white text-2xl font-extrabold" style={{ letterSpacing: '-0.025em' }}>{label}</h1><p className="text-gray-500 text-sm">{rows.length} records{showInactive ? ' (including inactive)' : ''}</p></div>
+        <div className="flex gap-3 items-center">
+          <button onClick={() => setShowInactive(!showInactive)} className={`text-xs font-medium px-3 py-2 rounded-lg transition-all ${showInactive ? 'bg-amber-900/20 text-amber-400 border border-amber-800/30' : 'text-gray-500 hover:text-white border border-[#1a2e1f]'}`}>
+            {showInactive ? '👁 Showing inactive' : 'Show inactive'}
+          </button>
+          <button onClick={startNew} className="bg-[#1B7A3D] hover:bg-[#1a6e37] text-white font-bold text-sm px-4 py-2.5 rounded-xl flex items-center gap-2">
+            <span className="material-symbols-outlined text-base">add</span> New {label.replace(/s$/, '')}
+          </button>
+        </div>
       </div>
       {message && <div className={`mb-4 px-4 py-3 rounded-xl text-sm font-medium ${message.startsWith('✅') ? 'bg-green-900/30 text-green-400 border border-green-800/30' : 'bg-red-900/30 text-red-400 border border-red-800/30'}`}>{message}</div>}
 
@@ -389,12 +416,20 @@ function EntityEditor({ table, label }: { table: string; label: string }) {
           <tbody>
             {loading ? <tr><td colSpan={5} className="px-4 py-8 text-center text-gray-500">Loading...</td></tr>
             : rows.map((row) => (
-              <tr key={row.id} className="border-b border-[#1a2e1f]/50 hover:bg-white/[.02]">
-                <td className="px-4 py-3 text-white font-medium">{row.name}</td>
+              <tr key={row.id} className={`border-b border-[#1a2e1f]/50 hover:bg-white/[.02] ${!row.is_active ? 'opacity-50' : ''}`}>
+                <td className="px-4 py-3 text-white font-medium">{row.name}{!row.is_active && <span className="ml-2 text-[10px] bg-red-900/30 text-red-400 px-2 py-0.5 rounded-full">Inactive</span>}</td>
                 <td className="px-4 py-3 text-gray-500 font-mono text-xs">{row.slug}</td>
                 <td className="px-4 py-3 text-gray-400 text-xs max-w-[200px] truncate">{row.h1 || '—'}</td>
                 <td className="px-4 py-3">{(row.hero_image || row.image) ? <img src={row.hero_image || row.image} alt="" className="w-16 h-8 object-cover rounded" onError={(e) => { (e.target as HTMLImageElement).src = ''; }} /> : <span className="text-gray-600 text-xs">No image</span>}</td>
-                <td className="px-4 py-3 text-right"><div className="flex gap-3 justify-end"><button onClick={() => startEditing(row)} className="text-[#4ADE80] hover:text-white text-xs font-bold">Edit</button><button onClick={() => handleDelete(row.id, row.name)} className="text-red-500/30 hover:text-red-400 text-xs font-bold">Deactivate</button></div></td>
+                <td className="px-4 py-3 text-right"><div className="flex gap-3 justify-end">
+                  <button onClick={() => startEditing(row)} className="text-[#4ADE80] hover:text-white text-xs font-bold">Edit</button>
+                  {row.is_active ? (
+                    <button onClick={() => handleDelete(row.id, row.name)} className="text-red-500/30 hover:text-red-400 text-xs font-bold">Deactivate</button>
+                  ) : (
+                    <><button onClick={() => handleReactivate(row.id, row.name)} className="text-amber-500/50 hover:text-amber-400 text-xs font-bold">Reactivate</button>
+                    <button onClick={() => handlePermanentDelete(row.id, row.name)} className="text-red-500/30 hover:text-red-500 text-xs font-bold">Delete</button></>
+                  )}
+                </div></td>
               </tr>
             ))}
           </tbody>
